@@ -1,0 +1,45 @@
+In weak lensing analysis, statistical measures are essential for extracting cosmological information from the convergence field $\kappa(\boldsymbol{\theta})$. The angular power spectrum is a fundamental two-point statistic that quantifies the variance of $\kappa$ across different angular scales, effectively capturing the Gaussian features of the matter distribution. However, due to the non-linear growth of cosmic structures, the matter distribution exhibits significant non-Gaussianity, necessitating the use of higher-order statistics for a more comprehensive description.
+
+This section explores higher-order statistics commonly employed in weak lensing analyses, including the bispectrum, probability density functions (PDFs), peak and minimum counts, and Minkowski functionals. 
+
+\section{Bispectrum}
+\label{sec:bispectrum}
+The bispectrum is a higher-order statistic that measures the phase correlations between different modes in the convergence field, providing sensitivity to the non-Gaussian features arising from the non-linear evolution of large-scale structures. We will review \citet{2004MNRAS.348..897T} the formalism for the convergence bispectrum.
+
+The bispectrum $B_{\ell_1 \ell_2 \ell_3}$ is defined through the expectation value of the product of three spherical harmonic coefficients  ($a_{\ell m}$;Eq.~\ref{eq:kappa_expansion}): :
+\begin{equation}
+    \left\langle a_{\ell_1 m_1} a_{\ell_2 m_2} a_{\ell_3 m_3} \right\rangle = \begin{pmatrix} 
+            \ell_1 & \ell_2 & \ell_3 \\ 
+            m_1 & m_2 & m_3 
+        \end{pmatrix} B^\kappa_{\ell_1 \ell_2 \ell_3},
+\end{equation}
+where the term in parentheses is the Wigner 3j-symbol, which arises due to rotational invariance and enforces the selection rules:
+\begin{itemize}
+    \item \textbf{Triangle Condition}: $|\ell_i - \ell_j| \leq \ell_k \leq \ell_i + \ell_j$ for all permutations of $(i, j, k)$.
+    \item \textbf{Parity Condition}: $\ell_1 + \ell_2 + \ell_3$ must be even.
+    \item \textbf{Magnetic Quantum Number Sum}: $m_1 + m_2 + m_3 = 0$.
+\end{itemize}
+Similar to the angular power spectrum, the convergence bispectrum can be written as ensemble averages of three modes of Fourier transformed $\kappa$:
+\begin{equation}
+    \langle \tilde{\kappa}(\mathbf{\ell}_1) \tilde{\kappa}(\mathbf{\ell}_2) \tilde{\kappa}(\mathbf{\ell}_3) \rangle = (2\pi)^2 \delta_{D}(\mathbf{\ell}_1 + \mathbf{\ell}_2 + \mathbf{\ell}_3) B^\kappa_{\ell_1 \ell_2 \ell_3},
+\end{equation}
+The full-sky bispectrum is then approximately related to the flat-sky bispectrum as:
+\begin{equation}
+    B_{\ell_1 \ell_2 \ell_3}^\kappa \simeq\left(\begin{array}{ccc}
+        \ell_1 & \ell_2 & \ell_3 \\
+        0 & 0 & 0
+        \end{array}\right) \times \sqrt{\frac{\left(2 \ell_1+1\right)\left(2 \ell_2+1\right)\left(2 \ell_3+1\right)}{4 \pi}}  B^\kappa\left(\ell_1, \ell_2, \ell_3\right)
+\end{equation}
+Accroding to \citet{2004MNRAS.348..897T}, an approximate form of Wigner 3j symbol is given by:
+\begin{equation}
+    \left(\begin{array}{ccc}
+        \ell_1 & \ell_2 & \ell_3 \\
+        0 & 0 & 0
+        \end{array}\right) \simeq(-1)^L \frac{\mathrm{e}^{3/2}}{\sqrt{2 \pi}}\left(\frac{2}{L+2}\right)^{1 / 4} \times \prod_{i=1}^3\left(L-\ell_i+1\right)^{-1 / 4} \times\left(\frac{L-\ell_i+1 / 2}{L-\ell_i+1}\right)^{L-\ell_i+1 / 4}
+\end{equation}
+where $L = (\ell_1 + \ell_2 + \ell_3) / 2$. Then the flat-sky lensing bispectrum is expressed in terms of the three-dimensional matter bispectrum as:
+\begin{equation}
+    B^\kappa_{\ell_1 \ell_2 \ell_3} = \int_0^{\chi_s} \frac{W^3(\chi)}{\chi^4} B_m\left( \frac{\ell_1}{\chi}, \frac{\ell_2}{\chi}, \frac{\ell_3}{\chi}, z(\chi) \right) d\chi.
+\end{equation}
+where $B_m(k_1, k_2, k_3, z)$ is the matter bispectrum at redshift $z$.
+

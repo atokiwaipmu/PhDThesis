@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{ipmu}
+
+% Packages
+\usepackage{natbib}     % For bibliography
+\usepackage{caption}    % Better control of figure captions
+\usepackage{subcaption} % Subfigures
+\usepackage{aas_macros}
+\usepackage{rotating}   % For rotating figures
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{comment}
+
+% Set Thesis Metadata
+\setThesisTitle{Effects of Replicated N-body Simulation Boxes \\in Simulating Weak Lensing Observables}
+\setThesisJapaneseTitle{弱重力レンズ統計量の模擬データ生成における\\有限体積のN体シミュレーションの影響の研究}
+\setThesisAuthorEnglish{Akira Tokiwa}
+\setThesisAuthorJapanese{常盤 晟}
+
+\begin{document}
+
+% Create Title Page
+\makethesistitle
+
+% Create Abstract Page
+% \begin{abstractpage}
+%     \input{abstract}
+% \end{abstractpage}
+
+\tableofcontents  % Generates the table of contents
+\listoffigures    % Optional: List of figures
+\listoftables     % Optional: List of tables
+
+\chapter{Introduction}
+\input{introduction}
+
+%chapter{Cosmology (Finished)}
+%\input{background/cosmology}
+
+%\chapter{CMB Power Spectrum (Omit)}
+%\input{background/history}
+
+\chapter{Weak Lensing}
+\input{background/theory}
+
+\chapter{Power Spectrum}
+\input{background/power_spectrum}
+
+\chapter{Higher-Order Statistics}
+\input{stats/bispectrum}
+\input{stats/pdfs}
+\input{stats/peak}
+\input{stats/minkowski}
+
+\chapter{Covariance}
+\input{background/covariance}
+
+\chapter{Surveys(Make it shorter)}
+\input{surveys/intro.tex}
+\input{surveys/hsc.tex}
+\input{surveys/des.tex}
+\input{surveys/lsst.tex}
+\input{surveys/roman.tex}
+
+\chapter{Simulations}
+\input{numerical}
+
+\chapter{Methods}
+\input{methods}
+
+\chapter{Results}
+\input{results}
+
+\chapter{Discussion}
+\input{discussion}
+
+% \chapter{Conclusions and Future Work}
+% \section{Summary of Key Findings}
+% This thesis demonstrated the importance of accounting for artefacts in weak lensing simulations to improve covariance matrix estimations.
+
+% \section{Limitations and Future Work}
+% Future research could explore more complex simulations and apply findings to LSST and Roman surveys.
+
+% \appendix  % Start of appendices
+
+% \chapter{Additional Mathematical Derivations}
+% Here you can include detailed derivations that were omitted from the main text.
+
+\bibliographystyle{mnras}
+\bibliography{thesis_bib.bib}
+
+\end{document}

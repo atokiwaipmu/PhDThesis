@@ -1,0 +1,247 @@
+In this chapter, we provide an overview of the fundamental concepts and equations that underpin the field of cosmology following textbooks \citet{2003moco.book.....D} and \citet{2008cosm.book.....W}.
+
+\section{Einstein Field Equations}
+The Einstein Field Equations are the fundamental equations of General Relativity, describing how matter and energy influence the curvature of spacetime. Introduced by Albert Einstein~\citep{1915SPAW.......844E}, these equations extend Newton's law of universal gravitation to a relativistic context, accounting for the effects of high velocities and strong gravitational fields.
+The EFE establish a relationship between the geometry of spacetime and the distribution of matter within it. Mathematically, they are expressed as:
+\begin{equation}
+    G_{\mu\nu} + \Lambda g_{\mu\nu}= \frac{8\pi G}{c^4} T_{\mu\nu},
+    \label{eq:einstein_field_equations}
+\end{equation}
+where \( G_{\mu\nu} \) denotes the Einstein tensor, defined by
+\begin{equation}
+    G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu},
+    \label{eq:einstein_tensor}
+\end{equation}
+the $R_{\mu\nu}$ is the Ricci curvature tensor:
+\begin{equation}
+    R_{\mu\nu} = \partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\lambda_{\lambda\sigma} \Gamma^\sigma_{\mu\nu} - \Gamma^\lambda_{\mu\sigma} \Gamma^\sigma_{\lambda\nu},
+    \label{eq:ricci_curvature_tensor}
+\end{equation}
+the Ricci curvature scalar $R$ is given by:
+\begin{equation}
+    R = g^{\mu\nu} R_{\mu\nu},
+    \label{eq:ricci_scalar}
+\end{equation}
+where \( g_{\mu\nu} \) is the metric tensor. The stress-energy tensor \( T_{\mu\nu} \) describes the distribution of matter and energy in spacetime.
+Assuming a perfect fluid as the source of the gravitational field, the stress-energy tensor is given by
+\begin{equation}
+    T_{\mu\nu} = \left(\rho + p \right) u_{\mu} u_{\nu} + p g_{\mu\nu},
+    \label{eq:stress_energy_tensor}
+\end{equation}
+where \( \rho \) is the energy density, \( p \) is the pressure, and \( u_{\mu} \) is the four-velocity of the fluid.
+In a homogeneous and isotropic universe, \( u_{\mu} \) is given by
+\begin{equation}
+    u_{\mu} = (-c, 0, 0, 0),
+    \label{eq:four_velocity}
+\end{equation}
+Therefore, each component of the stress-energy tensor can be expressed as
+\begin{equation}
+    T_{00} = \rho c^2, \quad T_{ij} = p g_{ij},
+    \label{eq:stress_energy_components}
+\end{equation}
+Different speices of matter and energy contribute to the energy density \( \rho \) and pressure \( P \) in the universe. The equation of state parameter \( w \) is defined as the ratio of pressure \( P \) to energy density \( \rho \):
+\begin{equation}
+    w = \frac{p}{\rho}.
+    \label{eq:equation_of_state}
+\end{equation}
+For perfect fluids, the equation of state parameter can be derived by considering the trace of the stress-energy tensor:
+\begin{equation}
+    0 = T = g^{\mu\nu} T_{\mu\nu} = (\rho + p)(-1) + 4p = -\rho + 3p,
+    \label{eq:stress_energy_trace}
+\end{equation}
+For non-relativistic matter where $p = 0$, the equation of state parameter is \( w = 0 \). 
+For dark energy, the equation of state parameter can be derived by comparing the effective stress-energy of the cosmological constant $T_{\mu\nu}^{(\Lambda)} = \rho_{\Lambda} g_{\mu\nu}$ to the stress-energy tensor of a perfect fluid:
+\begin{align}
+    \rho_{\Lambda} &= \frac{\Lambda c^4}{8\pi G} \label{eq:lambda_density} \\
+    \left(\rho_{\Lambda} + p_{\Lambda} \right) u_{\mu} u_{\nu} + p_{\Lambda} g_{\mu\nu} &= T_{\mu\nu}^{(\Lambda)} = \rho_{\Lambda} g_{\mu\nu}  \\
+    \rho_{\Lambda} + p_{\Lambda} &= 0 \quad \text{(valid for all $\mu$, $\nu$)} \nonumber \\
+    p_{\Lambda} &= -\rho_{\Lambda} \label{eq:lambda_pressure}
+\end{align}
+Therefore, the equation of state parameter for dark energy is \( w = -1 \).
+
+\section{Friedmann-Lemaître-Robertson-Walker Metric}
+The Friedmann-Lemaître-Robertson-Walker (FLRW) metric, which describes a homogeneous and isotropic universe, is given by
+\begin{equation}
+    ds^2 = -c^2 dt^2 + a^2(t) \left[ d\chi^2 + f_K^2(\chi) d\Omega^2 \right],
+    \label{eq:flrw_metric}
+\end{equation}
+where \( a(t) \) is the scale factor, \( \chi \) is the comoving radial coordinate, and \( d\Omega^2 = d\theta^2 + \sin^2\theta \, d\phi^2 \) represents the metric on the unit two-sphere. The function \( f_K(\chi) \) encodes the spatial curvature of the universe and is defined as
+\begin{equation}
+    f_K(\chi) = 
+    \begin{cases}
+        \dfrac{1}{\sqrt{K}} \sinh\left(\sqrt{K}\chi\right) & \text{for } K < 0, \\
+        \chi & \text{for } K = 0, \\
+        \dfrac{1}{\sqrt{K}} \sin\left(\sqrt{K}\chi\right) & \text{for } K > 0,
+    \end{cases}
+    \label{eq:fk_definition}
+\end{equation}
+where \( K \) denotes the curvature parameter, with \( K < 0 \) corresponding to an open universe, \( K = 0 \) to a flat universe, and \( K > 0 \) to a closed universe.
+
+Substituting the FLRW metric (Equation~\eqref{eq:flrw_metric}) into the Ricci tensor, the Einstein tensor components are given by
+\begin{itemize}
+    \item $00$ component: 
+    \begin{equation}
+        \label{eq:G00_component}
+        G_{00} = 3\left( \dfrac{\dot{a}}{a} \right)^2 + 3\dfrac{Kc^2}{a^2},
+    \end{equation}
+    \item $ij$ component:
+    \begin{equation}
+        \label{eq:Gij_component}
+        G_{ij} = -2\dfrac{\ddot{a}}{a} - \left( \dfrac{\dot{a}}{a} \right)^2 - \dfrac{Kc^2}{a^2} g_{ij},
+    \end{equation}
+\end{itemize}
+where the dot denotes differentiation with respect to cosmic time \( t \).
+
+Substituting all the components of the Einstein tensor (Eq.~\eqref{eq:stress_energy_components}, Eq.~\eqref{eq:G00_component}, Eq.~\eqref{eq:Gij_component}) into the Einstein field equations (Eq.~\eqref{eq:einstein_field_equations}), we obtain the Friedmann equations, which govern the evolution of the FLRW metric:
+\begin{itemize}
+    \item First Friedmann equation ($00$ component):
+    \begin{equation}
+        3 \left( \frac{\dot{a}}{a} \right)^2 + 3\frac{Kc^2}{a^2} + \Lambda c^2 = \frac{8\pi G}{c^4} \rho c^2
+    \end{equation}
+    \begin{equation}
+        \left( \frac{\dot{a}}{a} \right)^2 = \frac{8\pi G}{3} \rho - \frac{Kc^2}{a^2} + \frac{\Lambda c^2}{3}
+        \label{eq:friedmann_first}
+    \end{equation}
+    \item Second Friedmann equation ($ii$ component):
+    \begin{equation}
+        -\left(2\frac{\ddot{a}}{a} + \left( \frac{\dot{a}}{a} \right)^2 + \frac{Kc^2}{a^2}\right)g_{ii} + \Lambda c^2 g_{ii} = \frac{8\pi G}{c^4} P g_{ii}
+    \end{equation}
+    \begin{equation}
+        \frac{\ddot{a}}{a} = -\frac{4\pi G}{c^4} P - \frac{1}{2} \left(\left( \frac{\dot{a}}{a} \right)^2 
+            + \frac{Kc^2}{a^2} - \Lambda c^2 \right)
+    \end{equation}
+    \begin{equation}
+        \frac{\ddot{a}}{a} = -\frac{4\pi G}{3} \left( \rho + \frac{3P}{c^2} \right) + \frac{\Lambda c^2}{3}
+        \label{eq:friedmann_second}
+    \end{equation}
+\end{itemize}
+
+Now, we introduce the Hubble parameter \( H \) and the critical density \( \rho_c \) to simplify the Friedmann equations. The critical density \( \rho_c \) is defined as
+\begin{equation}
+    \label{eq:critical_density}
+    \rho_c = \dfrac{3 H^2}{8\pi G},
+\end{equation}
+which can be obtained by setting the curvature \( K = 0 \) and the cosmological constant \( \Lambda = 0 \) in the Friedmann equations. The Hubble parameter \( H \) is given by
+\begin{equation}
+    \label{eq:hubble_parameter}
+    H = \dfrac{\dot{a}}{a},
+\end{equation}
+
+By Substituting the critical density \( \rho_c \) and the Hubble parameter \( H \) into the Friedmann equations (Eq.~\eqref{eq:friedmann_first}), the equation can be rewritten as:    
+\begin{eqnarray}
+    H^2 &=& H^2\dfrac{\rho}{\rho_c} - \dfrac{Kc^2}{a^2} + \dfrac{\Lambda c^2}{3} \nonumber \\[2ex]
+    1 &=& \dfrac{\rho}{\rho_c} - \dfrac{Kc^2}{a^2 H^2} + \dfrac{\Lambda c^2}{3H^2} \label{eq:friedmann_rewritten}
+\end{eqnarray}
+Therefore, if we define the density parameters:
+\begin{equation}
+    \label{eq:density_parameters}
+    \Omega_m = \dfrac{\rho_m}{\rho_c}, \quad \Omega_r = \dfrac{\rho_r}{\rho_c}, \quad \Omega_{\Lambda} = \dfrac{\rho_{\Lambda}}{\rho_c}, \quad \Omega_K = -\dfrac{Kc^2}{a^2 H^2}
+\end{equation}
+we can rewrite the Friedmann equation as:
+\begin{equation}
+    \label{eq:friedmann_density_parameters}
+    1 = \Omega_r  + \Omega_m  + \Omega_K  + \Omega_{\Lambda}
+\end{equation}
+where $\rho_m$, $\rho_r$, and $\rho_{\Lambda}$ are the energy densities of matter, radiation, and dark energy, respectively. The representation of $\rho_\Lambda$ is given by Equation~\eqref{eq:lambda_density}.
+
+Since number density \( n \) is related to scale factor \( a \) by \( n \propto a^{-3} \), and the energy of radiation \( E \) is related to Scale factor \( a \) by \( E \propto a^{-1} \), the density parameters of radiation and matter can be expressed as:
+\begin{equation}
+    \label{eq:density_parameters_radiation_matter}
+    \Omega_m \propto n \propto a^{-3}, \quad \Omega_r \propto nE \propto a^{-4}
+\end{equation}
+
+Substituting these definitions into the Friedmann equations (Eq.~\eqref{eq:friedmann_density_parameters}), we can describe the evolution of the universe in terms of the density parameters of radiation, matter, curvature, and dark energy at different epochs by:
+\begin{equation}
+    H^2 = H_0^2 \left( \Omega_{r0} a^{-4} + \Omega_{m0} a^{-3} + \Omega_{K0} a^{-2} + \Omega_{\Lambda0} \right),
+    \label{eq:friedmann_rewritten}
+\end{equation}
+where \( H_0 \) is the present-day Hubble parameter, and the subscript \( 0 \) denotes the values of the density parameters at the current epoch. 
+
+\section{Linear Perturbation Theory}
+Linear perturbation theory provides a fundamental framework for understanding the evolution of small deviations from the homogeneous and isotropic background of the Universe. This theory begins with the continuity and Euler equations:
+\begin{eqnarray}
+    \label{eq:continuity_equation}
+    \dfrac{\partial \rho}{\partial t} + \nabla \cdot (\rho \boldsymbol{v}) &=& 0, \\[2ex]
+    \label{eq:euler_equation}
+    \dfrac{\partial \boldsymbol{v}}{\partial t} + (\boldsymbol{v} \cdot \nabla) \boldsymbol{v} &=& -\dfrac{\nabla P}{\rho} - \nabla \Phi,
+\end{eqnarray}
+where \( \rho \) is the density, \( \boldsymbol{v} \) is the peculiar velocity field, \( P \) is the pressure, and \( \Phi \) is the gravitational potential.
+By moving into comoving coordinates and substituting the density contrast $\rho = \bar{\rho}(1 + \delta)$, the continuity and Euler equations can be rewritten as:
+\begin{eqnarray}
+    \label{eq:continuity_equation_rewritten}
+    \dfrac{\partial \delta}{\partial t} + \dfrac{1}{a} \nabla \cdot ((1 + \delta) \boldsymbol{v}) &=& 0, \\[2ex]
+    \label{eq:euler_equation_rewritten}
+    \dfrac{\partial \boldsymbol{v}}{\partial t} + H \boldsymbol{v} + \dfrac{1}{a} (\boldsymbol{v} \cdot \nabla) \boldsymbol{v} &=& -\dfrac{\nabla \delta P}{a \bar{\rho} (1 + \delta)} - \dfrac{1}{a} \nabla \Phi,
+\end{eqnarray}
+To derive the equation of motion for the density contrast, we linearize the above equations under the assumption that \( \delta \ll 1 \) and \( \boldsymbol{v} \) is small. This approximation allows us to neglect higher-order terms in \( \delta \) and \( \boldsymbol{v} \), leading to the simplified equation:
+\begin{equation}
+    \ddot{\delta} + 2H\dot{\delta} - \frac{\nabla^2 (\delta P)}{a^2 \bar{\rho}} = \frac{4\pi G}{c^2} \left( \bar{\rho}_\mathrm{tot} \delta_\mathrm{tot} + 3 \delta p_\mathrm{tot} \right),
+\end{equation}
+where we substituted from the poisson equation \( \nabla^2 \Phi = 4\pi G \bar{\rho} \delta \).
+Assuming that contributions from other perturbative sources are negligible, the equation of motion in Fourier space is further simplified to:
+\begin{equation}
+    \ddot{\tilde{\delta}}(k, t) + 2H \dot{\tilde{\delta}}(k, t) - \left( 4\pi G \bar{\rho}_\mathrm{tot} - \frac{c_s^2 k^2}{a^2} \right) \tilde{\delta}(k, t) = 0,
+\end{equation}
+where \( \tilde{\delta}(k, t) \) is the Fourier transform of the density contrast, \( k \) is the wavenumber, and \( c_s \) denotes the sound speed.
+Here, we utilized the relation arises from adiabatic perturbations \( \delta p = c_s^2 \delta \rho \).
+This equation give solutions depends on the sign of the term $\omega^2(k) = 4\pi G \bar{\rho}_\mathrm{tot} - \frac{c_s^2 k^2}{a^2}$. 
+\begin{itemize}
+    \item For regions where gravity dominates pressure, \( \omega^2(k) > 0 \):
+    \begin{equation}
+        \tilde{\delta}(k, t) = C_1 e^{\lambda t} + C_2 e^{-\lambda t}
+        \label{eq:delta_growing_mode}
+    \end{equation}
+    The term with \( \lambda > 0 \) is the growing mode, leading to the collapse of the overdense region (e.g. galaxy formation). The term with \( \lambda < 0 \) is the decaying mode, which is typically neglected in late universe.
+    \item For regions where pressure dominates gravity, \( \omega^2(k) < 0 \):
+    \begin{equation}
+        \tilde{\delta}(k, t) = e^{-Ht} \left( C_1 \cos{\left( |\omega(k)| t \right)} + C_2 \sin{\left(|\omega(k)| t \right)} \right)
+        \label{eq:delta_oscillatory_mode}
+    \end{equation}
+    The density contrast oscillates with a characteristic frequency \( |\omega(k)| \), which is damped by the expansion of the universe. 
+\end{itemize}
+
+\section{Cosmological Distance}
+In the context of the FLRW metric, cosmological distance measures are pivotal for understanding the large-scale structure and expansion history of the universe. These distances are derived from the null geodesic condition, which implies that the spacetime interval \( ds^2 \) is zero for light-like trajectories. 
+\begin{equation}
+    ds^2 = 0 \quad \Rightarrow \quad d\chi = \frac{c \, dt}{a(t)}.
+    \label{eq:null_geodesic_condition}
+\end{equation}
+Consequently, the comoving radial distance \( \chi(z) \) as a function of redshift $z = \tfrac{1}{a} - 1$ is defined by
+\begin{equation}
+    \chi(z) = \int_{t_0}^{t(z)} \frac{c \, dt'}{a(t')} = \int_{0}^{z} \frac{c \, dz'}{H(z')},
+    \label{eq:comoving_radial_distance}
+\end{equation}
+where \( t_0 \) is the present time, and \( H(z) \) is the Hubble parameter at redshift \( z \).
+
+In the regime of the late universe, where the contribution of radiation to the overall energy density is negligible, the Hubble parameter \( H(z) \) can be approximated from Eq.~\eqref{eq:friedmann_rewritten} as:
+\begin{equation}
+    H(z) = H_0 \sqrt{\Omega_{m0}(1+z)^3 + \Omega_{K0}(1+z)^2 + \Omega_{\Lambda0}},
+    \label{eq:hubble_parameter_late_universe}
+\end{equation}
+Utilizing the comoving radial distance \( \chi(z) \), one can define two fundamental distance measures: the luminosity distance \( d_L \) and the angular diameter distance \( d_A \). These distances are related to observable quantities in cosmology, such as the brightness of standard candles and the angular size of standard rulers.
+
+\section{Luminosity Distance}
+The \textbf{luminosity distance} \( d_L \) arises from the inverse-square law of brightness, which states that the observed flux \( F \) from a luminous object diminishes with the square of the distance from the observer.In a static, Euclidean universe, the luminosity distance is given by
+\begin{equation}
+    F = \frac{L}{4\pi d_L^2},
+    \label{eq:luminosity_flux}
+\end{equation}
+where \( L \) is its intrinsic luminosity. In the context of an expanding universe, the luminosity distance is modified to account for the redshift \( z \) and the comoving radial distance \( f_K(\chi(z)) \) as
+\begin{equation}
+    d_L(z) = (1 + z) \, f_K(\chi(z)),
+    \label{eq:luminosity_distance}
+\end{equation}
+where \( f_K(\chi) \) is a function that depends on the spatial curvature of the universe, previously defined in Equation~\eqref{eq:fk_definition}. The luminosity distance accounts for the dimming of light due to the expansion of the universe and is crucial for determining the intrinsic luminosity of astronomical objects (e.g. SuperNova Ia). Therefore, if we already know the intrinsic luminosity of an astronomical object, we can determine the Cosmological parameters by measuring its observed flux.
+
+\section{Angular Diameter Distance}
+The \textbf{angular diameter distance} \( d_A \) connects an object's physical size to its observed angular size. In a static, Euclidean universe, the angular diameter distance is given by
+\begin{equation}
+    d_A = \frac{D}{\theta},
+    \label{eq:angular_diameter}
+\end{equation}
+where \( D \) is the physical size of the object and \( \theta \) is its angular size. Similarly, in an expanding universe, the angular diameter distance is modified to account for the redshift \( z \) and the comoving radial distance \( f_K(\chi(z)) \) as
+\begin{equation}
+    d_A(z) = \frac{f_K(\chi(z))}{1 + z},
+    \label{eq:angular_diameter_distance}
+\end{equation}
+Therefore, if we already know the physical size of an astronomical object (e.g. Baryonic Acoustic Oscillations), we can determine the Cosmological parameters by measuring its observed angular size.

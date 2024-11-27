@@ -1,0 +1,58 @@
+\section{Probability Density Functions}
+\label{sec:pdfs}
+The Probability Density Function (PDF) of the convergence field, $\kappa$, offers a comprehensive statistical characterization of the field's one-point distribution. It encapsulates all moments and cumulants, thereby capturing both Gaussian and non-Gaussian features inherent in the field.
+We adopt the formalism presented in \citet{2021MNRAS.505.2886B} and \citet{2023OJAp....6E...1U} to rigorously describe the PDF of the convergence field.
+
+\subsection{Definition}
+The PDF, $P(\kappa)$, is formally defined such that:
+\begin{equation}
+    P(\kappa) \, d\kappa = \mathrm{Prob}(\kappa \leq \kappa' \leq \kappa + d\kappa),
+\end{equation}
+which represents the probability of the convergence $\kappa'$ lying within the infinitesimal interval $[\kappa, \kappa + d\kappa]$. 
+
+For a discrete set of measurements $\{\kappa_i\}_{i=1}^{N_{\mathrm{pix}}}$ across $N_{\mathrm{pix}}$ pixels, the PDF can be expressed using the Dirac delta function $\delta_D$:
+\begin{equation}
+    P(\kappa) = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\kappa - \kappa_i).
+    \label{eq:pdf_delta}
+\end{equation}
+In practice, the exact PDF is approximated by discretizing the convergence values into bins of width $\Delta\kappa$. This leads to a binned estimator of the PDF:
+\begin{equation}
+    P(\kappa) \approx \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \frac{\Theta\left(\left|\kappa_i - \kappa\right| \leq \frac{\Delta\kappa}{2}\right)}{\Delta\kappa},
+    \label{eq:pdf_binned}
+\end{equation}
+where $\Theta(x)$ is the Heaviside step function.
+This estimator effectively counts the number of convergence values $\kappa_i$ that fall within each bin centered at $\kappa$, normalizing by the total number of pixels and the bin width.
+
+\subsection{Normalization}
+To enable comparisons across different datasets and to facilitate the analysis of statistical properties, the convergence values are often normalized by their standard deviation, $\sigma_\kappa$. The standardized convergence, $\tilde{\kappa}_i$, is defined as:
+\begin{equation}
+    \tilde{\kappa}_i = \frac{\kappa_i - \langle \kappa \rangle}{\sigma_\kappa},
+    \label{eq:kappa_normalized}
+\end{equation}
+where $\langle \kappa \rangle$ is the mean convergence, typically set to zero following mean-field subtraction:
+\begin{equation}
+    \langle \kappa \rangle = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \kappa_i \approx 0.
+\end{equation}
+The normalized PDF, $P(\tilde{\kappa})$, then satisfies the normalization condition:
+\begin{equation}
+    \int_{-\infty}^{\infty} P(\tilde{\kappa}) \, d\tilde{\kappa} = 1.
+    \label{eq:pdf_normalization}
+\end{equation}
+
+\subsection{Moments and Cumulants}
+The moments of the PDF provide crucial statistical descriptors of the convergence field. The $n$-th moment about the mean is defined as:
+\begin{equation}
+    \mu_n = \langle (\tilde{\kappa})^n \rangle = \int_{-\infty}^{\infty} \tilde{\kappa}^n P(\tilde{\kappa}) \, d\tilde{\kappa}.
+    \label{eq:moments}
+\end{equation}
+While the first two moments (mean and variance) fully describe a Gaussian PDF, higher-order moments and cumulants are necessary to characterize non-Gaussian features. Skewness ($\gamma_1$) and kurtosis ($\gamma_2$) are the standardized third and fourth cumulants, respectively.
+
+The cumulants, $\kappa_n$, are related to the moments and provide information about the shape of the PDF beyond the mean and variance. They can be derived using the generating function approach. The cumulant generating function (CGF), $K(t)$, is defined as the logarithm of the moment generating function (MGF):
+\begin{equation}
+    K(t) = \log \left( \langle e^{t \tilde{\kappa}} \rangle \right) = \log \left( \int_{-\infty}^{\infty} e^{t \tilde{\kappa}} P(\tilde{\kappa}) \, d\tilde{\kappa} \right).
+\end{equation}
+Expanding $K(t)$ in a Taylor series around $t=0$ yields:
+\begin{equation}
+    K(t) = \sum_{n=1}^{\infty} \frac{\kappa_n}{n!} t^n,
+\end{equation}
+These relations allow us to express the cumulants in terms of moments, capturing the deviations from Gaussianity ($\kappa_n = 0$ for all $n > 2$ in a Gaussian distribution).
