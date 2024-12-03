@@ -1,0 +1,119 @@
+\section{Convergence Power Spectrum}
+The matter power spectrum, \( P(k) \), is a fundamental quantity in cosmology that characterizes the distribution of dark matter density fluctuations in Fourier space. It is defined as the Fourier transform of the two-point correlation function of the dark matter density field, \( \delta(\mathbf{x}) \) \citep{2001PhR...340..291B}. Mathematically, the matter power spectrum is expressed as:
+\begin{equation}
+    \langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(\mathbf{k}') \rangle = (2\pi)^3 \delta^{(3)}(\mathbf{k} + \mathbf{k}') P(k),
+    \label{eq:matter_power_spectrum}
+\end{equation}
+where \( \tilde{\delta}(\mathbf{k}) \) represents the Fourier transform of the density contrast \( \delta(\mathbf{x}) \), and \( \delta^{(3)} \) is the three-dimensional Dirac delta function ensuring statistical isotropy and homogeneity.
+
+In the context of weak gravitational lensing, the matter power spectrum \( P(k) \) is not directly observable. Instead, observations yield the angular power spectrum of the convergence field, \( C_{\ell}^{\kappa\kappa} \), which encapsulates the statistical properties of the convergence \( \kappa(\boldsymbol{\theta}) \) across the sky \citep{2001PhR...340..291B}. The convergence power spectrum, \( P_{\kappa}(\ell) \), is defined through the relation:
+\begin{equation}
+    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle = (2\pi)^2 \delta^{(2)}(\boldsymbol{\ell} + \boldsymbol{\ell}') P_{\kappa}(\ell),
+    \label{eq:convergence_power_spectrum}
+\end{equation}
+where \( \tilde{\kappa}(\boldsymbol{\ell}) \) is the Fourier transform of the convergence field \( \kappa(\boldsymbol{\theta}) \), and \( \delta^{(2)} \) is the two-dimensional Dirac delta function.
+
+The convergence field \( \kappa(\boldsymbol{\theta}) \) can be expressed as a weighted projection of the matter density contrast along the line of sight (see Eq.~\eqref{eq:convergence_integral}):
+\begin{equation}
+    \kappa(\boldsymbol{\theta}) = \int_0^{\chi_s} d\chi \, W(\chi) \, \delta_m\left(\chi \boldsymbol{\theta}, \chi\right),
+    \label{eq:kappa_projection}
+\end{equation}
+where \( W(\chi) \) is the lensing kernel, \( \chi \) is the comoving radial distance.
+
+Recognizing the Fourier transform of the matter density field \( \delta_m\left(\chi \boldsymbol{\theta}, \chi\right) \), we write:
+\begin{equation}
+    \delta_m\left(\chi \boldsymbol{\theta}, \chi\right) = \int \frac{d^3\mathbf{k}}{(2\pi)^3} \tilde{\delta}(\mathbf{k}) e^{i \mathbf{k} \cdot \mathbf{x}},
+    \label{eq:delta_m_fourier}
+\end{equation}
+where \( \mathbf{x} = (\chi \boldsymbol{\theta}, \chi) \) is the comoving position vector. Substituting this into the Fourier transform of the convergence field \( \tilde{\kappa}(\boldsymbol{\ell}) \), we obtain:
+\begin{eqnarray}
+    \tilde{\kappa}(\boldsymbol{\ell}) &=& \int_0^{\chi_s} d\chi \, W(\chi) \int d\boldsymbol{\theta} \, e^{-i \boldsymbol{\ell} \cdot \boldsymbol{\theta}} \delta_m\left(\chi \boldsymbol{\theta}, \chi\right) \nonumber \\
+    &=& \int_0^{\chi_s} d\chi \, W(\chi) \int \frac{d^3\mathbf{k}}{(2\pi)^3} \tilde{\delta}(\mathbf{k}) e^{i k_\parallel \chi} \int d\boldsymbol{\theta} \, e^{-i \boldsymbol{\ell} \cdot \boldsymbol{\theta}} e^{i \chi \mathbf{k}_\perp \cdot \boldsymbol{\theta}} \nonumber \\
+    &=& \int_0^{\chi_s} d\chi \, W(\chi) \int \frac{dk_\parallel}{2\pi} \frac{d^2\mathbf{k}_\perp}{(2\pi)^2} \tilde{\delta}_m(k_\parallel, \mathbf{k}_\perp) e^{i k_\parallel \chi} \int d\boldsymbol{\theta} \, e^{-i (\boldsymbol{\ell} - \chi \mathbf{k}_\perp) \cdot \boldsymbol{\theta}} \nonumber \\
+    &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int \frac{dk_\parallel}{2\pi} \tilde{\delta}_m\left(k_\parallel, \frac{\boldsymbol{\ell}}{\chi}\right) e^{i k_\parallel \chi},
+    \label{eq:kappa_fourier_final}
+\end{eqnarray}
+where \( \mathbf{k}_\perp \) and \( k_\parallel \) are the components of \( \mathbf{k} \) perpendicular and parallel to the line of sight, respectively.
+
+Next, we compute the ensemble average of the Fourier transform of the convergence field:
+\begin{eqnarray}
+    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} \int \frac{dk_\parallel}{2\pi} \int \frac{dk'_\parallel}{2\pi} \langle \tilde{\delta}_m\left(k_\parallel, \frac{\boldsymbol{\ell}}{\chi}\right) \tilde{\delta}_m\left(k'_\parallel, \frac{\boldsymbol{\ell}'}{\chi'}\right) \rangle e^{i k_\parallel \chi} e^{i k'_\parallel \chi'} \nonumber \\
+    &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} \int \frac{dk_\parallel}{2\pi} e^{i k_\parallel (\chi - \chi')} (2\pi)^2 \delta^{(2)}\left(\frac{\boldsymbol{\ell}}{\chi} + \frac{\boldsymbol{\ell}'}{\chi'}\right) P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \nonumber 
+    \label{eq:kappa_power_spectrum}
+\end{eqnarray}
+where in the last step we have applied the Limber approximation \citep{1954ApJ...119..655L}, which assumes \( k_\parallel \ll \ell/\chi \).
+Under the Limber approximation, the integral simplifies as:
+\begin{equation}
+    \int \frac{dk_\parallel}{2\pi} e^{i k_\parallel (\chi - \chi')} P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \approx P_m\left(\frac{\ell}{\chi}\right) \delta(\chi - \chi'),
+    \label{eq:limber_approximation}
+\end{equation}
+where \( P_m(k) \) is evaluated at \( k = \ell/\chi \).
+Substituting this into Eq.~\eqref{eq:kappa_power_spectrum}, we obtain:
+\begin{equation}
+    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle = (2\pi)^2 \delta^{(2)}(\boldsymbol{\ell} + \boldsymbol{\ell}') \int_0^{\chi_s} d\chi \, \frac{W^2(\chi)}{\chi^2} P_m\left(\frac{\ell}{\chi}; \chi\right),
+    \label{eq:kappa_power_spectrum_final}
+\end{equation}
+where \( P_m\left(\frac{\ell}{\chi}; \chi\right) \) denotes the matter power spectrum evaluated at wavenumber \( k = \ell/\chi \) and at the comoving distance \( \chi \).
+Finally, equating this result with the definition of the convergence power spectrum in Eq.~\eqref{eq:convergence_power_spectrum}, we derive the expression for \( C_{\ell}^{\kappa\kappa} \):
+\begin{equation}
+    C_{\ell}^{\kappa\kappa} = \int_0^{\chi_s} d\chi \, \frac{W^2(\chi)}{\chi^2} P_m\left(\frac{\ell}{\chi}; \chi\right).
+    \label{eq:convergence_power_spectrum_final}
+\end{equation}
+This relation demonstrates how the observable convergence power spectrum \( C_{\ell}^{\kappa\kappa} \) is sourced by the underlying matter power spectrum \( P_m(k; \chi) \) integrated along the line of sight.
+
+\section{Bispectrum}
+The bispectrum, \( B(k) \), serves as the Fourier counterpart to the three-point correlation function and is the lowest-order statistical quantity capable of characterizing non-Gaussianity in the matter distribution \citep{2002PhR...367....1B}. While the power spectrum effectively captures Gaussian fluctuations through two-point statistics, the bispectrum provides deeper insights by incorporating three-point correlations, thereby unveiling more complex structures in the cosmic density field \citep{1999ApJ...517..531S, 2004MNRAS.348..897T}.
+
+Analogous to the angular power spectrum, the convergence bispectrum can be expressed as the ensemble average of three Fourier-transformed convergence modes, \( \tilde{\kappa} \) \citep{2005PhRvD..72h3001D}:
+\begin{equation}
+    \langle \tilde{\kappa}(\mathbf{\ell}_1) \tilde{\kappa}(\mathbf{\ell}_2) \tilde{\kappa}(\mathbf{\ell}_3) \rangle = (2\pi)^2 \delta_{D}(\mathbf{\ell}_1 + \mathbf{\ell}_2 + \mathbf{\ell}_3) B^\kappa_{\ell_1 \ell_2 \ell_3},
+    \label{eq:convergence_bispectrum_def}
+\end{equation}
+Building upon the derivations analogous to Equations~\eqref{eq:kappa_fourier_final} through \eqref{eq:kappa_power_spectrum_final}, the convergence bispectrum can be expressed as:
+\begin{equation}
+    B_{\ell_1 \ell_2 \ell_3}^\kappa = \int_0^{\chi_s} d\chi \, \frac{W^3(\chi)}{\chi^4} B_m\left( \frac{\ell_1}{\chi}, \frac{\ell_2}{\chi}, \frac{\ell_3}{\chi}; \chi \right),
+    \label{eq:convergence_bispectrum}
+\end{equation}
+where \( B_m(k_1, k_2, k_3, z) \) denotes the matter bispectrum at redshift \( z \), and \( W(\chi) \) is the lensing kernel. 
+
+The bispectrum depends not only on the magnitudes of the wavevectors but also on the shapes formed by the triplet \( (\boldsymbol{k}_1, \boldsymbol{k}_2, \boldsymbol{k}_3) \), constrained by the condition \( \boldsymbol{k}_1 + \boldsymbol{k}_2 + \boldsymbol{k}_3 = 0 \). Different triangle configurations (e.g. equilateral, squeezed, isoceles) probe different physical processes and scales in the Universe \citep{2005PhRvD..72h3001D}.
+
+\section{Probability Density Functions} \label{sec:pdfs}
+The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field.
+
+Formally, the PDF \( P(\kappa) \) is defined such that:
+\begin{equation}
+    P(\kappa) \, d\kappa = \mathrm{Prob}(\kappa \leq \kappa' \leq \kappa + d\kappa),
+\end{equation}
+where \(\mathrm{Prob}\) denotes the probability that the convergence \(\kappa'\) lies within the interval \([\kappa, \kappa + d\kappa]\).
+
+For a discrete set of convergence measurements \(\{\kappa_i\}_{i=1}^{N_{\mathrm{pix}}}\) obtained from \(N_{\mathrm{pix}}\) pixels, the PDF can be represented using the Dirac delta function \(\delta_D\):
+\begin{equation}
+    P(\kappa) = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\kappa - \kappa_i).
+    \label{eq:pdf_delta}
+\end{equation}
+This expression effectively constructs the PDF by summing over all pixel values, assigning a weight to each convergence measurement \(\kappa_i\) at its exact value.
+
+In practical applications, however, the Dirac delta function is not computationally feasible. Instead, we approximate the PDF by discretizing the convergence values into bins of finite width \(\Delta\kappa\). This leads to a binned estimator:
+\begin{equation}
+    P(\kappa) \approx \frac{1}{N_{\mathrm{pix}} \Delta\kappa} \sum_{i=1}^{N_{\mathrm{pix}}} \Theta\left(\left|\kappa_i - \kappa\right| \leq \frac{\Delta\kappa}{2}\right),
+    \label{eq:pdf_binned}
+\end{equation}
+where \(\Theta(x)\) is the Heaviside step function. This estimator counts the number of convergence \(\kappa_i\) that fall within each bin centered at \(\kappa\), normalizing by the total number of pixels and the bin width \(\Delta\kappa\).
+
+To facilitate comparison across different datasets, it is common to normalize the convergence values by their standard deviation $\sigma_\kappa$. The standardized convergence $\tilde{\kappa}_i$ is defined as:
+\begin{equation}
+    \nu_i = \frac{\kappa_i - \langle \kappa \rangle}{\sigma_\kappa},
+    \label{eq:kappa_normalized}
+\end{equation}
+where $\langle \kappa \rangle$ is the mean convergence. Typically, the mean convergence is approximated to zero after mean-field subtraction:
+\begin{equation}
+    \langle \kappa \rangle = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \kappa_i \approx 0.
+\end{equation}
+Normalization ensures that the PDF satisfies the standard probability normalization condition:
+\begin{equation}
+    \int_{-\infty}^{\infty} P(\nu) \, d\nu = 1,
+    \label{eq:pdf_normalization}
+\end{equation}
+
+

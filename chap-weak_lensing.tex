@@ -141,8 +141,6 @@ Substituting the expression for $\Phi$ from Eq.~\eqref{eq:poisson_flat} into the
 \begin{eqnarray}
     \label{eq:convergence_integral}
     \kappa(\boldsymbol{\theta}) 
-    &=& \frac{1}{2} \nabla_{\boldsymbol{\theta}}^2 \psi(\boldsymbol{\theta}) \nonumber \\
-    &=& \frac{1}{c^2} \int_0^{\chi_s} \mathrm{d}\chi \, \frac{f_K(\chi_s - \chi)}{f_K(\chi_s) f_K(\chi)} \nabla_{\boldsymbol{\theta}}^2 \Phi\left(f_K(\chi) \boldsymbol{\theta}, \chi\right) \nonumber \\
     &=& \frac{1}{c^2} \int_0^{\chi_s} \mathrm{d}\chi \, \frac{f_K(\chi_s - \chi)}{f_K(\chi_s) f_K(\chi)} \left[ \frac{1}{f_K^2(\chi)} \nabla_{\mathbf{x}}^2 \Phi\left(\mathbf{x}, \chi\right) \right] \nonumber \\
     &=& \int_0^{\chi_s} \mathrm{d}\chi \, \frac{3 \Omega_m H_0^2}{2 c^2} \, \frac{f_K(\chi_s - \chi) f_K(\chi)}{f_K(\chi_s)} \frac{a^{-1}(\chi)}{f_K^3(\chi)} \delta\left(\mathbf{x}, \chi\right) \nonumber \\
     &=& \int_0^{\chi_s} \mathrm{d}\chi \, W(\chi, \chi_s) \, \delta\left(\mathbf{x}, \chi\right),
@@ -181,6 +179,7 @@ Similar as Eq.~\eqref{eq:jacobian_matrix}, the shear field can be expressed in c
 Therefore, the shear field in Fourier space is directly related to the convergence field combining Eq.\eqref{eq:fourier_convergence} and Eq.\eqref{eq:fourier_shear}:
 \begin{equation}
     \tilde{\kappa}(\boldsymbol{\ell}) = \frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{\ell^2} \tilde{\gamma}(\boldsymbol{\ell}).
+    \label{eq:kappa_gamma_relation}
 \end{equation}
 \subsection{E-mode and B-mode}
 The shear field can be decomposed into two distinct modes: the \textbf{E-mode} (gradient component) and the \textbf{B-mode} (curl component). 
@@ -209,60 +208,49 @@ For standard gravitational lensing by density fluctuations, the B-mode component
     \label{eq:EB_decomposition_standard}
 \end{equation}
 
-\begin{comment}
-\section{Reduced Shear}
-In practical weak lensing observations, the directly measurable quantity is not the shear $\gamma$ but the \textbf{reduced shear} $g$, defined as:
-\begin{equation}
-    g := \frac{\gamma}{1 - \kappa}.
-    \label{eq:reduced_shear}
-\end{equation}
-This relation arises because the observed ellipticity of background galaxies is influenced by both shear and convergence. The reduced shear accounts for the fact that convergence alters the intrinsic size and brightness of galaxies, thereby affecting the observed shear.
+\section{Estimation of Lensing Fields}
+In the case of cosmic shear, not the convergence but the shear is measured from the observed galaxy shapes. Theoretical predictions of the convergence can be related to the observed shear using the relationship in Eq.~\eqref{eq:kappa_gamma_relation}. 
+Here, we introduce a concept of the reduced shear. Furthermore, a convergence field can be estimated from the observed galaxy shapes \citep{1993ApJ...404..441K} and can be estimated from magnification \citep{2001PhR...340..291B}.
 
 \subsection{Ellipticity and Reduced Shear}
-Here I discuss a simple way to measure galaxy shapes using second moments \( Q_{ab} \) of their surface brightness distributions \( I(\theta) \). For each galaxy, \( Q_{ab} \) is defined as:
+To quantify the shapes of galaxies, we use the second moments of their surface brightness distributions $I(\theta)$. For each galaxy, the second moments $Q_{ab}$ are defined as \citep{2001PhR...340..291B}:
 \begin{equation}
-    Q_{ab} := \frac{\int d\theta I(\theta) \theta_a \theta_b}{\int d\theta I(\theta)},
+    Q_{ab} = \frac{\int d^2\theta\, I(\theta) \theta_a \theta_b}{\int d^2\theta\, I(\theta)},
     \label{eq:second_moments}
 \end{equation}
-adopting the origin of \( \theta \) to the center of the galaxy. I define complex ellipticity \( \epsilon \) of a galaxy as:
+where $\theta = (\theta_1, \theta_2)$ is the angular position relative to the galaxy center. The complex ellipticity $\epsilon$ of the galaxy is then defined as:
 \begin{equation}
-    \epsilon := \frac{Q_{11} - Q_{22} + 2i Q_{12}}{Q_{11} + Q_{22}}.
+    \epsilon = \frac{Q_{11} - Q_{22} + 2i Q_{12}}{Q_{11} + Q_{22}}.
     \label{eq:complex_ellipticity}
 \end{equation}
-Using the matrix \( A \) Eq.~\eqref{eq:jacobian_matrix}, the corresponding second moments in the source plane \( Q^{(s)}_{ab} \) are given by
+
+Gravitational lensing transforms the image of a source galaxy via the Jacobian matrix $A$ (see Eq.~\eqref{eq:jacobian_matrix}). Assuming that the surface brightness is conserved during lensing, $I^{(s)}(\beta) = I(\theta)$, the second moments in the source plane $Q_{ab}^{(s)}$ are related to those in the image plane by:
 \begin{equation}
-    Q^{(s)}_{ab} := \frac{\int d\beta I(\beta) \beta_a \beta_b}{\int d\beta I(\beta)} \approx A_{ac} A_{bd} Q_{cd},
+    Q_{ab}^{(s)} = \frac{\int d^2\beta\, I^{(s)}(\beta) \beta_a \beta_b}{\int d^2\beta\, I^{(s)}(\beta)} \approx A_{ac} A_{bd} Q_{cd},
     \label{eq:second_moments_source}
 \end{equation}
-where the conservation of the surface brightness distribution due to gravitational lensing \( I^{(s)}(\beta) = I(\theta) \) is adopted, and adopting \( \int d\beta \approx \int d\theta | \det A | \approx |\det A| \int d\theta \) given that the size of each galaxy is sufficiently small. Each component of \( Q^{(s)}_{ab} \) could be calculated as:
-\begin{eqnarray}
-    Q_{11}^{(s)} &=& A_{11}^2 Q_{11} + A_{12}^2 Q_{22} + 2A_{11}A_{12}Q_{12} \nonumber \\
-    &=& (1 - \kappa - \gamma_1)^2 Q_{11} + \gamma_2^2 Q_{22} + 2(1 - \kappa - \gamma_1)\gamma_2 Q_{12} 
-    \label{eq:Q11_source}
-\end{eqnarray}
-\begin{eqnarray}
-    Q_{22}^{(s)} &=& A_{21}^2 Q_{11} + A_{22}^2 Q_{22} + 2A_{21}A_{22}Q_{12} \nonumber \\
-    &=& \gamma_2^2 Q_{11} + (1 - \kappa + \gamma_1)^2 Q_{22} + 2\gamma_2(1 - \kappa + \gamma_1) Q_{12} 
-    \label{eq:Q22_source}
-\end{eqnarray}
-\begin{eqnarray}
-    Q_{12}^{(s)} &=& A_{11}A_{21}Q_{11} + A_{12}A_{22}Q_{22} + (A_{11}A_{22} + A_{12}A_{21})Q_{12} \nonumber \\
-    &=& -(1 - \kappa - \gamma_1)\gamma_2 Q_{11} - \gamma_2(1 - \kappa + \gamma_1) Q_{22} + \left[(1 - \kappa - \gamma_1)(1 - \kappa + \gamma_1)+ \gamma_2^2\right]Q_{12} \nonumber \\
-    &=& (1 - \kappa - \gamma_1)\gamma_2 Q_{11} - \gamma_2(1 - \kappa + \gamma_1) Q_{22} + \left[(1 - \kappa)^2 - \gamma_1^2+ \gamma_2^2\right]Q_{12}
-    \label{eq:Q12_source}
-\end{eqnarray}
-By a straightforward calculation, it is shown that
+where we have approximated the size of the galaxy as sufficiently small so that the lensing distortion is constant across the galaxy image.
+
+By expanding the components of $Q_{ab}^{(s)}$ and performing straightforward calculations (see \citealt{1992grle.book.....S} for details), we find that the intrinsic ellipticity $\epsilon^{(s)}$ is related to the observed ellipticity $\epsilon$ through:
 \begin{equation}
-    \epsilon^{s} = \frac{(1 - \kappa)^2\epsilon - 2 (1 - \kappa)\gamma + \gamma^2 \epsilon^*}{(1 - \kappa)^2 + |\gamma|^2 - 2(1 - \kappa)\mathcal{\text{Re}}(\gamma)}.
+    \epsilon^{(s)} = \frac{(1 - \kappa)^2 \epsilon - 2 (1 - \kappa) \gamma + \gamma^2 \epsilon^*}{(1 - \kappa)^2 + |\gamma|^2 - 2 (1 - \kappa) \text{Re}[\gamma \epsilon^*]},
     \label{eq:reduced_shear_ellipticity}
 \end{equation}
-Using the definition of the reduced shear \( g = \gamma / (1 - \kappa) \), the above equation can be rewritten as:
+where $\epsilon^*$ denotes the complex conjugate of $\epsilon$, and $\text{Re}$ denotes the real part.
+
+Introducing the \emph{reduced shear} $g = \gamma / (1 - \kappa)$, the above equation simplifies to \citep{1995A&A...294..411S}:
 \begin{equation}
-    \epsilon^{s}  = \frac{\epsilon - 2g + g^2 \epsilon^*}{1 + |g|^2 - \mathcal{\text{Re}}(g \epsilon^*)}.
+    \epsilon^{(s)} = \frac{\epsilon - 2g + g^2 \epsilon^*}{1 + |g|^2 - 2 \text{Re}[g \epsilon^*]}.
     \label{eq:reduced_shear_ellipticity_g}
 \end{equation}
-This indicate that the weak lensing observes the reduced shear \( g \) instead of the shear \( \gamma \) to measure the galaxy shapes.
+This relation indicates that weak lensing measurements are sensitive to the reduced shear $g$ rather than the shear $\gamma$ directly. In the weak lensing regime, where $|\kappa|, |\gamma| \ll 1$, and assuming that the intrinsic ellipticities of galaxies are randomly oriented (i.e., $\langle \epsilon^{(s)} \rangle = 0$), the observed ellipticity becomes an unbiased estimator of the reduced shear:
+\begin{equation}
+    \langle \epsilon \rangle = g.
+    \label{eq:reduced_shear_expectation}
+\end{equation}
+However, in the weak-lensing regime, the shear cannot be detected from an individual galaxy due to the dominance of intrinsic shape noise. The typical root mean square (rms) of the intrinsic ellipticity is $\sigma_\epsilon \approx 0.26$ \citep{2019A&A...627A..59E}, which necessitates averaging over a large number of galaxies to measure the shear signal accurately.
 
+\begin{comment}
 \section{Magnification}
 \textbf{Magnification} $\mu$ quantifies the change in the apparent size and brightness of background sources due to lensing. It is related to convergence and shear through the determinant of the lensing Jacobian matrix $\mathcal{A}$:
 \begin{equation}
