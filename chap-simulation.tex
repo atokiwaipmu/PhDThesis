@@ -1,90 +1,88 @@
-In this section, we describe the N-body simulations used in this study, the process of generating convergence maps, the incorporation of shape and measurement noise, and the techniques employed for patch extraction in covariance analysis.
+Numerical simulations are crucial in physics and astronomy for studying complex systems of interacting particles, such as galaxies and the Universe's large-scale structure, where analytical solutions are often impractical due to complexity and nonlinearity. This section provides an overview of $N$-body simulations commonly used in cosmology.
 
-\section{Initial condition}
+Since the 1980s, numerical cosmology has developed algorithms to mitigate the computational challenges posed by long-range gravitational interactions by reducing global communication across the computational domain. Key algorithms include mesh-based methods, tree codes, and multipole expansions~\citep{1981csup.book.....H}. Figure~\ref{fig:particle-count} displays the number of particles used in selected $N$-body simulations employing these techniques. Symbols and colors indicate the gravitational solvers: particle-particle-particle-mesh (P$^3$M) and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR).
+
+Advancements in algorithms and software optimization have increased the number of particles in cosmological simulations beyond what direct summation methods allow. Since 1990, gravity-only simulations have exhibited a super-exponential growth trend, indicated by the quadratic regression in Figure~\ref{fig:particle-count}, reflecting significant methodological innovations beyond hardware improvements~\citep{leclercq2020}.
+
+\begin{figure} \centering \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png} \caption{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
+
+\section{Initial Condition Generation}
 \subsection{Primordial Power Spectrum}
-Primodial power spectrum is defined as:
+The primordial power spectrum describes the initial distribution of matter fluctuations in the universe and serves as a fundamental input for cosmological simulations. It is defined as \citep{2003moco.book.....D}:
 \begin{equation}
-    P_p(k) = A \left(\frac{k}{k_*}\right)^{n_s - 1}
+    P_p(k) = A_s \left(\frac{k}{k_*}\right)^{n_s - 1},
 \end{equation}
-where $A$ is the amplitude of the power spectrum, $k$ is the wavenumber, $k_*$ is the pivot scale, and $n_s$ is the spectral index. The power spectrum describes the distribution of matter in the universe and is an essential ingredient in cosmological simulations.
-As the universe evolves, various physical processes (like radiation pressure, baryon-photon interactions, and dark matter dynamics) affect the growth of perturbations. These effects are encapsulated in the transfer function $T(k)$, which describes the evolution of the power spectrum from the early universe to the present day. The power spectrum at redshift $z$ is given by
-\begin{eqnarray}
-    P(k; z) &=& P_p(k) T^2(k, z) D^2(z)  \\
-    P(k; z = 0)&=& P_p(k) T^2(k, z=0) 
-\end{eqnarray}
-where $D(z)$ is the linear growth factor, which describes the growth of perturbations in the linear regime. 
-The evolution of cosmological perturbations is governed by the Boltzmann equations for each species. For example, for cold dark matter (CDM), the perturbation equation is given by
-\begin{equation}
-    \ddot{\delta_m} + 2H\dot{\delta_m} - 4\pi G \rho_m \delta_m = 0
-\end{equation}
-where $\delta_m$ is the density contrast, $H$ is the Hubble parameter, and $\rho_m$ is the total matter density. 
+where $A_s$ is the amplitude of the scalar fluctuations, $k_*$ is the pivot scale, and $n_s$ is the spectral index.
 
-In a FLRW universe, the linear growth facttor is given by:
+As the universe evolves, various physical processes, such as radiation pressure, baryon-photon interactions, and dark matter dynamics, influence the growth of these initial perturbations. These effects are encapsulated in the transfer function $T(k)$, which modifies the primordial power spectrum to give the matter power spectrum at redshift $z$ \citep{2003moco.book.....D}:
 \begin{equation}
-    D(a) = \frac{5 \Omega_m a}{2} \int_0^1 \frac{da'}{a'^3 H(a')^3}
+    P(k, z) = P_p(k) T^2(k) D^2(z),
 \end{equation}
-The transfer function $T(k)$ is computed using the CAMB code \citep{2000ApJ...538..473L}.
+where $D(z)$ is the linear growth factor that describes the growth of perturbations in the linear regime. At the present epoch ($z = 0$), the power spectrum simplifies to:
+\begin{equation}
+    P(k, z=0) = P_p(k) T^2(k).
+\end{equation}
+The transfer function $T(k)$ accounts for the suppression of power on small scales due to the horizon size at matter-radiation equality and is computed using the \texttt{CAMB} code \citep{2000ApJ...538..473L}.
 
-\subsection{Initial Conditions}
-\subsubsection{Initial Density Field}
-Express the density contrast in terms of its Fourier components:
+\subsection{Linear Growth Factor}
+The linear growth factor $D(a)$ quantifies the growth of matter perturbations in the linear regime and is given by:
 \begin{equation}
-    \delta(\mathbf{x}) = \int \frac{d^3k}{(2\pi)^3} \tilde{\delta}(\mathbf{k}) e^{i\mathbf{k} \cdot \mathbf{x}}
+    D(a) = \frac{5 \Omega_m a}{2} \int_0^1 \frac{dx}{(\Omega_m / x + \Omega_\Lambda x^2 + 1 - \Omega_m - \Omega_\Lambda)^{3/2}},
 \end{equation}
-Assuming the density field is a Gaussian random field, each Fourier mode $\tilde{\delta}(\mathbf{k})$ is a complex Gaussian random variable with zero mean and variance $P(k)$:
-\begin{eqnarray}
-    \tilde{\delta}(\mathbf{k}) &=& A(\mathbf{k}) + iB(\mathbf{k}) \\
-    \langle A(\mathbf{k}) \rangle = \langle B(\mathbf{k}) \rangle &=& 0 \\
-    \langle A(\mathbf{k}) A(\mathbf{k'}) \rangle = \langle B(\mathbf{k}) B(\mathbf{k'}) \rangle &=& \frac{P(k)}{2} \delta_D(\mathbf{k} - \mathbf{k'}) \\
-    \langle A(\mathbf{k}) B(\mathbf{k'}) \rangle &=& 0
-\end{eqnarray}
-where $\delta_D$ is the Dirac delta function. The density field is then obtained by taking the inverse Fourier transform of $\delta(\mathbf{k})$.
-\subsubsection{Initial Displacement Field}
-Under the Zel'dovich approximation, the initial displacement field $\Psi(\mathbf{x})$ is linearly related to the initial density field $\delta(\mathbf{x})$:
+where at the limit $a \to 0$, $D(a) \to a$. The growth rate of structure formation is defined as:
 \begin{equation}
-    \Psi(\mathbf{x}) = - \nabla \Phi(\mathbf{x}) 
+    f(a) = \frac{d\ln D}{d\ln a},
 \end{equation}
-\begin{equation}
-    \nabla^2 \Phi = \delta(\mathbf{x})
-\end{equation}
-In Fourier space, the displacement field is given by:
-\begin{eqnarray}
-    - k^2 \tilde{\Phi}(\mathbf{k}) &=& \tilde{\delta}(\mathbf{k}) \nonumber \\
-    \tilde{\Psi}(\mathbf{k}) &=& -i\mathbf{k} \tilde{\Phi}(\mathbf{k}) = i\mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2} \nonumber \\
-    \Psi(\mathbf{x}) &=& \int \frac{d^3k}{(2\pi)^3} i\mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2} e^{i\mathbf{k} \cdot \mathbf{x}}
-\end{eqnarray}
+which is essential for determining the velocities of particles in the simulations.
 
-\subsubsection{Initial Positions and Velocities}
-Assuming that particles start in a uniform grid in Lagrangian (initial) coordinates $\mathbf{q}$, the initial positions $\mathbf{x}$ is given by:
+\subsection{Initial Density Field}
+To generate the initial density field for the simulations, we express the density contrast $\delta(\mathbf{x})$ in terms of its Fourier components:
 \begin{equation}
-    \mathbf{x}(\mathbf{q}) = \mathbf{q} + \Psi(\mathbf{q})
+    \delta(\mathbf{x}) = \int \frac{d^3k}{(2\pi)^3} \tilde{\delta}(\mathbf{k}) e^{i\mathbf{k} \cdot \mathbf{x}}.
 \end{equation}
-Under the Zel'dovich approximation, the initial velocities $\mathbf{v}$ are proportional to the displacement field:
-\begin{eqnarray}
-    \mathbf{v}(\mathbf{x}) &=& a H f \Psi(\mathbf{x}) \nonumber \\
-    \tilde{\mathbf{v}}(\mathbf{k}) &=& a H f i\mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2} \nonumber \\
-    \mathbf{v}(\mathbf{x}) &=& i a H f\int \frac{d^3k}{(2\pi)^3} \frac{\mathbf{k}}{k^2} \tilde{\delta}(\mathbf{k}) e^{i\mathbf{k} \cdot \mathbf{x}}
-\end{eqnarray}
-where $f = d\ln D/d\ln a$ is the growth rate of structure formation.
+Assuming a Gaussian random field, each Fourier mode $\tilde{\delta}(\mathbf{k})$ is a complex Gaussian random variable with zero mean and variance $P(k)$:
+\begin{align}
+    \tilde{\delta}(\mathbf{k}) &= A(\mathbf{k}) + i B(\mathbf{k}), \\
+    \langle A(\mathbf{k}) \rangle &= \langle B(\mathbf{k}) \rangle = 0, \\
+    \langle A(\mathbf{k}) A(\mathbf{k}') \rangle &= \langle B(\mathbf{k}) B(\mathbf{k}') \rangle = \frac{1}{2} P(k) \delta_D(\mathbf{k} - \mathbf{k}'), \\
+    \langle A(\mathbf{k}) B(\mathbf{k}') \rangle &= 0,
+\end{align}
+where $A(\mathbf{k})$ and $B(\mathbf{k})$ are real Gaussian random variables, and $\delta_D$ is the Dirac delta function.
+
+\subsection{Initial Displacement Field}
+The initial displacement field $\boldsymbol{\Psi}(\mathbf{q})$ relates the Lagrangian coordinates $\mathbf{q}$ to the Eulerian coordinates $\mathbf{x}$:
+\begin{equation}
+    \mathbf{x}(\mathbf{q}) = \mathbf{q} + \boldsymbol{\Psi}(\mathbf{q}).
+\end{equation}
+The displacement field is proportional to the gradient of the gravitational potential $\Phi(\mathbf{q})$:
+\begin{equation}
+    \boldsymbol{\Psi}(\mathbf{q}) = - \nabla \Phi(\mathbf{q}),
+\end{equation}
+where the potential satisfies Poisson's equation:
+\begin{equation}
+    \nabla^2 \Phi(\mathbf{q}) = \delta(\mathbf{q}).
+\end{equation}
+The first order solution to the displacement field is given by the Zel'dovich approximation \citep{1970A&A.....5...84Z}:
+\begin{align}
+    -k^2 \tilde{\Phi}(\mathbf{k}) &= \tilde{\delta}(\mathbf{k}), \\
+    \tilde{\boldsymbol{\Psi}}(\mathbf{k}) &= i \mathbf{k} \tilde{\Phi}(\mathbf{k}) = i \mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2}, \\
+    \boldsymbol{\Psi}(\mathbf{q}) &= \int \frac{d^3k}{(2\pi)^3} i \mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2} e^{i\mathbf{k} \cdot \mathbf{q}}.
+\end{align}
+
+\subsection{Initial Velocities}
+The initial velocities of particles are derived from the time derivative of the displacement field. The velocities are given by \citep{1985ApJS...57..241E}:
+\begin{align}
+    \mathbf{v}(\mathbf{q}) &= a H f(a) \boldsymbol{\Psi}(\mathbf{q}), \\
+    \tilde{\mathbf{v}}(\mathbf{k}) &= a H f(a) \tilde{\boldsymbol{\Psi}}(\mathbf{k}) = a H f(a) i \mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2}, \\
+    \mathbf{v}(\mathbf{q}) &= i a H f(a) \int \frac{d^3k}{(2\pi)^3} \frac{\mathbf{k}}{k^2} \tilde{\delta}(\mathbf{k}) e^{i\mathbf{k} \cdot \mathbf{q}},
+\end{align}
+where $a$ is the scale factor, $H$ is the Hubble parameter, and $f(a)$ is the growth rate.
 
 \section{Simulation Basics}
-Numerical simulations are indispensable tools in physics and astronomy for investigating complex systems of interacting particles, such as galaxies, star clusters, and the large-scale structure of the Universe. The inherent complexity and nonlinearity of these systems render analytical solutions impractical or intractable, thereby necessitating the application of numerical methods. This section provides a comprehensive overview of $N$-body simulations commonly employed to study the large-scale structure of the cosmos.
-
-To address the computational challenges posed by the long-range nature of gravitational interactions, significant efforts in numerical cosmology since the 1980s have focused on developing algorithms that reduce the need for global communication across the entire computational domain. These algorithms include mesh-based methods, tree codes, and multipole expansions~\citep{1981csup.book.....H}. Figure~\ref{fig:particle-count} illustrates the number of particles utilized in selected $N$-body simulations employing such techniques. The symbols and colors in the figure denote the gravitational solvers used: particle-particle-particle-mesh (P$^3$M) and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR).
-
-Owing to advancements in computational algorithms and software optimization, the number of particles in cosmological simulations has increased at a rate surpassing that achievable with direct summation methods. Notably, since 1990, a super-exponential growth trend has been observed for gravity-only simulations, as indicated by the quadratic regression in Figure~\ref{fig:particle-count}. This acceleration cannot be solely attributed to improvements in computational hardware performance and reflects significant methodological innovations~\citep{leclercq2020}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png}
-    \caption{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.}
-    \label{fig:particle-count}
-\end{figure}
+We outline the fundamental concepts and algorithms used in $N$-body simulations, including direct summation, particle-mesh methods, particle-particle particle-mesh (P3M) methods, and tree-particle-mesh (Tree-PM) methods.
 
 \subsection{Direct Summation}
-Direct Summation computes gravitational forces between all pairs of particles directly. This method scales with $\mathcal{O}(N^2)$, making it computationally intensive for large $N$. Each particle $i$ is characterized by its position $\mathbf{r}_i$, velocity $\mathbf{v}_i$, and mass $m_i$.
-
-The algorithm proceeds through the following steps at each time step $t$:
+Direct Summation calculates gravitational forces between all particle pairs directly, scaling as $\mathcal{O}(N^2)$ and becoming computationally intensive for large $N$. Each particle $i$ has position $\mathbf{r}_i$, velocity $\mathbf{v}_i$, and mass $m_i$. At each time step $t$:
 \begin{enumerate}
     \item \textbf{Compute Forces:}
     \[
@@ -103,105 +101,63 @@ The algorithm proceeds through the following steps at each time step $t$:
 \end{enumerate}
 
 \subsection{Particle-Mesh (PM) Method}
-Particle-Mesh (PM) methods approximate gravitational forces by mapping particles onto a grid and solving for the gravitational potential. This approach reduces the computational cost to $\mathcal{O}(N + M \log M)$, where $M$ is the number of grid points. PM methods efficiently handle large-scale simulations but tend to smooth out small-scale forces, potentially sacrificing accuracy at smaller scales.
+The PM method approximates gravitational forces by mapping particles onto a grid and solving for the gravitational potential, reducing computational cost to $\mathcal{O}(N + M \log M)$, where $M$ is the number of grid points. While efficient for large-scale simulations, it smooths out small-scale forces.
 
-The algorithm proceeds through the following steps at each time step $t$:
+The main difference between the PM method and direct summation is the grid-based force calculation:
 \begin{enumerate}
     \item \textbf{Assign Particles to Grid:} See Section~\ref{sec:mass-assignment}.
-    
     \item \textbf{Compute Density Field:}
     \[
     \rho(\mathbf{x}) = \sum_i m_i W(\mathbf{x} - \mathbf{r}_i) \quad \text{(where $W$: Interpolation Kernel)}
     \]
-    
     \item \textbf{Solve Poisson's Equation:}
     \[
     \nabla^2 \Phi = 4\pi G \rho
     \]
-    
-    \item \textbf{Compute Gravitational Field:}
+    \item \textbf{Compute Force due to Potential:}
     \[
     \mathbf{E} = -\nabla \Phi
-    \]
-    
-    \item \textbf{Update Particle States:}
-    \[
-    \mathbf{v}_i(t + \Delta t) = \mathbf{v}_i(t) + \mathbf{E}_i \Delta t, \quad \mathbf{r}_i(t + \Delta t) = \mathbf{r}_i(t) + \mathbf{v}_i(t + \Delta t) \Delta t
-    \]
-    
-    \item \textbf{Advance Time:}
-    \[
-    t \leftarrow t + \Delta t
     \]
 \end{enumerate}
 
 \subsection{Particle-Particle Particle-Mesh (P3M) Method}
-The Particle-Particle Particle-Mesh (P3M) method combines direct summation for short-range force calculations with the Particle-Mesh (PM) approach for long-range interactions. This hybrid technique maintains the $\mathcal{O}(N \log N)$ complexity of PM methods while achieving higher accuracy for close particle interactions by explicitly computing particle-particle (PP) forces. Key considerations in the P3M method include the selection of mesh size, the softening parameter $\epsilon$, and the management of force resolution to balance computational efficiency and accuracy.
+The P$^3$M method combines direct summation for short-range forces with the PM approach for long-range interactions, achieving $\mathcal{O}(N \log N)$ complexity while enhancing accuracy for nearby particles. Key parameters include mesh size, softening parameter $\epsilon$, and force resolution.
 
-The algorithm proceeds through the following steps at each time step $t$:
-
+The difference between the P$^3$M method and the PM method lies in the force calculation:
 \begin{enumerate}
     \item \textbf{Long-Range Forces (PM):}
-    Compute the long-range gravitational forces using the Particle-Mesh approach:
     \[
     \mathbf{F}_{\text{long},i} = m_i \mathbf{E}_{\text{long}}(\mathbf{r}_i)
     \]
-    where $\mathbf{E}_{\text{long}}$ is the gravitational field derived from the mesh-based potential.
-    
     \item \textbf{Short-Range Forces (Direct Summation):}
     \begin{enumerate}[label={(\alph*)}]
         \item \textbf{Neighbor Search:}
-        For each particle $i$, identify neighboring particles $j$ within a cutoff radius $r_{\text{cut}}$.
-        
+        Identify particles $j$ within cutoff radius $r_{\text{cut}}$ of particle $i$.
         \item \textbf{Force Calculation:}
-        Compute the short-range gravitational force for each neighboring particle pair:
         \[
         \mathbf{F}_{\text{short},i} = -G m_i \sum_{\substack{j \in \text{neighbors}}} \frac{m_j (\mathbf{r}_i - \mathbf{r}_j)}{\left(\|\mathbf{r}_i - \mathbf{r}_j\|^2 + \epsilon^2\right)^{3/2}}
         \]
     \end{enumerate}
-    
     \item \textbf{Combine Forces:}
-    Combine the long-range and short-range forces to obtain the total force on each particle:
     \[
     \mathbf{F}_i = \mathbf{F}_{\text{long},i} + \mathbf{F}_{\text{short},i}
-    \]
-    
-    \item \textbf{Update Particle States:}
-    Update the velocity and position of each particle using the computed total force:
-    \[
-    \mathbf{v}_i(t + \Delta t) = \mathbf{v}_i(t) + \frac{\mathbf{F}_i}{m_i} \Delta t, \quad \mathbf{r}_i(t + \Delta t) = \mathbf{r}_i(t) + \mathbf{v}_i(t + \Delta t) \Delta t
-    \]
-    
-    \item \textbf{Advance Time:}
-    Increment the simulation time by the time step $\Delta t$:
-    \[
-    t \leftarrow t + \Delta t
     \]
 \end{enumerate}
 
 \subsection{Tree-Particle-Mesh (Tree-PM) Method}
-Tree-Particle-Mesh (Tree-PM) methods combine the Particle-Mesh (PM) approach for efficient long-range force computation with the tree algorithm for accurate short-range forces. This hybrid model reduces the computational complexity from $\mathcal{O}(N^2)$ to $\mathcal{O}(N \log N)$, enabling efficient, high-resolution simulations of large-scale structures. However, careful parameter tuning (e.g., grid size, softening length $\epsilon$, and opening angle $\theta_{\text{max}}$) and adequate memory allocation for tree structures are crucial for optimal performance.
+The Tree-PM method integrates the PM approach for long-range forces with a tree algorithm for short-range interactions, reducing complexity to $\mathcal{O}(N \log N)$. Proper tuning of parameters like grid size, softening length $\epsilon$, and opening angle $\theta_{\text{max}}$ is essential.
 
-The algorithm proceeds through the following steps at each time step $t$:
-
+The main updates in the Tree-PM method compared to the P$^3$M method are in the tree construction when calculating short-range forces:
 \begin{enumerate}
-    \item \textbf{Long-Range Forces (PM):}
-    Compute the long-range gravitational forces using the Particle-Mesh approach:
-    \[
-    \mathbf{F}_{\text{long},i} = m_i \mathbf{E}_{\text{long}}(\mathbf{r}_i)
-    \]
-    where $\mathbf{E}_{\text{long}}$ is the gravitational field derived from the mesh-based potential.
-    
-    \item \textbf{Short-Range Forces (Tree Algorithm):}
-    \begin{enumerate}[label=(\alph*)]
-        \item \textbf{Tree Construction:}
-        Build spatial cells (e.g., octree) and assign particles to the appropriate nodes.
-        
+    \item \textbf{Tree Construction:}
+    \begin{enumerate}[label={(\alph*)}]
+        \item \textbf{Build Spatial Cells:}
+        Partition the simulation volume into spatial cells (e.g., octree) and assign particles to nodes.
         \item \textbf{Multipole Moments:}
-        Compute the mass $M_j$, center of mass $\mathbf{r}_{\text{cm},j}$, and higher-order multipole moments for each tree node $j$.
-        
-        \item \textbf{Force Calculation:}
-        For each particle $i$, traverse the tree to compute the short-range gravitational force:
+        For each node $j$, calculate mass $M_j$ and center of mass $\mathbf{r}_{\text{cm},j}$.
+    \end{enumerate}
+    \item \textbf{Force Calculation:}
+    For each particle $i$, traverse the tree to compute the short-range gravitational force:
         \[
         \mathbf{F}_{\text{short},i} = -G m_i \sum_{\text{nodes}} \frac{M_j (\mathbf{r}_i - \mathbf{r}_j)}{(\|\mathbf{r}_i - \mathbf{r}_j\|^2 + \epsilon^2)^{3/2}}
         \]
@@ -210,31 +166,10 @@ The algorithm proceeds through the following steps at each time step $t$:
         \theta = \frac{l_j}{\|\mathbf{r}_i - \mathbf{r}_j\|} < \theta_{\text{max}}
         \]
         where $l_j$ is the size of node $j$ and $\theta_{\text{max}}$ is the maximum allowed opening angle.
-    \end{enumerate}
-    
-    \item \textbf{Combine Forces:} 
-    Combine the long-range and short-range forces to obtain the total gravitational force on each particle:
-    \[
-    \mathbf{F}_i = \mathbf{F}_{\text{long},i} + \mathbf{F}_{\text{short},i}
-    \]
-    
-    \item \textbf{Update Particle States:}
-    Update the velocity and position of each particle using the computed total force:
-    \[
-    \mathbf{v}_i(t + \Delta t) = \mathbf{v}_i(t) + \frac{\mathbf{F}_i}{m_i} \Delta t, \quad \mathbf{r}_i(t + \Delta t) = \mathbf{r}_i(t) + \mathbf{v}_i(t + \Delta t) \Delta t
-    \]
-    
-    \item \textbf{Advance Time:} 
-    Increment the simulation time by the time step $\Delta t$:
-    \[
-    t \leftarrow t + \Delta t
-    \]
 \end{enumerate}
 
 \section{Tools for Fast Computation}
-
-Efficient computational tools are essential for handling large-scale simulations and data analysis in scientific and engineering applications. 
-This section provides an overview of key computational techniques and algorithms commonly employed in $N$-body simulations and large-scale structure studies.
+Efficient computational tools are crucial for large-scale simulations and data analysis in scientific and engineering applications. This section overviews key computational techniques and algorithms used in $N$-body simulations and large-scale structure studies.
 
 \subsection{Fast Fourier Transform}
 The Fast Fourier Transform (FFT) is a highly efficient algorithm for computing the Discrete Fourier Transform (DFT) of a sequence. Given a sequence of $N$ complex numbers $\{x_n\}_{n=0}^{N-1}$, the DFT is defined as:
@@ -249,21 +184,12 @@ The naive computation of the DFT requires $\mathcal{O}(N^2)$ operations. The FFT
 where $X_k^{\text{even}}$ and $X_k^{\text{odd}}$ are the DFTs of the even and odd subsequences, respectively.
 
 \subsection{Mass Assignment Schemes}\label{sec:mass-assignment}
-
-Mass assignment schemes are critical for mapping particle masses onto a computational grid to compute density fields and gravitational forces. These schemes ensure that the discretization process preserves important physical properties such as mass conservation and minimizes aliasing errors. 
-Figure~\ref{fig:mass-assignment} illustrates the mass assignment process for a particle distribution on a 1D grid using different schemes.
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{figures/weight_functions.png}
-    \caption{Illustration of three mass assignment schemes—Nearest Grid Point (NGP), Cloud-In-Cell (CIC), and Triangular-Shaped Cloud (TSC)—used to map a particle's mass onto a 1D grid.}
-    \label{fig:mass-assignment}
-\end{figure}
+Mass assignment schemes map particle masses onto a computational grid to compute density fields and gravitational forces, ensuring mass conservation and minimizing aliasing errors. Common schemes include:
 \begin{itemize}
     \item \textbf{Nearest Grid Point (NGP):} Each particle is assigned entirely to the nearest grid point.
     \item \textbf{Cloud-In-Cell (CIC):} Mass is linearly interpolated to the nearest $2^3 = 8$ surrounding grid points.
     \item \textbf{Triangular-Shaped Cloud (TSC):} Mass is distributed to the nearest $3^3 = 27$ grid points using a quadratic interpolation function.
 \end{itemize}
-
 In Fourier space, these mass assignment window functions are represented as:
 \begin{equation}
     W(\mathbf{k}) = \prod_{i=1}^{3} W(k_i),
@@ -272,29 +198,31 @@ where
 \begin{equation}
     W(k_i) = \left[\frac{\sin\left(\pi k_i / (2 k_N)\right)}{\pi k_i / (2 k_N)}\right]^p,
 \end{equation}
-with $k_N$ being the Nyquist wavenumber, $k_i$ the $i$-th component of the wavevector $\mathbf{k}$, and $p = 1$ for NGP, $p = 2$ for CIC, and $p = 3$ for TSC \citep{1981csup.book.....H, 2008ApJ...687..738C}.
+with $k_N$ being the Nyquist wavenumber, $k_i$ the $i$-th component of the wavevector $\mathbf{k}$, and $p = 1$ for NGP, $p = 2$ for CIC, and $p = 3$ for TSC \citep{1981csup.book.....H, 1985ApJS...57..241E}.
+
+Figure~\ref{fig:mass-assignment} illustrates the mass assignment process for a particle distribution on a 1D grid using different schemes.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/weight_functions.png}
+    \caption{Illustration of three mass assignment schemes—Nearest Grid Point (NGP), Cloud-In-Cell (CIC), and Triangular-Shaped Cloud (TSC)—used to map a particle's mass onto a 1D grid.}
+    \label{fig:mass-assignment}
+\end{figure}
 
 \subsection{Parallelization Techniques}
-
-Parallelization techniques are pivotal for accelerating computations in large-scale simulations by leveraging multiple processors or computing nodes. The primary strategies include:
-
+Parallelization accelerates computations in large-scale simulations by leveraging multiple processors or computing nodes. Key strategies include:
 \begin{itemize}
     \item \textbf{Domain Decomposition:} The computational domain is partitioned into smaller subdomains, each assigned to a separate processor \citep{1986Natur.324..446B}.
-    \item \textbf{Task Parallelism:} Independent tasks are distributed across multiple processors.
-    \item \textbf{Data Parallelism:} Identical operations are performed concurrently on different data elements, enabling SIMD (Single Instruction, Multiple Data) execution.
+    \item \textbf{Task Parallelism:} Distributing independent tasks across multiple processors.
+    \item \textbf{Data Parallelism:} Performing identical operations concurrently on different data elements, enabling SIMD (Single Instruction, Multiple Data) execution.
 \end{itemize}
 
-These parallelization strategies can be combined to maximize computational efficiency.
-
 \subsection{Adaptive Mesh Refinement}
-
-Adaptive Mesh Refinement (AMR) dynamically adjusts the resolution of the computational grid in regions requiring higher accuracy. The primary goal of AMR is to allocate computational resources efficiently by refining the mesh where necessary and coarsening it elsewhere. AMR generates a hierarchy of refined grids, where each level has finer resolution \citep{1989JCoPh..82...64B}.
-
-Refinement is typically based on physical quantities such as density gradients. For a scalar field $\phi(\mathbf{x})$, refinement is triggered where:
+Adaptive Mesh Refinement (AMR) dynamically adjusts grid resolution, refining the mesh where higher accuracy is needed (e.g., regions with high density gradients) and coarsening it elsewhere \citep{1989JCoPh..82...64B}. This creates a hierarchy of grids with increasing resolution and optimizes computational resources. Refinement is typically triggered when: 
 \begin{equation}
     \left| \nabla \phi(\mathbf{x}) \right| > \theta,
 \end{equation}
 with $\theta$ being a predefined threshold.
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/adaptive_mesh_refinement.png}
@@ -304,31 +232,23 @@ with $\theta$ being a predefined threshold.
 Figure~\ref{fig:amr} demonstrates the application of Adaptive Mesh Refinement (AMR) to a two-dimensional image containing two Gaussian kernels. Initially, a uniformly coarse grid overlays the entire image (left panel). As the refinement process progresses, the mesh becomes increasingly finer in regions with higher intensity, specifically around the Gaussian kernels (middle and right panels). The red grid lines represent the hierarchy of the refined meshes, enabling higher resolution where it is most needed and optimizing computational resources by keeping a coarser grid in less significant areas.
 
 \subsection{Tree Construction}
-
-Tree-based data structures are fundamental for efficiently organizing and querying hierarchical spatial data. In computational simulations, the Barnes-Hut Octree is commonly used for tasks like force calculations in $N$-body simulations \citep{1986Natur.324..446B}.
-
-\subsubsection{Barnes-Hut Octree}
-
-The Barnes-Hut algorithm employs an Octree to hierarchically partition the simulation space. Each node represents a cubic region, recursively subdivided into eight octants if it contains more than one particle.
-
-The force on a particle is computed by approximating distant clusters of particles as single mass points. This approximation is controlled by the opening angle $\theta$:
+Tree-based data structures efficiently organize hierarchical spatial data. The Barnes-Hut algorithm employs an octree to partition space, reducing computational complexity from $\mathcal{O}(N^2)$ to $\mathcal{O}(N \log N)$ by approximating distant particle clusters as single mass points. This approximation is controlled by the opening angle $\theta$:
 \begin{equation}
     \frac{s}{d} < \theta,
 \end{equation}
-where $s$ is the size of the node, and $d$ is the distance from the particle to the node's center of mass. This method reduces the computational complexity from $\mathcal{O}(N^2)$ to $\mathcal{O}(N \log N)$.
-Figure~\ref{fig:barnes-hut} illustrates the application of the Barnes-Hut Octree algorithm to partition a three-dimensional simulation space containing four particles. 
+where $s$ is the node size and $d$ is the distance from the particle to the node's center of mass.
+
+One of the popular algorithms for tree construction is the Barnes-Hut Octree \citep{1986Natur.324..446B}, which recursively subdivides the simulation volume into hierarchical grid cells. Figure~\ref{fig:barnes-hut} illustrates the Octree decomposition for a 3D volume containing four particles.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/Octree.png}
-    \caption{Illustration of an Octree decomposition for a 3D volume containing four particles. The left panel showcases the spatial subdivision of the volume into hierarchical grid cells, with color-coding indicating different levels of refinement—red for coarse, blue for intermediate, and orange for fine cells where particles reside. The right panel presents the corresponding Octree data structure, highlighting the hierarchical relationships between nodes. The root node (purple) represents the entire simulation volume, while the second layer comprises various node types: empty nodes are depicted in white, single-particle nodes in orange-pink with a black dot, and multi-particle nodes in orange-pink without a dot, which require further subdivision. This hierarchical decomposition enables efficient computation by concentrating resolution in regions with higher particle density while conserving computational resources in less populated areas. Credit by \citet{Powell2023}}
+    \caption{Illustration of an Octree decomposition for a 3D volume containing four particles. The left panel showcases the spatial subdivision of the volume into hierarchical grid cells, with color-coding indicating different levels of refinement. The right panel presents the corresponding Octree data structure, highlighting the hierarchical relationships between nodes. Credit by \citet{Powell2023}}
     \label{fig:barnes-hut}
-\end{figure}
-
-\subsubsection{Parallel Implementation}
+\end{figure}ß
 
 Parallel tree construction involves building local trees within each subdomain and integrating them for global computations \citep{DUBINSKI1996133}. Efficient parallelization enhances scalability and performance in large-scale simulations.
 
-\section{\texttt{FASTPM}}
+\section{\texttt{FASTPM}} \label{sec:fastpm}
 \texttt{FASTPM} (Fast Particle Mesh; \citealt{10.1093/mnras/stw2123}) is an advanced N-body simulation code tailored for efficiently modeling the evolution of dark matter and halo structures on cosmological scales. Building upon the foundational Particle-Mesh (PM) approach, \texttt{FASTPM} integrates modified kick and drift factors derived from the Zel'dovich Approximation (ZA). This enhancement allows \texttt{FASTPM} to achieve high accuracy in large-scale structure formation while significantly reducing computational overhead. This subsection delineates the core methodology of FASTPM, incorporating the mathematical formalism of its modified kick and drift factors.
 
 \subsection{Modified Kick and Drift Factors}

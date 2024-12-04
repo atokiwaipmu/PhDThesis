@@ -61,7 +61,7 @@ Finally, equating this result with the definition of the convergence power spect
 \end{equation}
 This relation demonstrates how the observable convergence power spectrum \( C_{\ell}^{\kappa\kappa} \) is sourced by the underlying matter power spectrum \( P_m(k; \chi) \) integrated along the line of sight.
 
-\section{Bispectrum}
+\section{Convergence Bispectrum}
 The bispectrum, \( B(k) \), serves as the Fourier counterpart to the three-point correlation function and is the lowest-order statistical quantity capable of characterizing non-Gaussianity in the matter distribution \citep{2002PhR...367....1B}. While the power spectrum effectively captures Gaussian fluctuations through two-point statistics, the bispectrum provides deeper insights by incorporating three-point correlations, thereby unveiling more complex structures in the cosmic density field \citep{1999ApJ...517..531S, 2004MNRAS.348..897T}.
 
 Analogous to the angular power spectrum, the convergence bispectrum can be expressed as the ensemble average of three Fourier-transformed convergence modes, \( \tilde{\kappa} \) \citep{2005PhRvD..72h3001D}:
@@ -81,39 +81,101 @@ The bispectrum depends not only on the magnitudes of the wavevectors but also on
 \section{Probability Density Functions} \label{sec:pdfs}
 The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field.
 
-Formally, the PDF \( P(\kappa) \) is defined such that:
+To effectively suppress noise and small-scale fluctuations, the convergence map $\kappa(\hat{\mathbf{n}})$ is first smoothed with a Gaussian kernel. The smoothed convergence field, $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$, is defined as:
 \begin{equation}
-    P(\kappa) \, d\kappa = \mathrm{Prob}(\kappa \leq \kappa' \leq \kappa + d\kappa),
+    \kappa_{\mathrm{smooth}}(\hat{\mathbf{n}}) = \int_{S^2} \kappa(\hat{\mathbf{n}}') W(\hat{\mathbf{n}} - \hat{\mathbf{n}}') \, d\hat{\mathbf{n}}',
+    \label{eq:smoothing}
 \end{equation}
-where \(\mathrm{Prob}\) denotes the probability that the convergence \(\kappa'\) lies within the interval \([\kappa, \kappa + d\kappa]\).
-
-For a discrete set of convergence measurements \(\{\kappa_i\}_{i=1}^{N_{\mathrm{pix}}}\) obtained from \(N_{\mathrm{pix}}\) pixels, the PDF can be represented using the Dirac delta function \(\delta_D\):
+where $W(\theta)$ is the Gaussian smoothing kernel given by:
 \begin{equation}
-    P(\kappa) = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\kappa - \kappa_i).
+    W(\theta) = \frac{1}{2\pi \sigma_{\theta}^2} \exp\left( -\frac{\theta^2}{2 \sigma_{\theta}^2} \right),
+    \label{eq:gaussian_kernel}
+\end{equation}
+with $\theta = \arccos(\hat{\mathbf{n}} \cdot \hat{\mathbf{n}}')$ representing the angular separation between the points $\hat{\mathbf{n}}$ and $\hat{\mathbf{n}}'$ on the unit sphere $S^2$, and $\sigma_{\theta}$ is the smoothing scale. To standardize the statistical analysis, the smoothed convergence values are normalized by their standard deviation. The normalized smoothed convergence, $\tilde{\kappa}_{\mathrm{smooth}, i}$, is defined as:
+\begin{equation}
+    \nu_{i} = \frac{\kappa_{\mathrm{smooth}, i} - \langle \kappa_{\mathrm{smooth}} \rangle}{\sigma_{\mathrm{smooth}}},
+    \label{eq:kappa_smooth_normalized}
+\end{equation}
+where:
+\begin{equation}
+    \langle \kappa_{\mathrm{smooth}} \rangle = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \kappa_{\mathrm{smooth}, i}, \quad \sigma_{\mathrm{smooth}}^2 = \sigma_{\mathrm{signal}}^2 + \sigma_{\mathrm{noise}}^2.
+    \label{eq:normalization}
+\end{equation}
+Formally, the PDF \( P(\nu) \) is defined such that:
+\begin{equation}
+    P(\nu) \, d\nu = \mathrm{Prob}(\nu \leq \nu' \leq \nu + d\nu),
+\end{equation}
+where \(\mathrm{Prob}\) denotes the probability that the normalized convergence \(\nu'\) lies within the interval \([\nu, \nu + d\nu]\).
+
+For a discrete set of normalized convergence measurements \(\{\nu_i\}_{i=1}^{N_{\mathrm{pix}}}\) obtained from \(N_{\mathrm{pix}}\) pixels, the PDF can be represented using the Dirac delta function \(\delta_D\):
+\begin{equation}
+    P(\nu) = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\nu - \nu_i).
     \label{eq:pdf_delta}
 \end{equation}
-This expression effectively constructs the PDF by summing over all pixel values, assigning a weight to each convergence measurement \(\kappa_i\) at its exact value.
+This expression effectively constructs the PDF by summing over all pixel values, assigning a weight to each normalized convergence measurement \(\nu_i\) at its exact value.
 
-In practical applications, however, the Dirac delta function is not computationally feasible. Instead, we approximate the PDF by discretizing the convergence values into bins of finite width \(\Delta\kappa\). This leads to a binned estimator:
+In practical applications, however, the Dirac delta function is not computationally feasible. Instead, we approximate the PDF by discretizing the normalized convergence values into bins of finite width \(\Delta\nu\). This leads to a binned estimator:
 \begin{equation}
-    P(\kappa) \approx \frac{1}{N_{\mathrm{pix}} \Delta\kappa} \sum_{i=1}^{N_{\mathrm{pix}}} \Theta\left(\left|\kappa_i - \kappa\right| \leq \frac{\Delta\kappa}{2}\right),
+    P(\nu) \approx \frac{1}{N_{\mathrm{pix}} \Delta\nu} \sum_{i=1}^{N_{\mathrm{pix}}} \Theta\left(\left|\nu_i - \nu\right| \leq \frac{\Delta\nu}{2}\right),
     \label{eq:pdf_binned}
 \end{equation}
-where \(\Theta(x)\) is the Heaviside step function. This estimator counts the number of convergence \(\kappa_i\) that fall within each bin centered at \(\kappa\), normalizing by the total number of pixels and the bin width \(\Delta\kappa\).
+where \(\Theta(x)\) is the Heaviside step function. This estimator counts the number of normalized convergence \(\nu_i\) that fall within each bin centered at \(\nu\), normalizing by the total number of pixels and the bin width \(\Delta\nu\).
 
-To facilitate comparison across different datasets, it is common to normalize the convergence values by their standard deviation $\sigma_\kappa$. The standardized convergence $\tilde{\kappa}_i$ is defined as:
-\begin{equation}
-    \nu_i = \frac{\kappa_i - \langle \kappa \rangle}{\sigma_\kappa},
-    \label{eq:kappa_normalized}
-\end{equation}
-where $\langle \kappa \rangle$ is the mean convergence. Typically, the mean convergence is approximated to zero after mean-field subtraction:
-\begin{equation}
-    \langle \kappa \rangle = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \kappa_i \approx 0.
-\end{equation}
-Normalization ensures that the PDF satisfies the standard probability normalization condition:
-\begin{equation}
-    \int_{-\infty}^{\infty} P(\nu) \, d\nu = 1,
-    \label{eq:pdf_normalization}
-\end{equation}
+\section{Peak and Minimum Counts}
+\label{sec:peak_min_counts}
+Local maxima (peaks) and minima in convergence field correspond to regions of over-densities and under-densities, respectively. Analyzing the statistics of these extrema offers insights into the non-Gaussian features of the matter distribution, providing a powerful tool to constrain cosmological models beyond traditional two-point statistics like the power spectrum \citep{2000ApJ...530L...1J, 2010MNRAS.402.1049D}.
 
+The $i$-th pixel in the normalized convergence map, $\nu$ is identified as a peak or a minimum by comparing its value with those of its neighboring pixels. Formally, let $\mathcal{N}(i)$ denote the set of neighboring pixels adjacent to pixel $i$. The conditions for a pixel to be classified as a peak or a minimum are then defined as:
+\begin{align}
+    \text{Peak Condition:} \quad & \kappa_{\mathrm{smooth}, i} > \kappa_{\mathrm{smooth}, j} \quad \forall \, j \in \mathcal{N}(i), \label{eq:peak_condition} \\
+    \text{Minimum Condition:} \quad & \kappa_{\mathrm{smooth}, i} < \kappa_{\mathrm{smooth}, j} \quad \forall \, j \in \mathcal{N}(i). \label{eq:min_condition}
+\end{align}
+These conditions ensure that peaks are local maxima and minima are local minima in the convergence field. Figure~\ref{fig:peak_min} illustrates the identification of peaks (red circles) and minima (blue circles) in the smoothed convergence map $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/peaks_minima.png}
+    \caption{Identification of peaks and minima in a smoothed convergence map. The left panel shows the smoothed convergence field $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$ with peaks (red circles) satisfying the peak condition (Equation~\eqref{eq:peak_condition}), and the right panel highlights the minima (blue circles) satisfying the minimum condition (Equation~\eqref{eq:min_condition}).}
+    \label{fig:peak_min}
+\end{figure}
 
+The noise properties of peaks can be analytically described using Gaussian statistics \citep{1986ApJ...304...15B, 1987MNRAS.226..655B}. Due to the symmetry of a Gaussian field, the expected number density of minima below $-\nu$ is equal to that of peaks above $\nu$, $N_{\mathrm{min}}(-\nu) = N_{\mathrm{peak}}(\nu)$.
+
+\section{Minkowski Functionals}
+\label{sec:minkowski_functionals}
+Minkowski functionals are powerful morphological descriptors derived from integral geometry, widely used to quantify the geometry and topology of spatial structures in cosmological datasets \citep{2024arXiv241000401A}. 
+
+For a two-dimensional normalized convergence field $\nu(\hat{\mathbf{n}})$ with zero mean and variance $\sigma_0^2$, the excursion set $\Sigma(\nu_0)$ at threshold $\nu_0$ is defined as the set of points where the field exceeds a certain threshold value:
+\begin{equation}
+    \Sigma(\nu_0) = \left\{ \hat{\mathbf{n}} \in S^2 \ \bigg| \ \nu(\hat{\mathbf{n}}) > \nu_0 \right\}.
+\end{equation}
+Figure~\ref{fig:excursion_sets} shows $\Sigma(\nu_0)$ for increasing threshold values $\nu_0 = 0.5, 1, 1.5,$ and $2$. As the threshold increases, the size and connectivity of the excursion sets diminish, reflecting the decreasing number of high-value regions in the field.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/threshold_comparison.png}
+    \caption{Excursion sets $\Sigma(\nu) = \{ \kappa > \nu \sigma_0 \}$ for increasing thresholds ($\nu = 0.5, 1, 1.5, 2$). Black regions indicate areas where $\kappa$ exceeds $\nu \sigma_0$, showing reduced size and connectivity as $\nu$ increases.}
+    \label{fig:excursion_sets}
+\end{figure}
+
+The Minkowski functionals $V_0(\nu_0)$, $V_1(\nu_0)$, and $V_2(\nu_0)$ quantify the morphological properties of these excursion sets \citep{2010PhRvD..81h3505M}: 
+\begin{align}
+    V_0(\nu_0) &= \frac{1}{A} \int_{\Sigma(\nu_0)} da, \label{eq:minkowski_V0} \\
+    V_1(\nu_0) &= \frac{1}{4A} \int_{\partial \Sigma(\nu_0)} dl, \label{eq:minkowski_V1} \\
+    V_2(\nu_0) &= \frac{1}{2\pi A} \int_{\partial \Sigma(\nu_0)} \mathcal{K} \, dl, \label{eq:minkowski_V2}
+\end{align}
+where $A$ is the total area, $da$ and $dl$ are area and length elements, and $\mathcal{K}$ is the geodesic curvature of the boundary $\partial \Sigma(\nu)$. Specifically: $V_0(\nu)$ measures the area fraction of the excursion set, $V_1(\nu)$ measures half the boundary length per unit area, and $V_2(\nu)$ quantifies the Euler characteristic per unit area.
+
+For a pixelized map with $\nu_{\mathrm{pix}}$ pixels, the continuous integrals in Equations~\eqref{eq:minkowski_V0}--\eqref{eq:minkowski_V2} are approximated by discrete sums \citep{2012PhRvD..85j3513K}:
+\begin{align}
+    V_0(\nu_0) &\approx \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \Theta(\nu_i - \nu_0), \label{eq:V0_discrete} \\
+    V_1(\nu_0) &\approx \frac{1}{4N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \sum_{j \in \mathcal{N}(i)} |\Theta(\nu_i - \nu_0) - \Theta(\nu_j - \nu_0)|, \label{eq:V1_discrete} \\
+    V_2(\nu_0) &\approx \frac{1}{2\pi N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\nu_i - \nu_0) \left( \frac{\nu_{,xx} \nu_{,yy} - \nu_{,xy}^2}{\nu_{,x}^2 + \nu_{,y}^2} \right), \label{eq:V2_discrete}
+\end{align}
+where $\Theta$ is the Heaviside function, $\delta_D$ the Dirac delta function, $\mathcal{N}(i)$ the neighboring pixels of $i$, and derivatives are estimated via finite differences.
+
+For a two-dimensional GRF $\kappa(\hat{\mathbf{n}})$ with zero mean and unit variance (after normalization), the Minkowski functionals are \citep{2010PhRvD..81h3505M}: 
+\begin{align}
+    V_0(\nu) &= \frac{1}{2} \operatorname{erf}\left( \frac{\nu}{\sqrt{2}} \right), \label{eq:V0_GRF} \\
+    V_1(\nu) &= \frac{\sigma_1}{8\sqrt{2}\sigma_0} e^{-\nu^2/2}, \label{eq:V1_GRF} \\
+    V_2(\nu) &= \frac{\sigma_1^2}{2\pi \sigma_0^3} \nu e^{-\nu^2/2}, \label{eq:V2_GRF}
+\end{align}
+where $\operatorname{erf}$ is the error function, and $\sigma_1^2 = \langle |\nabla \nu|^2 \rangle = \langle \kappa_{,x}^2 + \kappa_{,y}^2 \rangle$. These expressions provide a Gaussian benchmark for identifying non-Gaussian features in the data.

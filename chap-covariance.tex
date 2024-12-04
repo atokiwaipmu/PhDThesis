@@ -1,41 +1,35 @@
 Covariance matrices play a crucial role in weak lensing analyses, quantifying the uncertainties and correlations between different statistical measurements of the convergence field. Accurate estimation of covariance matrices is essential for reliable parameter estimation and for understanding the precision of cosmological constraints derived from weak lensing data.
 
-The covariance matrix between two observables $O_i$ and $O_j$ is defined as:
+The covariance matrix between two observables $\mathcal{O}_i$ and $\mathcal{O}_j$ is defined as:
 \begin{equation}
-    \mathrm{Cov}(O_i, O_j) = \left\langle (O_i - \langle O_i \rangle)(O_j - \langle O_j \rangle) \right\rangle,
+    \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \left\langle (\mathcal{O}_i - \langle \mathcal{O}_i \rangle)(\mathcal{O}_j - \langle \mathcal{O}_j \rangle) \right\rangle,
 \end{equation}
 where $\langle \cdot \rangle$ denotes the ensemble average over multiple realizations.
 For an unbiased estimator, the covariance matrix is given by:
 \begin{equation}
     \label{eq:covariance}
-    \mathrm{Cov}(O_i, O_j) = \frac{1}{N_{\mathrm{sim}} - 1} \sum_{n=1}^{N_{\mathrm{sim}}} (O_i^{(n)} - \langle O_i \rangle) (O_j^{(n)} - \langle O_j \rangle),
+    \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \frac{1}{N_{\mathrm{sim}} - 1} \sum_{n=1}^{N_{\mathrm{sim}}} (\mathcal{O}_i^{(n)} - \langle \mathcal{O}_i \rangle) (\mathcal{O}_j^{(n)} - \langle \mathcal{O}_j \rangle),
 \end{equation}
-where \( N_{\mathrm{sim}} \) is the number of simulations, and \( O_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
+where \( N_{\mathrm{sim}} \) is the number of simulations, and \( \mathcal{O}_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
 
-\section{Covariance of Matter Power Spectrum}
-Before delving into two-dimensional weak lensing statistics, it is essential to understand the covariance matrix for the matter power spectrum.
-The covariance matrix for the matter power spectrum \( P_m(k) \) is defined as:
+\section{Covariance of the Matter Power Spectrum}
+Understanding the covariance matrix of the matter power spectrum \( P_m(k) \) is crucial before delving into two-dimensional weak lensing statistics. 
+The covariance matrix for the matter power spectrum is defined as:
 \begin{equation}
-    \mathrm{Cov}(k, k') = \left\langle P_m(k) P_m(k') \right\rangle - \left\langle P_m(k) \right\rangle \left\langle P_m(k') \right\rangle,
-\end{equation}Ω
-where \( P_m(k) \) is defined via the two-point correlation function in Fourier space:
-\begin{equation}
-    \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \right\rangle = (2\pi)^3 \delta_D(\mathbf{k} + \mathbf{k'}) P_m(|\mathbf{k}|),
+    \mathrm{Cov}(k, k') = \left\langle \hat{P}_m(k) \hat{P}_m(k') \right\rangle - \left\langle \hat{P}_m(k) \right\rangle \left\langle \hat{P}_m(k') \right\rangle,
 \end{equation}
-where \( \tilde{\delta}(\mathbf{k}) \) is the Fourier transform of the matter overdensity field \( \delta(\mathbf{x}) \):
-\begin{equation}
-    \tilde{\delta}(\mathbf{k}) = \int_V \delta(\mathbf{x}) e^{-i \mathbf{k} \cdot \mathbf{x}} \, d^3 x.
-\end{equation}
-The matter power spectrum from a single realization is given by:
+where \( \hat{P}_m(k) \) is an estimator of the matter power spectrum obtained from a finite volume \( V \).
+An estimator for the matter power spectrum in a finite survey volume is given by \citep{1994ApJ...426...23F}:
 \begin{equation}
     \hat{P}_m(k) = (2\pi)^3 \delta_D(\mathbf{k} + \mathbf{k'}) \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) = V_f \int_{V_s(k)} \frac{\mathrm{d}^3 \mathbf{k}}{V_s(k)} \, \tilde{\delta}(\mathbf{k}) \, \tilde{\delta}(-\mathbf{k}),
 \end{equation}
 where $V_f = (2\pi)^3 / V$ is the volume of a Fourier cell where $V$ is the total survey volume, and $V_s(k) = 4\pi k^2 \Delta k$ is the volume of the shell in Fourier space corresponding to wavenumber \( k \).
-To derive the covariance matrix, we substitute the estimator for \( P_m(k) \) into the covariance definition:
+
+To derive the covariance matrix, we substitute the estimator \( \hat{P}_m(k) \) into the covariance definition:
 \begin{equation}
     \mathrm{Cov}(\mathbf{k}, \mathbf{k'}) = V_f^2 \left( \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle - \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \right\rangle \left\langle \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle\right)
 \end{equation}
-The first term on the right-hand side involves the four-point correlation function of the density field, which can be decomposed using Wick's theorem:
+The four-point correlation function \( \left\langle \tilde{\delta}(\mathbf{k}_1) \tilde{\delta}(\mathbf{k}_2) \tilde{\delta}(\mathbf{k}_3) \tilde{\delta}(\mathbf{k}_4) \right\rangle \) can be decomposed using Wick's theorem (valid for Gaussian fields) into products of two-point functions \citep{PhysRev.80.268}:
 \begin{eqnarray}
     \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle 
     &=& \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \right\rangle \left\langle \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle \nonumber \\
@@ -43,90 +37,83 @@ The first term on the right-hand side involves the four-point correlation functi
     &+& \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k'}) \right\rangle \left\langle \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \right\rangle \nonumber \\ 
     &+& \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle_c,
 \end{eqnarray}
-where the subscript \( c \) denotes the connected part of the four-point function, also known as the \textbf{trispectrum} \( T(\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3, \mathbf{k}_4) \).
-Substituting the decomposed four-point function back into the covariance expression, and utilize the Dirac delta function approximation, the covariance matrix simplifies to:
-\begin{equation}
-    \mathrm{Cov}(k, k') = \frac{P_m(k) P_m(k')}{V} (\delta_{\mathbf{k}, -\mathbf{k'}} + \delta_{\mathbf{k}, \mathbf{k'}}) + \frac{T(\mathbf{k}, -\mathbf{k}, \mathbf{k'}, -\mathbf{k'})}{V}.
-\end{equation}
-In practice, measurements are averaged over all modes within spherical shells around each \( k \). Let \( N(k) = V_s(k)/V_f\) be the number of independent modes in the shell at wavenumber \( k \). The covariance simplifies to \citep{2017JCAP...11..051B}:
+where the last term represents the connected (non-Gaussian) part of the four-point function, known as the trispectrum \( T(\mathbf{k}, -\mathbf{k}, \mathbf{k}', -\mathbf{k}') \).
+
+Using the properties of the Dirac delta function and assuming statistical isotropy, the covariance matrix simplifies to:
 \begin{equation}
     \mathrm{Cov}(k, k') = \frac{2 P_m(k)^2}{N(k)} \delta_{k,k'} + \frac{T(k, k')}{V}
 \end{equation}
-For the case with survey window effects, the covariance matrix is modified to include the super-sample covariance term:
-\begin{equation}
-    \mathrm{Cov}(k, k') = \frac{2 P_m(k)^2}{N(k)} \delta_{k,k'} + \frac{T(k, k')}{V} + \frac{\partial P_m(k)}{\partial \delta_b} \frac{\partial P_m(k')}{\partial \delta_b} \sigma_b^2,
-\end{equation}
-where
-\begin{equation}
-    \sigma_b^2 = \int \frac{d^3 k}{(2\pi)^3} \, P_m(k, z) \tilde{W}^2(k),
-\end{equation}
-and \( \tilde{W}(k) \) is the Fourier transform of the survey window function.
+where \( N(k) = V_s(k) / V_f \) is the number of independent modes in the shell at wavenumber \( k \). The first term represents the Gaussian (disconnected) contribution, and the second term accounts for the non-Gaussian (connected) contribution from the trispectrum.
 
-\section{Covariance of Angular Power Spectrum}
-We consider a cosmological survey characterized by a window function  $W(\boldsymbol{\theta})$ and a survey area \( A \). The survey area is defined as the integral of the window function over the sky \citep{PhysRevD.87.123504}:
+In the presence of a finite survey volume, super-sample covariance arises due to modes larger than the survey size influencing the observed modes \citep{PhysRevD.87.123504}. This effect adds an additional term to the covariance matrix:
 \begin{equation}
-    A = \int d^2 \theta \, W(\boldsymbol{\theta}),
+    \mathrm{Cov}(k, k') = \frac{2 P_m^2(k)}{N(k)} \delta_{kk'} + \frac{1}{V} T(k, k') + \left( \frac{\partial P_m(k)}{\partial \delta_b} \right) \left( \frac{\partial P_m(k')}{\partial \delta_b} \right) \sigma_b^2,
 \end{equation}
-The Fourier transform of the window function, \( \tilde{W}(\mathbf{q}) \), plays a pivotal role in relating the observed field to its underlying statistical properties.
-The estimator for angular power spectrum \( C_\ell \) in the presence of a window function is given by:
+where \( \delta_b \) represents the large-scale (background) density fluctuation, and \( \sigma_b^2 \) is its variance:
 \begin{equation}
-    \hat{C}_\ell = \frac{1}{A} \int_{A_\ell} \frac{d^2 \ell'}{A_\ell} \int \frac{d^2 q_1}{(2\pi)^2} \int \frac{d^2 q_2}{(2\pi)^2} \, \tilde{W}(\mathbf{q}_1) \tilde{W}(\mathbf{q}_2) \, \tilde{\kappa}(\mathbf{\ell}' - \mathbf{q}_1) \, \tilde{\kappa}(-\mathbf{\ell}' - \mathbf{q}_2),
+    \sigma_b^2 = \int \frac{\mathrm{d}^3 k}{(2\pi)^3} P_m(k) |\tilde{W}(\mathbf{k})|^2,
 \end{equation}
-where:
-\begin{itemize}
-    \item \( \tilde{\kappa}(\mathbf{\ell}) \) is the Fourier transform of the convergence field \( \kappa(\boldsymbol{\theta}) \),
-    \item \( A_\ell \) is the area of the annulus in Fourier space corresponding to multipole \( \ell \), defined as:
-    \begin{equation}
-        A_\ell = \int_{|\mathbf{\ell}| = \ell} d^2 \mathbf{\ell} \approx 2 \pi \ell \Delta \ell \, (\Delta \ell / \ell \ll 1),
-    \end{equation}
-    \item The integrals over \( \mathbf{q}_1 \) and \( \mathbf{q}_2 \) account for the effects of the survey window.
-\end{itemize}
-Following a procedure analogous to that of the matter power spectrum, the covariance matrix for the angular power spectrum \( C_\ell \) is defined as:
+with \( \tilde{W}(\mathbf{k}) \) being the Fourier transform of the survey window function \( W(\mathbf{x}) \).
+The derivatives \( \partial P_m(k) / \partial \delta_b \) quantify the response of the power spectrum to changes in the background density and can be related to the concept of the response function or integrated perturbation theory \citep{2014PhRvD..89h3519L}.
+
+\section{Covariance of the Angular Power Spectrum}
+We consider a cosmological survey characterized by a window function \( W(\boldsymbol{\theta}) \) and a total survey area \( A \), defined as the integral of the window function over the sky \citep{PhysRevD.87.123504}:
+\begin{equation}
+    A = \int \mathrm{d}^2 \theta \, W(\boldsymbol{\theta}).
+\end{equation}
+The window function \( W(\boldsymbol{\theta}) \), and its Fourier transform, \( \tilde{W}(\boldsymbol{\ell}) \), accounts for the survey geometry and selection effects. 
+
+In the presence of the window function, the estimator for the angular power spectrum \( C_\ell \) is given by \citep{PhysRevD.87.123504}:
+\begin{equation}
+    \hat{C}_\ell = \frac{1}{A} \int_{A_\ell} \frac{\mathrm{d}^2 \ell'}{A_\ell} \int \frac{\mathrm{d}^2 q_1}{(2\pi)^2} \int \frac{\mathrm{d}^2 q_2}{(2\pi)^2} \, \tilde{W}(\mathbf{q}_1) \tilde{W}(\mathbf{q}_2) \, \tilde{\kappa}(\boldsymbol{\ell}' - \mathbf{q}_1) \, \tilde{\kappa}(-\boldsymbol{\ell}' - \mathbf{q}_2),
+\end{equation}
+where \( \tilde{\kappa}(\boldsymbol{\ell}) \) is the Fourier transform of the convergence field \( \kappa(\boldsymbol{\theta}) \), and \( A_\ell \) is the area of the annulus in Fourier space corresponding to multipole \( \ell \), defined as:
+\begin{equation}
+    A_\ell = \int_{|\boldsymbol{\ell}| = \ell} \mathrm{d}^2 \boldsymbol{\ell} \approx 2 \pi \ell \Delta \ell, \quad (\Delta \ell / \ell \ll 1),
+\end{equation}
+with \( \Delta \ell \) being the width of the multipole bin. The integrals over \( \mathbf{q}_1 \) and \( \mathbf{q}_2 \) incorporate the effects of the survey window function, effectively convolving the true sky signal with the survey geometry.
+
+The covariance matrix of the angular power spectrum \( C_\ell \) is defined as:
 \begin{equation}
     \mathrm{Cov}(\ell_1, \ell_2) = \left\langle \hat{C}_{\ell_1} \hat{C}_{\ell_2} \right\rangle - \left\langle \hat{C}_{\ell_1} \right\rangle \left\langle \hat{C}_{\ell_2} \right\rangle,
 \end{equation}
-Substituting the estimator for \( \hat{C}_\ell \) into the covariance definition and expanding the resulting expression leads to terms involving two-point and four-point correlation functions of the convergence field. Specifically, the covariance can be expressed as:
+which measures the statistical correlation between estimates of \( C_{\ell_1} \) and \( C_{\ell_2} \).
+Substituting the estimator \( \hat{C}_\ell \) into the covariance definition and expanding the resulting expression leads to terms involving two-point and four-point correlation functions of the convergence field \( \kappa(\boldsymbol{\theta}) \). Specifically, the covariance can be expressed as:
 \begin{equation}
-    \mathrm{Cov}(\ell_1, \ell_2) = \frac{1}{A^2} \int_{A_{\ell_1}} \frac{d^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{d^2 \ell_2'}{A_{\ell_2}} \left[ \left\langle \tilde{\kappa}(\mathbf{\ell}_1') \tilde{\kappa}(-\mathbf{\ell}_1') \tilde{\kappa}(\mathbf{\ell}_2') \tilde{\kappa}(-\mathbf{\ell}_2') \right\rangle - \left\langle \tilde{\kappa}(\mathbf{\ell}_1') \tilde{\kappa}(-\mathbf{\ell}_1') \right\rangle \left\langle \tilde{\kappa}(\mathbf{\ell}_2') \tilde{\kappa}(-\mathbf{\ell}_2') \right\rangle \right].
+    \mathrm{Cov}(\ell_1, \ell_2) = \frac{1}{A^2} \int_{A_{\ell_1}} \frac{\mathrm{d}^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{\mathrm{d}^2 \ell_2'}{A_{\ell_2}} \left[ \left\langle \tilde{\kappa}(\boldsymbol{\ell}_1') \tilde{\kappa}(-\boldsymbol{\ell}_1') \tilde{\kappa}(\boldsymbol{\ell}_2') \tilde{\kappa}(-\boldsymbol{\ell}_2') \right\rangle - \left\langle \tilde{\kappa}(\boldsymbol{\ell}_1') \tilde{\kappa}(-\boldsymbol{\ell}_1') \right\rangle \left\langle \tilde{\kappa}(\boldsymbol{\ell}_2') \tilde{\kappa}(-\boldsymbol{\ell}_2') \right\rangle \right].
 \end{equation}
-After the same computation as that of matter power spectrum, the covariance matrix for the angular power spectrum \( C_\ell \) can be expressed as:
+The first term inside the brackets involves the four-point correlation function (connected and disconnected parts), while the second term is the product of two-point correlation functions. After evaluating the integrals and applying the appropriate approximations, the covariance matrix for the angular power spectrum \( C_\ell \) simplifies to:
 \begin{equation}
-    \mathrm{Cov}(\ell_1, \ell_2) = \frac{2}{A} \int_{A_{\ell_1}} \frac{d^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{d^2 \ell_2'}{A_{\ell_2}} \, C_{\ell_1'} C_{\ell_2'} \, \delta_{\ell_1 \ell_2} + \frac{1}{A} \int_{A_{\ell_1}} \frac{d^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{d^2 \ell_2'}{A_{\ell_2}} \, T_{\ell_1', -\ell_1', \ell_2', -\ell_2'} + \mathrm{Cov}_{\ell_1, \ell_2}^{\mathrm{SSC}},
+    \mathrm{Cov}(\ell_1, \ell_2) = \frac{1}{A} \left[ \frac{(2\pi)^2}{A_\ell} C_{\ell_1}^2 \delta_{\ell_1, \ell_2} +  \tilde{\mathcal{T}}^W_{\ell_1, \ell_2} \right],
 \end{equation}
-By simplifying that we can obtain:
+where \( \tilde{\mathcal{T}}^W_{\ell_1, \ell_2} \) is the windowed (or convolved) trispectrum, incorporating the effects of the finite survey window.
+
+Using the Limber approximation \citep{1954ApJ...119..655L}, which simplifies the projection of three-dimensional quantities into two dimensions, the covariance matrix can be related to the matter power spectrum. The trispectrum can be decomposed using the trispectrum consistency relation, allowing the covariance matrix to be written as:
 \begin{equation}
-    \mathrm{Cov}(\ell_1, \ell_2) = \frac{1}{A} \left[ \frac{(2\pi)^2}{A_\ell} C_{\ell_1}^2 \delta_{\ell_1, \ell_2} +  \tilde{\mathcal{T}}^W_{\ell_1, \ell_2} \right]
-\end{equation}
-where \( \tilde{\mathcal{T}}^W_{\ell_1, \ell_2} \) is the windowed trispectrum, and the super-sample covariance term is included in the covariance matrix.
-Using the limber approximation, the covariance matrix can be related to the matter power spectrum covariance matrix and decomposed using tripectrum consistency relation:
-\begin{equation}
-    \mathrm{Cov}(\ell_1, \ell_2) = \mathrm{Cov}^{G}(\ell_1, \ell_2) + \mathrm{Cov}^{T0}(\ell_1, \ell_2) + \mathrm{Cov}^{SSC}(\ell_1, \ell_2)
+    \mathrm{Cov}(\ell_1, \ell_2) = \mathrm{Cov}^{G}(\ell_1, \ell_2) + \mathrm{Cov}^{\text{NG}}(\ell_1, \ell_2) + \mathrm{Cov}^{\mathrm{SSC}}(\ell_1, \ell_2),
 \end{equation}
 where:
 \begin{align}
-    \mathrm{Cov}^{G}(\ell_1, \ell_2) &= \frac{1}{A} \frac{(2\pi)^2}{A_\ell} C_{\ell_1}^2 \delta_{\ell_1, \ell_2}\\
-    \mathrm{Cov}^{T0}(\ell_1, \ell_2) &= \frac{1}{A} \int_{A_{\ell_1}} \frac{d^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{d^2 \ell_2'}{A_{\ell_2}} \, T_{\ell_1', -\ell_1', \ell_2', -\ell_2'}\\
-    \mathrm{Cov}^{SSC}(\ell_1, \ell_2) &= \frac{1}{A^2} \int_0^{\chi_s} \frac{W^4(\chi)}{\chi^6} \, \frac{\partial P_{m}(k_i)}{\partial \delta_b} \frac{\partial P_{m}(k_j)}{\partial \delta_b} \sigma_b^2
+    \mathrm{Cov}^{G}(\ell_1, \ell_2) &= \frac{1}{A} \frac{(2\pi)^2}{A_\ell} C_{\ell_1}^2 \delta_{\ell_1, \ell_2},\\
+    \mathrm{Cov}^{\text{NG}}(\ell_1, \ell_2) &= \frac{1}{A} \int_{A_{\ell_1}} \frac{\mathrm{d}^2 \ell_1'}{A_{\ell_1}} \int_{A_{\ell_2}} \frac{\mathrm{d}^2 \ell_2'}{A_{\ell_2}} \, T(\boldsymbol{\ell}_1', -\boldsymbol{\ell}_1', \boldsymbol{\ell}_2', -\boldsymbol{\ell}_2'),\\
+    \mathrm{Cov}^{\mathrm{SSC}}(\ell_1, \ell_2) &= \frac{1}{A^2} \int_0^{\chi_s} \frac{\mathrm{d} \chi}{\chi^6} W^4(\chi) \, \frac{\partial P_{m}(k_1)}{\partial \delta_b} \frac{\partial P_{m}(k_2)}{\partial \delta_b} \sigma_b^2,
 \end{align}
+Notably, the super-sample covariance term \( \mathrm{Cov}^{\mathrm{SSC}}(\ell_1, \ell_2) \) arises from the large-scale density fluctuations modulating the observed power spectrum within the survey area \citep{PhysRevD.87.123504}.
 
 \section{Covariance of Higher-Order Statistics}
-Most of the higher-order statistics, such as the bispectrum, peak counts, and Minkowski functionals, are difficult to compute their covariance matrices analytically. Therefore, researchers often rely on simulations to estimate the covariance matrices for these statistics. Assuming an analogy between the matter power spectrum and the higher-order statistics, the covariance matrix for the higher-order statistics can be expressed as:
+Despite some successes in analytical modeling (\citealt{2018PhRvD..97d3532C, 2018A&A...611A..83L, 2019A&A...624A..61L, 2023OJAp....6E...1U}), computing the covariance matrices for higher-order statistics  still need to rely on simulations. Drawing an analogy with the matter power spectrum, the covariance matrix for higher-order statistics can be expressed as:
 \begin{equation}
-    \mathrm{Cov}(O_i, O_j) = \mathrm{Cov}^{\mathrm{noSSC}}(O_i, O_j) + \mathrm{Cov}^{\mathrm{SSC}}(O_i, O_j),
+    \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \mathrm{Cov}^{\mathrm{noSSC}}(\mathcal{O}_i, \mathcal{O}_j) + \mathrm{Cov}^{\mathrm{SSC}}(\mathcal{O}_i, \mathcal{O}_j),
 \end{equation}
-Since in the higher-order statistics, we expect them to be non-gauusian so that it makes non-sense to separate them into gaussian and non-Gaussian. Therefore, we just separate the super-sample covariance part apart. The super-sample covariance term with response function can be given by \citep{2014PhRvD..89h3519L}:
+A rigorous super-sample covariance for line-of-sight integrated observable $\mathcal{O}_i$, where $\mathcal{O}_i = \int dV_i \mathfrak{o}_i = \int \chi_i^2 d\chi \mathfrak{o}_i$, is given by \citep{2016JCAP...08..005L}:
 \begin{equation}
-    \mathrm{Cov}^{\mathrm{SSC}}(O_i, O_j) = \frac{\partial O_i}{\partial \delta_b} \frac{\partial O_j}{\partial \delta_b} \sigma_b^2
+    \mathrm{Cov}^{\mathrm{SSC}}(\mathcal{O}_i, \mathcal{O}_j) = 
+    \iint \mathrm{d}V_i \, \mathrm{d}V_j \,
+    \left(
+        \frac{\partial \mathfrak{o}_i}{\partial \delta_b}
+    \right)
+    \left(
+        \frac{\partial \mathfrak{o}_j}{\partial \delta_b}
+    \right)
+    \sigma_b^2, 
 \end{equation}
-
-\begin{comment}
-\section{Fisher Forecast}
-One main application of the covariance matrix is in the Fisher forecast, which estimates the precision of cosmological parameter constraints from weak lensing data. The Fisher matrix \( F_{\alpha \beta} \) is defined as:
-\begin{equation}
-    F_{\alpha \beta} = \sum_{i, j} \frac{\partial O_i}{\partial \theta_\alpha} \mathrm{Cov}^{-1}_{ij} \frac{\partial O_j}{\partial \theta_\beta},
-\end{equation}
-where \( O_i \) and \( O_j \) are the observables, and \( \theta_\alpha \) and \( \theta_\beta \) are the cosmological parameters. The inverse of the Fisher matrix provides the covariance matrix for the cosmological parameters:
-\begin{equation}
-    \mathrm{Cov}(\theta_\alpha, \theta_\beta) = F^{-1}_{\alpha \beta}.
-\end{equation}
-\end{comment}
