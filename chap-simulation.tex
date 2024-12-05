@@ -7,33 +7,7 @@ Advancements in algorithms and software optimization have increased the number o
 \begin{figure} \centering \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png} \caption{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
 
 \section{Initial Condition Generation}
-\subsection{Primordial Power Spectrum}
-The primordial power spectrum describes the initial distribution of matter fluctuations in the universe and serves as a fundamental input for cosmological simulations. It is defined as \citep{2003moco.book.....D}:
-\begin{equation}
-    P_p(k) = A_s \left(\frac{k}{k_*}\right)^{n_s - 1},
-\end{equation}
-where $A_s$ is the amplitude of the scalar fluctuations, $k_*$ is the pivot scale, and $n_s$ is the spectral index.
-
-As the universe evolves, various physical processes, such as radiation pressure, baryon-photon interactions, and dark matter dynamics, influence the growth of these initial perturbations. These effects are encapsulated in the transfer function $T(k)$, which modifies the primordial power spectrum to give the matter power spectrum at redshift $z$ \citep{2003moco.book.....D}:
-\begin{equation}
-    P(k, z) = P_p(k) T^2(k) D^2(z),
-\end{equation}
-where $D(z)$ is the linear growth factor that describes the growth of perturbations in the linear regime. At the present epoch ($z = 0$), the power spectrum simplifies to:
-\begin{equation}
-    P(k, z=0) = P_p(k) T^2(k).
-\end{equation}
-The transfer function $T(k)$ accounts for the suppression of power on small scales due to the horizon size at matter-radiation equality and is computed using the \texttt{CAMB} code \citep{2000ApJ...538..473L}.
-
-\subsection{Linear Growth Factor}
-The linear growth factor $D(a)$ quantifies the growth of matter perturbations in the linear regime and is given by:
-\begin{equation}
-    D(a) = \frac{5 \Omega_m a}{2} \int_0^1 \frac{dx}{(\Omega_m / x + \Omega_\Lambda x^2 + 1 - \Omega_m - \Omega_\Lambda)^{3/2}},
-\end{equation}
-where at the limit $a \to 0$, $D(a) \to a$. The growth rate of structure formation is defined as:
-\begin{equation}
-    f(a) = \frac{d\ln D}{d\ln a},
-\end{equation}
-which is essential for determining the velocities of particles in the simulations.
+As we have seen in Section~\ref{sec:initial_conditions}, the primodial power spectrum $P(k)$ is a key ingredient in generating initial conditions for cosmological simulations. Based on the linear power spectrum, we will review the process of generating initial conditions for $N$-body simulations.
 
 \subsection{Initial Density Field}
 To generate the initial density field for the simulations, we express the density contrast $\delta(\mathbf{x})$ in terms of its Fourier components:
@@ -76,7 +50,10 @@ The initial velocities of particles are derived from the time derivative of the 
     \tilde{\mathbf{v}}(\mathbf{k}) &= a H f(a) \tilde{\boldsymbol{\Psi}}(\mathbf{k}) = a H f(a) i \mathbf{k} \frac{\tilde{\delta}(\mathbf{k})}{k^2}, \\
     \mathbf{v}(\mathbf{q}) &= i a H f(a) \int \frac{d^3k}{(2\pi)^3} \frac{\mathbf{k}}{k^2} \tilde{\delta}(\mathbf{k}) e^{i\mathbf{k} \cdot \mathbf{q}},
 \end{align}
-where $a$ is the scale factor, $H$ is the Hubble parameter, and $f(a)$ is the growth rate.
+where $a$ is the scale factor, $H$ is the Hubble parameter, and $f(a)$ is the growth rate defined as:
+\begin{equation}
+    f(a) = \frac{d\ln D}{d\ln a},
+\end{equation}
 
 \section{Simulation Basics}
 We outline the fundamental concepts and algorithms used in $N$-body simulations, including direct summation, particle-mesh methods, particle-particle particle-mesh (P3M) methods, and tree-particle-mesh (Tree-PM) methods.
@@ -244,7 +221,7 @@ One of the popular algorithms for tree construction is the Barnes-Hut Octree \ci
     \includegraphics[width=0.6\textwidth]{figures/Octree.png}
     \caption{Illustration of an Octree decomposition for a 3D volume containing four particles. The left panel showcases the spatial subdivision of the volume into hierarchical grid cells, with color-coding indicating different levels of refinement. The right panel presents the corresponding Octree data structure, highlighting the hierarchical relationships between nodes. Credit by \citet{Powell2023}}
     \label{fig:barnes-hut}
-\end{figure}ß
+\end{figure}
 
 Parallel tree construction involves building local trees within each subdomain and integrating them for global computations \citep{DUBINSKI1996133}. Efficient parallelization enhances scalability and performance in large-scale simulations.
 

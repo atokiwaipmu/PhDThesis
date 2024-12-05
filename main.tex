@@ -1,15 +1,5 @@
 \documentclass[11pt,a4paper]{ipmu}
 
-% Packages
-\usepackage{natbib}     % For bibliography
-\usepackage{caption}    % Better control of figure captions
-\usepackage{subcaption} % Subfigures
-\usepackage{aas_macros}
-\usepackage{rotating}   % For rotating figures
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage{comment}
-
 % Set Thesis Metadata
 \setThesisTitle{Effects of Replicated N-body Simulation Boxes \\in Simulating Weak Lensing Observables}
 \setThesisJapaneseTitle{弱重力レンズ統計量の模擬データ生成における\\有限体積のN体シミュレーションの影響の研究}
@@ -20,47 +10,66 @@
 
 % Create Title Page
 \makethesistitle
-
+\frontmatter
 % Create Abstract Page
 % \begin{abstractpage}
 %     \input{abstract}
 % \end{abstractpage}
 
+
 \tableofcontents  % Generates the table of contents
 \listoffigures    % Optional: List of figures
 \listoftables     % Optional: List of tables
 
+
 \chapter{Introduction}
+\label{chap:introduction}
+\mainmatter
+\minitoc 
 \input{chap-introduction}
 
 \chapter{Cosmology}
+\label{chap:cosmology}
+\minitoc 
 \input{chap-cosmology}
 
 \chapter{Weak Lensing}
+\label{chap:weak_lensing}
+\minitoc 
 \input{chap-weak_lensing}
 
-\chapter{Surveys}
-\input{chap-survey.tex}
-
 \chapter{Statistics}
+\label{chap:statistics}
+\minitoc 
 \input{chap-statistics.tex}
 
 \chapter{Covariance}
+\label{chap:covariance}
+\minitoc 
 \input{chap-covariance}
 
 \chapter{Simulations}
+\label{chap:simulation}
+\minitoc 
 \input{chap-simulation}
 
 \chapter{Methods}
+\label{chap:methods}
+\minitoc 
 \input{chap-methods}
 
 \chapter{Results}
+\label{chap:results}
+\minitoc 
 \input{chap-results}
 
 \chapter{Discussion}
+\label{chap:discussion}
+\minitoc 
 \input{chap-discussion}
 
-% \chapter{Conclusions and Future Work}
+\chapter{Conclusions and Future Work}
+\label{chap:conclusions}
 % \section{Summary of Key Findings}
 % This thesis demonstrated the importance of accounting for artefacts in weak lensing simulations to improve covariance matrix estimations.
 
@@ -72,6 +81,7 @@
 % \chapter{Additional Mathematical Derivations}
 % Here you can include detailed derivations that were omitted from the main text.
 
+\backmatter
 \bibliographystyle{mnras}
 \bibliography{thesis_bib.bib}
 

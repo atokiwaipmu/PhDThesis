@@ -1,4 +1,4 @@
-Covariance matrices play a crucial role in weak lensing analyses, quantifying the uncertainties and correlations between different statistical measurements of the convergence field. Accurate estimation of covariance matrices is essential for reliable parameter estimation and for understanding the precision of cosmological constraints derived from weak lensing data.
+The covariance matrix encapsulates the uncertainties and correlations between different measurements. It plays a critical role in parameter estimation techniques, including maximum likelihood analyses and Bayesian inference, and is foundational in forecasting the capabilities of future surveys through the Fisher information matrix.
 
 The covariance matrix between two observables $\mathcal{O}_i$ and $\mathcal{O}_j$ is defined as:
 \begin{equation}
@@ -11,6 +11,27 @@ For an unbiased estimator, the covariance matrix is given by:
     \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \frac{1}{N_{\mathrm{sim}} - 1} \sum_{n=1}^{N_{\mathrm{sim}}} (\mathcal{O}_i^{(n)} - \langle \mathcal{O}_i \rangle) (\mathcal{O}_j^{(n)} - \langle \mathcal{O}_j \rangle),
 \end{equation}
 where \( N_{\mathrm{sim}} \) is the number of simulations, and \( \mathcal{O}_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
+
+\section{Role of the Covariance Matrix}
+Though we leave the Fisher forecast using the covariance matrix for future work, it is worthful to discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. When comparing theoretical models to observational data, we often compute a likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$, where $\mathbf{d}$ represents the data vector and $\mathbf{p}$ denotes the set of cosmological parameters. For Gaussian-distributed data, the likelihood function is given by:
+\begin{equation}
+    \ln \mathcal{L}(\mathbf{d} | \mathbf{p}) = -\frac{1}{2}(\mathbf{d} - \mathbf{m}(\mathbf{p}))^{\mathrm{T}} \mathbf{C}^{-1} (\mathbf{d} - \mathbf{m}(\mathbf{p})) + \mathrm{const},
+\end{equation}
+where $\mathbf{m}(\mathbf{p})$ is the model prediction for the data vector $\mathbf{d}$, and $N$ is the number of data points. The covariance matrix $\mathbf{C}$ quantifies the uncertainties and correlations between different data points.
+
+Based on the likelihood function, we can construct the Fisher information matrix $\mathcal{F}_{\alpha\beta}$, which quantifies the sensitivity of the likelihood function to changes in the model parameters $\mathbf{p}$. The Fisher information matrix is defined as:
+\begin{equation}
+    \mathcal{F}_{\alpha\beta} = -\left\langle \frac{\partial^2 \ln \mathcal{L}}{\partial p_\alpha \partial p_\beta} \right\rangle,
+\end{equation}
+In the case of Gaussian likelihoods, the Fisher information matrix is simplified to:
+\begin{equation}
+    \mathcal{F}_{\alpha\beta} = \frac{1}{2} \mathrm{Tr} \left[ \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\alpha} \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\beta} \right]\Bigg|_{p_\alpha = \mu_\alpha} + \left(\frac{\partial \mathbf{\mu}}{\partial p_\alpha}\right)^{\mathrm{T}} \mathbf{C}^{-1} \frac{\partial \mathbf{\mu}}{\partial p_\beta},
+\end{equation}
+where $\mathbf{\mu}$ is the mean of the data vector $\mathbf{d}$. The Fisher matrix allows us to forecast the expected uncertainties on the parameters via the Cramér-Rao bound:
+\begin{equation}
+    \left\langle (\Delta p_\alpha)^2 \right\rangle \geq (\mathcal{F}^{-1})_{\alpha\alpha},
+\end{equation}
+where $\Delta p_\alpha$ is the uncertainty on the $\alpha$-th parameter. Note that this condition is marginalized over all other parameters, $p_\beta$ ($\beta \neq \alpha$).
 
 \section{Covariance of the Matter Power Spectrum}
 Understanding the covariance matrix of the matter power spectrum \( P_m(k) \) is crucial before delving into two-dimensional weak lensing statistics. 

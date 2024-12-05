@@ -20,16 +20,19 @@ The trajectory of light within this spacetime is governed by the geodesic equati
     \label{eq:geodesic_equation}
 \end{equation}
 where \( \lambda \) is an affine parameter and \( \Gamma^\mu_{\alpha \beta} \) are the Christoffel symbols corresponding to the metric in Equation~\eqref{eq:perturbed_metric}.
+
 To facilitate the derivation, we reparametrize the geodesic equation by substituting the affine parameter \( \lambda \) with the comoving radial distance \( \chi \). Applying the chain rule, the geodesic equation transforms to
 \begin{equation}
     \frac{d^2 x^\mu}{d\chi^2} + \Gamma^\mu_{\alpha \beta} \frac{dx^\alpha}{d\chi} \frac{dx^\beta}{d\chi} - \frac{d^2 \lambda}{d\chi^2} \left( \frac{d\lambda}{d\chi} \right)^{-1} \frac{dx^\mu}{d\chi} = 0.
     \label{eq:geodesic_reparametrized}
 \end{equation}
+
 Setting \( \mu = 1 \) (where \( x^1 = \chi \)) in Equation~\eqref{eq:geodesic_reparametrized} and simplifying, we obtain
 \begin{equation}
     \frac{d^2 x^\mu}{d\chi^2} + \left( \Gamma^\mu_{\alpha \beta} - \Gamma^1_{\alpha \beta} \right) \frac{dx^\alpha}{d\chi} \frac{dx^\beta}{d\chi} = 0.
     \label{eq:geodesic_mu1}
 \end{equation}
+
 The evaluation of Equation~\eqref{eq:geodesic_mu1} requires the computation of the Christoffel symbols. Additionally, the derivative \( c \, dt / d\chi \) is derived from the null condition
 \begin{equation}
     g_{\mu \nu} \frac{dx^\mu}{d\chi} \frac{dx^\nu}{d\chi} = 0,
@@ -215,12 +218,12 @@ Here, we introduce a concept of the reduced shear. Furthermore, a convergence fi
 \subsection{Ellipticity and Reduced Shear}
 To quantify the shapes of galaxies, we use the second moments of their surface brightness distributions $I(\theta)$. For each galaxy, the second moments $Q_{ab}$ are defined as \citep{2001PhR...340..291B}:
 \begin{equation}
-    Q_{ab} = \frac{\int d^2\theta\, I(\theta) \theta_a \theta_b}{\int d^2\theta\, I(\theta)},
+    Q_{ab} := \frac{\int d^2\theta\, I(\theta) \theta_a \theta_b}{\int d^2\theta\, I(\theta)},
     \label{eq:second_moments}
 \end{equation}
 where $\theta = (\theta_1, \theta_2)$ is the angular position relative to the galaxy center. The complex ellipticity $\epsilon$ of the galaxy is then defined as:
 \begin{equation}
-    \epsilon = \frac{Q_{11} - Q_{22} + 2i Q_{12}}{Q_{11} + Q_{22}}.
+    \epsilon := \frac{Q_{11} - Q_{22} + 2i Q_{12}}{Q_{11} + Q_{22}}.
     \label{eq:complex_ellipticity}
 \end{equation}
 
@@ -245,10 +248,52 @@ Introducing the \emph{reduced shear} $g = \gamma / (1 - \kappa)$, the above equa
 \end{equation}
 This relation indicates that weak lensing measurements are sensitive to the reduced shear $g$ rather than the shear $\gamma$ directly. In the weak lensing regime, where $|\kappa|, |\gamma| \ll 1$, and assuming that the intrinsic ellipticities of galaxies are randomly oriented (i.e., $\langle \epsilon^{(s)} \rangle = 0$), the observed ellipticity becomes an unbiased estimator of the reduced shear:
 \begin{equation}
-    \langle \epsilon \rangle = g.
+    \langle \epsilon \rangle \approx g \approx \gamma.
     \label{eq:reduced_shear_expectation}
 \end{equation}
 However, in the weak-lensing regime, the shear cannot be detected from an individual galaxy due to the dominance of intrinsic shape noise. The typical root mean square (rms) of the intrinsic ellipticity is $\sigma_\epsilon \approx 0.26$ \citep{2019A&A...627A..59E}, which necessitates averaging over a large number of galaxies to measure the shear signal accurately.
+The noise for the reduced shear estimator is dominated by Poisson noise, which is given by:
+\begin{equation}
+    \sigma_\gamma = \frac{\sigma_\epsilon}{\sqrt{N}},
+    \label{eq:reduced_shear_noise}
+\end{equation}
+where $N$ is the number of galaxies used in the shear estimation. It is known that the following transformation of convergence does not change the reduced shear, 
+\begin{equation}
+    \kappa' = \lambda \kappa + (1 - \lambda),
+    \label{eq:kappa_transformation}
+\end{equation}
+where $\lambda$ is a arbitary constant. This degree of freedom in the convergence
+field is known as the mass-sheet degeneracy \citep{1985ApJ...289L...1F}.
+
+\subsection{From Shear to Convergence}
+As we have seen in Eq.~\eqref{eq:kappa_gamma_relation}, shear and convergence are related through the Fourier transform. Following \citet{1993ApJ...404..441K}, the relation between the shear and convergence fields in real space can be expressed as:
+\begin{equation}
+    \gamma(\boldsymbol{\theta}) = \frac{1}{\pi} \int d^2\theta' \, \mathcal{D}(\boldsymbol{\theta} - \boldsymbol{\theta'}) \kappa(\boldsymbol{\theta'}),
+\end{equation}
+where $\mathcal{D}(\boldsymbol{\theta})$ is a kernel function defined by:
+\begin{equation}
+    \mathcal{D}(\boldsymbol{\theta}) = - \frac{\theta_1^2 - \theta_2^2 + 2i\theta_1\theta_2}{\boldsymbol{\theta}^4} = - \frac{1}{(\theta_1 - i\theta_2)^2}.
+\end{equation}
+Therefore, the convolution with the kernel function in Fourier space yields:
+\begin{equation}
+    \tilde{\gamma}(\boldsymbol{\ell}) = \frac{1}{\pi}\tilde{\mathcal{D}}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}),
+\end{equation}
+The Fourier transform of the kernel function,  $\tilde{\mathcal{D}}(\boldsymbol{\ell})$, is given by:
+\begin{equation}
+    \tilde{\mathcal{D}}(\boldsymbol{\ell}) = \pi \frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{\ell^2} 
+\end{equation}
+It is notable that this kernel function and its conjugate satisfies:
+\begin{equation}
+    \tilde{\mathcal{D}}(\boldsymbol{\ell})\tilde{\mathcal{D}}^*(\boldsymbol{\ell}) = \pi^2 \left(\frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{\ell^2}\right)\left(\frac{\ell_1^2 - \ell_2^2 - 2i\ell_1\ell_2}{\ell^2}\right) = \pi^2.
+\end{equation}
+Substituting the expression for $\tilde{\mathcal{D}}(\boldsymbol{\ell})$ into the relation between the shear and convergence fields, we find:
+\begin{equation}
+    \tilde{\kappa}(\boldsymbol{\ell}) = \frac{1}{\pi}\tilde{\gamma}(\boldsymbol{\ell}) \tilde{\mathcal{D}}^*(\boldsymbol{\ell}).
+\end{equation}
+\begin{equation}
+    \kappa(\boldsymbol{\theta}) = \kappa_0 + \frac{1}{\pi} \int d^2\theta' \, \mathcal{D}^*(\boldsymbol{\theta} - \boldsymbol{\theta'}) \gamma(\boldsymbol{\theta'}).
+\end{equation}
+The constant term $\kappa_0$ arises from the unknown $\ell = 0$ mode in the Fourier space, which is not constrained by the observed shear field.
 
 \begin{comment}
 \section{Magnification}

@@ -18,7 +18,7 @@
 %                             BASE CLASS
 % ============================================================================
 % Load the base 'report' class with the passed options.
-\LoadClass{report}
+\LoadClass[a4paper,11pt,twoside]{report} % Added twoside option
 
 % ============================================================================
 %                             PACKAGES
@@ -31,7 +31,15 @@
 \setmainlanguage{english}
 \setotherlanguage{japanese}
 
-% Load additional packages
+% Load additional required packages
+\RequirePackage{natbib}     % For bibliography management
+\RequirePackage{caption}    % Better control of figure captions
+\RequirePackage{subcaption} % Support for subfigures
+\RequirePackage{aas_macros} % AAS journal macros
+\RequirePackage{rotating}   % Support for rotating figures
+\RequirePackage{booktabs}  % Professional tables
+\RequirePackage{enumitem}  % Customize lists
+\RequirePackage{comment}   % Comment environment
 \RequirePackage{geometry}          % For page layout
 \RequirePackage{graphicx}          % For including graphics
 \RequirePackage{amsmath, amssymb}  % For mathematical symbols and environments
@@ -40,14 +48,19 @@
 \RequirePackage{fancyhdr}          % For header and footer customization
 \RequirePackage{unicode-math}      % For Unicode math fonts
 \RequirePackage{lipsum} % For dummy text (optional)
-\RequirePackage{hyperref} 
+\RequirePackage{hyperref}
 \hypersetup{
-    colorlinks=true,     % Enable colored links
-    linkcolor=blue,      % Internal links (e.g., TOC)
-    citecolor=blue,      % Citation links
-    filecolor=blue,      % Links to local files
-    urlcolor=blue        % External URLs
+    linktoc=page,        % ページ番号にリンク
+    colorlinks=true,     % カラーリンクを有効化
+    linkcolor=blue,      % 内部リンク
+    citecolor=blue,      % 引用リンク
+    filecolor=blue,      % ファイルリンク
+    urlcolor=blue        % URLリンク
 }
+\RequirePackage{minitoc}
+\setcounter{tocdepth}{3}
+\setcounter{minitocdepth}{1}
+\AtBeginDocument{\dominitoc} 
 
 % Set main font (you can change this to your preferred font)
 \setmainfont{Times New Roman} % Example for English text
@@ -71,7 +84,30 @@
 % Set up geometry if not already set by class options.
 % Note: 'a4paper' and 'margin=2.5cm' can be overridden via class options.
 \geometry{
-    margin=2.5cm
+    paper=a4paper,
+    twoside,
+    margin=2.5cm,
+    bindingoffset=0.5cm  % Add space for binding
+}
+
+% --- Define frontmatter command ---
+\newcommand{\frontmatter}{
+    \pagenumbering{roman}    % i, ii, iii, ...
+    \pagestyle{plain}        % Only page numbers, no headers
+    \setcounter{page}{1}     % Start from page i
+}
+
+% --- Define mainmatter command if not already defined ---
+\newcommand{\mainmatter}{
+    \pagenumbering{arabic}   % 1, 2, 3, ...
+    \setcounter{page}{1}     % Start from page 1
+    \pagestyle{fancy}        % Use fancy headers
+}
+
+% --- Define backmatter command if needed ---
+\newcommand{\backmatter}{
+    \clearpage
+    \pagestyle{plain}
 }
 
 % ============================================================================
@@ -180,8 +216,8 @@
 \fancyhf{} % Clear all default header and footer fields
 
 % --- Header Configuration ---
-\fancyhead[LO]{\leftmark}
-\fancyhead[R]{\rightmark}
+\fancyhead[LO]{\leftmark} % Chapter on left of odd pages
+\fancyhead[RE]{\rightmark} % Section on right of even pages
 
 % --- Footer Configuration ---
 % Center Footer (Both Even and Odd Pages)

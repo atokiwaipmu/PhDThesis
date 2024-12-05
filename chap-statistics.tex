@@ -37,8 +37,17 @@ where \( \mathbf{k}_\perp \) and \( k_\parallel \) are the components of \( \mat
 
 Next, we compute the ensemble average of the Fourier transform of the convergence field:
 \begin{eqnarray}
-    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} \int \frac{dk_\parallel}{2\pi} \int \frac{dk'_\parallel}{2\pi} \langle \tilde{\delta}_m\left(k_\parallel, \frac{\boldsymbol{\ell}}{\chi}\right) \tilde{\delta}_m\left(k'_\parallel, \frac{\boldsymbol{\ell}'}{\chi'}\right) \rangle e^{i k_\parallel \chi} e^{i k'_\parallel \chi'} \nonumber \\
-    &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} \int \frac{dk_\parallel}{2\pi} e^{i k_\parallel (\chi - \chi')} (2\pi)^2 \delta^{(2)}\left(\frac{\boldsymbol{\ell}}{\chi} + \frac{\boldsymbol{\ell}'}{\chi'}\right) P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \nonumber 
+    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle 
+    &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} 
+        \int \frac{dk_\parallel}{2\pi} \int \frac{dk'_\parallel}{2\pi} \nonumber \\
+    && \times \langle \tilde{\delta}_m\left(k_\parallel, \frac{\boldsymbol{\ell}}{\chi}\right) 
+       \tilde{\delta}_m\left(k'_\parallel, \frac{\boldsymbol{\ell}'}{\chi'}\right) \rangle 
+       e^{i k_\parallel \chi} e^{i k'_\parallel \chi'} \nonumber \\
+    [2ex]
+    &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} 
+        \int \frac{dk_\parallel}{2\pi} e^{i k_\parallel (\chi - \chi')} \nonumber \\
+    && \times (2\pi)^2 \delta^{(2)}\left(\frac{\boldsymbol{\ell}}{\chi} + \frac{\boldsymbol{\ell}'}{\chi'}\right) 
+       P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \nonumber 
     \label{eq:kappa_power_spectrum}
 \end{eqnarray}
 where in the last step we have applied the Limber approximation \citep{1954ApJ...119..655L}, which assumes \( k_\parallel \ll \ell/\chi \).
@@ -61,6 +70,27 @@ Finally, equating this result with the definition of the convergence power spect
 \end{equation}
 This relation demonstrates how the observable convergence power spectrum \( C_{\ell}^{\kappa\kappa} \) is sourced by the underlying matter power spectrum \( P_m(k; \chi) \) integrated along the line of sight.
 
+\subsection{\texttt{Halofit} Model}
+Based on the halo models (discussed in Sec.~\ref{sec:halo}), Halofit model is a widely used prescription to compute the non-linear matter power spectrum \( P(k) \) from the linear power spectrum \( P_{\mathrm{L}}(k) \) \citep{2003MNRAS.341.1311S, 2012ApJ...761..152T}. In the Halofit regime, the power spectrum is consists of two terms:
+\begin{equation}
+    P(k) = P_{\mathrm{1h}}(k) + P_{\mathrm{2h}}(k),
+    \label{eq:halofit_model}
+\end{equation}
+where the two-halo term \( P_{\mathrm{2h}}(k) \) captures the contribution from large-scale linear structures, given by:   
+\begin{equation}
+    P_{\mathrm{2h}}(k) = P_{\mathrm{L}}(k) \left[ \frac{1}{\bar{\rho}} \int dM \, b(M) n(M) \tilde{\rho}(k, M) \right]^2,
+    \label{eq:halofit_1h}
+\end{equation}
+and one-halo term $P_{\mathrm{1h}}(k)$ accounts for the contribution from small-scale non-linear structures, defined as:
+\begin{equation}
+    P_{\mathrm{1h}}(k) = \frac{1}{\bar{\rho}^2 (2\pi)^3} \int dM \, n(M) \left| \tilde{\rho}(k, M) \right|^2.
+    \label{eq:halofit_2h}
+\end{equation}
+Here, \( \bar{\rho} \) is the mean matter density, \( n(M) dM \) is the halo mass function, \( b(M) \) is the halo bias, and \( \tilde{\rho}(k, M) \) is the Fourier transform of the halo density profile. 
+Those two terms are then approximated into empirical fitting formulae and calibrated against \( N \)-body simulations.
+
+The one-halo term resembles a shot noise spectrum on large scales but is progressively reduced on small scales due to the filtering effects of halo profiles and the mass function. Conversely, the two-halo term modifies the relative correlations of halos beyond what is predicted by linear theory and becomes negligible on small scales. 
+
 \section{Convergence Bispectrum}
 The bispectrum, \( B(k) \), serves as the Fourier counterpart to the three-point correlation function and is the lowest-order statistical quantity capable of characterizing non-Gaussianity in the matter distribution \citep{2002PhR...367....1B}. While the power spectrum effectively captures Gaussian fluctuations through two-point statistics, the bispectrum provides deeper insights by incorporating three-point correlations, thereby unveiling more complex structures in the cosmic density field \citep{1999ApJ...517..531S, 2004MNRAS.348..897T}.
 
@@ -69,14 +99,45 @@ Analogous to the angular power spectrum, the convergence bispectrum can be expre
     \langle \tilde{\kappa}(\mathbf{\ell}_1) \tilde{\kappa}(\mathbf{\ell}_2) \tilde{\kappa}(\mathbf{\ell}_3) \rangle = (2\pi)^2 \delta_{D}(\mathbf{\ell}_1 + \mathbf{\ell}_2 + \mathbf{\ell}_3) B^\kappa_{\ell_1 \ell_2 \ell_3},
     \label{eq:convergence_bispectrum_def}
 \end{equation}
-Building upon the derivations analogous to Equations~\eqref{eq:kappa_fourier_final} through \eqref{eq:kappa_power_spectrum_final}, the convergence bispectrum can be expressed as:
+Building upon the derivations analogous to Equations~\eqref{eq:kappa_fourier_final} through~\eqref{eq:kappa_power_spectrum_final}, the convergence bispectrum can be expressed as:
 \begin{equation}
     B_{\ell_1 \ell_2 \ell_3}^\kappa = \int_0^{\chi_s} d\chi \, \frac{W^3(\chi)}{\chi^4} B_m\left( \frac{\ell_1}{\chi}, \frac{\ell_2}{\chi}, \frac{\ell_3}{\chi}; \chi \right),
     \label{eq:convergence_bispectrum}
 \end{equation}
 where \( B_m(k_1, k_2, k_3, z) \) denotes the matter bispectrum at redshift \( z \), and \( W(\chi) \) is the lensing kernel. 
 
-The bispectrum depends not only on the magnitudes of the wavevectors but also on the shapes formed by the triplet \( (\boldsymbol{k}_1, \boldsymbol{k}_2, \boldsymbol{k}_3) \), constrained by the condition \( \boldsymbol{k}_1 + \boldsymbol{k}_2 + \boldsymbol{k}_3 = 0 \). Different triangle configurations (e.g. equilateral, squeezed, isoceles) probe different physical processes and scales in the Universe \citep{2005PhRvD..72h3001D}.
+The bispectrum depends not only on the magnitudes of the wavevectors but also on the shapes formed by the triplet \( (\boldsymbol{k}_1, \boldsymbol{k}_2, \boldsymbol{k}_3) \), constrained by the condition \( \boldsymbol{k}_1 + \boldsymbol{k}_2 + \boldsymbol{k}_3 = 0 \). Different triangle configurations (e.g.\, equilateral, squeezed, isoceles) probe different physical processes and scales in the Universe \citep{2005PhRvD..72h3001D}.
+
+\subsection{\texttt{BiHalofit} Model}
+The \texttt{BiHalofit} model \citep{2020ApJ...895..113T} extends the Halofit prescription to compute the non-linear matter bispectrum \( B_m(k_1, k_2, k_3) \) from the linear matter power spectrum \( P_{\mathrm{L}}(k) \). The bispectrum is decomposed into one-halo and three-halo terms, given by:
+\begin{equation}
+    B_m(k_1, k_2, k_3) = B_{\mathrm{1h}}(k_1, k_2, k_3) + B_{\mathrm{3h}}(k_1, k_2, k_3),
+    \label{eq:bihalofit_model}
+\end{equation}
+The one-halo term describes the correlation in an individual halo, and the three-halo term captures the correlation between three different halos. Because the two-halo term is subdominant in most of the triangle configurations (except at the squeezed limit; \citealt{2011A&A...532A...4V}), it is neglected in the \texttt{BiHalofit} model.
+
+The one-halo term is given by:
+\begin{equation}
+    B_{1h}\left(k_1, k_2, k_3\right)=\int d M \frac{d n(M)}{d M}\left(\frac{M}{\bar{\rho}}\right)^3 u\left(k_1 ; M\right) u\left(k_2 ; M\right) u\left(k_3 ; M\right)
+    \label{eq:bihalofit_1h}
+\end{equation}
+where \( u(k; M) \) is the Fourier transform of the scaled halo density profile $\rho(r; M)/M$. The three-halo term is given by:
+\begin{equation}
+    B_{3h}\left(k_1, k_2, k_3\right)=2\left[F_2\left(\boldsymbol{k}_1, \boldsymbol{k}_2\right)+\frac{I_1^2\left(k_3\right)}{2 I_1^1\left(k_3\right)}\right] I_1^1\left(k_1\right) I_1^1\left(k_2\right) I_1^1\left(k_3\right) P_{\mathrm{L}}\left(k_1\right) P_{\mathrm{L}}\left(k_2\right)+2 \text { perm. }
+    \label{eq:bihalofit_3h}
+\end{equation}
+with 
+\begin{equation}
+    I_1^\beta(k)=\int d M \frac{d n(M)}{d M} \frac{M}{\bar{\rho}} b_\beta(M) u(k ; M)
+    \label{eq:bihalofit_3h_integral}
+\end{equation}
+and
+\begin{equation}
+    F_2\left(\boldsymbol{k}_1, \boldsymbol{k}_2\right)=\frac{5}{7}+\frac{1}{2}\left(\frac{k_1}{k_2}+\frac{k_2}{k_1}\right) \mu_{12}+\frac{2}{7} \mu_{12}^2
+    \label{eq:bihalofit_3h_F2}
+\end{equation}
+which is given at the tree level (leading order) in perturbation theory \citep{2002PhR...367....1B}.
+
 
 \section{Probability Density Functions} \label{sec:pdfs}
 The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field.
@@ -121,6 +182,14 @@ In practical applications, however, the Dirac delta function is not computationa
 \end{equation}
 where \(\Theta(x)\) is the Heaviside step function. This estimator counts the number of normalized convergence \(\nu_i\) that fall within each bin centered at \(\nu\), normalizing by the total number of pixels and the bin width \(\Delta\nu\).
 
+\subsection{\texttt{hmpdf} Model}
+The \texttt{hmpdf} model \citep{2020PhRvD.102l3545T} presents a halo-model formalism to compute the weak lensing convergence PDF, and its covariance matirix. The one-point $P(\kappa_a)$ and two-point $P(\kappa_a, \kappa_b; \phi)$ PDFs are separated into one-halo and two-halo terms as:
+\begin{equation}
+    P_{\text{1pt/2pt}} = P^{1h}_{\text{1pt/2pt}}P^{2h}_{\text{1pt/2pt}},
+    \label{eq:hmpdf}
+\end{equation}
+for exact formulae, see \cite{2020PhRvD.102l3545T}. Expanding the exponentials to the first order, the $p$-th order of the one-halo term describes overlaps of $p$ halos along the line of sight. The two-halo term arises from the dependence of halo density on the underlying matter density field.
+
 \section{Peak and Minimum Counts}
 \label{sec:peak_min_counts}
 Local maxima (peaks) and minima in convergence field correspond to regions of over-densities and under-densities, respectively. Analyzing the statistics of these extrema offers insights into the non-Gaussian features of the matter distribution, providing a powerful tool to constrain cosmological models beyond traditional two-point statistics like the power spectrum \citep{2000ApJ...530L...1J, 2010MNRAS.402.1049D}.
@@ -138,17 +207,19 @@ These conditions ensure that peaks are local maxima and minima are local minima 
     \label{fig:peak_min}
 \end{figure}
 
-The noise properties of peaks can be analytically described using Gaussian statistics \citep{1986ApJ...304...15B, 1987MNRAS.226..655B}. Due to the symmetry of a Gaussian field, the expected number density of minima below $-\nu$ is equal to that of peaks above $\nu$, $N_{\mathrm{min}}(-\nu) = N_{\mathrm{peak}}(\nu)$.
+The noise properties of peaks can be analytically described using Gaussian statistics \citep{1986ApJ...304...15B, 1987MNRAS.226..655B}. Due to the symmetry of a Gaussian field, the expected number density of minima below $-\nu$ is equal to that of peaks above $\nu$, $N_{\mathrm{\min}}(-\nu) = N_{\mathrm{peak}}(\nu)$.
+
+Different approaches to analytically predict weak lensing peak counts have been developed over the recent years. One milestone is the model for Gaussian random Field developed by \citet{1986ApJ...304...15B}, and the extention to the weak lensing field by \citet{2010A&A...519A..23M}. Another popular way to analyze weak lensing data is to compare the measured peak counts to weak lensing maps generated by N-body simulations \citep{2016MNRAS.463.3653K, 2018MNRAS.474..712M, 2021JCAP...01..028Z}.
 
 \section{Minkowski Functionals}
 \label{sec:minkowski_functionals}
-Minkowski functionals are powerful morphological descriptors derived from integral geometry, widely used to quantify the geometry and topology of spatial structures in cosmological datasets \citep{2024arXiv241000401A}. 
+Minkowski functionals are powerful morphological descriptors derived from integral geometry, widely used to quantify the geometry and topology of spatial structures \citep{2024arXiv241000401A}. 
 
 For a two-dimensional normalized convergence field $\nu(\hat{\mathbf{n}})$ with zero mean and variance $\sigma_0^2$, the excursion set $\Sigma(\nu_0)$ at threshold $\nu_0$ is defined as the set of points where the field exceeds a certain threshold value:
 \begin{equation}
     \Sigma(\nu_0) = \left\{ \hat{\mathbf{n}} \in S^2 \ \bigg| \ \nu(\hat{\mathbf{n}}) > \nu_0 \right\}.
 \end{equation}
-Figure~\ref{fig:excursion_sets} shows $\Sigma(\nu_0)$ for increasing threshold values $\nu_0 = 0.5, 1, 1.5,$ and $2$. As the threshold increases, the size and connectivity of the excursion sets diminish, reflecting the decreasing number of high-value regions in the field.
+Figure~\ref{fig:excursion_sets} shows $\Sigma(\nu_0)$ for increasing threshold values $\nu_0 = 0.5, 1, 1.5$ and $2$. As the threshold increases, the size and connectivity of the excursion sets diminish, reflecting the decreasing number of high-value regions in the field.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/threshold_comparison.png}
