@@ -25,7 +25,7 @@ Based on the likelihood function, we can construct the Fisher information matrix
 \end{equation}
 In the case of Gaussian likelihoods, the Fisher information matrix is simplified to:
 \begin{equation}
-    \mathcal{F}_{\alpha\beta} = \frac{1}{2} \mathrm{Tr} \left[ \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\alpha} \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\beta} \right]\Bigg|_{p_\alpha = \mu_\alpha} + \left(\frac{\partial \mathbf{\mu}}{\partial p_\alpha}\right)^{\mathrm{T}} \mathbf{C}^{-1} \frac{\partial \mathbf{\mu}}{\partial p_\beta},
+    \mathcal{F}_{\alpha\beta} = \frac{1}{2} \mathrm{Tr} \left[ \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\alpha} \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\beta} \right]\Bigg|_{p_\alpha = \mu_\alpha} + \left(\frac{\partial \mu}{\partial p_\alpha}\right)^{\mathrm{T}} \mathbf{C}^{-1} \frac{\partial \mu}{\partial p_\beta},
 \end{equation}
 where $\mathbf{\mu}$ is the mean of the data vector $\mathbf{d}$. The Fisher matrix allows us to forecast the expected uncertainties on the parameters via the Cramér-Rao bound:
 \begin{equation}

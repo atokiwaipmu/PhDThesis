@@ -2,31 +2,7 @@
 In this section, we will discuss the possible sources of systematics that could affect the covariance matrix. 
 
 \subsection{Box Replication Effect}
-The box replication effect arises from the re
+The box replication effect arises from replication of the simulation box in order to increase the volume of the simulation. In our setup, patches around the equator suffer the most from the box replication effect. To roughly assess the effect, we can compare the covariance matrices made from the patches around the equator and the rest of the patches.
 
-
-
-\section{Possible Effects}
-In this section, we will consider possible effects that could affect the covariance matrix, except for the super-sample covariance.
-\subsection{Finite Support Effects}
-Finite support effects are the effects that arise from the fact that the survey volume is finite. The finite support effects can be divided into two categories: the effects of the survey window function and the effects of the survey boundary. The survey window function is the function that describes the survey geometry, and the survey boundary is the boundary of the survey volume. The finite support effects can be understood as the effects of the survey window function and the survey boundary on the covariance matrix.
-
-\subsection{Box Replication Effect}
-It is clear that the patches lying on the equator are more tiled compared to the rest. For a rough estimation, we check the statistics of the patches lying on the equator and compare them with the rest of the patches.
-
-\section{Validation}
-We conducted simulations to validate the effects of finite support and box replication. The simulations were performed with box sizes $(L_{\text{box}}\, [\mathrm{Mpc}/h])$ of 125, 250, 500, 1000, 2000, and 4000, corresponding to particle numbers $(N_{\text{part}})$ of $125^3$, $250^3$, $500^3$, $1000^3$, $2000^3$, and $4000^3$, respectively. The simulations cover redshifts from $0$ to $3$, and for each set of parameters, we generated 5 realizations.
-
-We check the statistics for each simulation boxes and compare them each other.
-
-
-
-\section{Check if the gnomview matters}
-
-\section{Why higher-order statistics are less affected?}
-
-\section{correlation between different smoothing scales}
-
-
-
-
+\section{flat-sky vs. full-sky}
+The flat-sky approximation is a good approximation for small patches on the sky. However, the flat-sky approximation breaks down for large patches. In this section, we conduct a test for angular power spectrum, PDF, and peak/minima counts to see how the flat-sky approximation affects the statistics.
