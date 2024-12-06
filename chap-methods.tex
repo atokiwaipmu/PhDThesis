@@ -84,34 +84,44 @@ In order to simlplify the analysis onto a flat patch, we extracted patches from 
 \begin{equation}
     \sin \theta_i = \frac{2i}{2N + 1}, \quad \phi_i = \frac{2 \pi i}{\varphi}, \quad -N \leq i \leq N, \quad -\frac{\pi}{2} \leq \theta_i \leq \frac{\pi}{2},
 \end{equation}
-where $N$ is the number of patches and $\varphi = (1 + \sqrt{5})/2$ is the golden ratio.
-
-The number of patches, denoted \( N_{\text{patches}} \), was optimized to ensure that individual patches do not overlap, except in regions near the poles where overlapping patches were subsequently discarded. The optimization process commenced with an initial count of \( N_{\text{patches}} = 400 \) and involved iteratively reducing this number until a configuration was achieved wherein the patches remained non-overlapping, except for centers located within \( 10\sqrt{2}^\circ \, \mathrm{\deg}\) of the poles, that is $|\theta_i| \geq 10\sqrt{2}^\circ$ and $|\phi_i| \leq \pi - 10\sqrt{2}^\circ$. Additionally, patches include points heavily tiled along with line of sight and near the equator are excluded to avoid severe Box Replication Effect (see Sec.~\ref{sec:boxreplication} for further check).
-After optimization and masking, the number of patches was set to $N_{\text{patches}} = 273$, effectively reducing to $N_{\text{patches}} = 262$, effectively cover $64 \%$ of the sky. The visualization of the Fibonacci grid is shown in Figure~\ref{fig:fibonacci}.
+where $N$ is the number of patches and $\varphi = (1 + \sqrt{5})/2$ is the golden ratio. The visualization of the Fibonacci grid is shown in Figure~\ref{fig:fibonacci}.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/fibonacci_grid.png}
+    \includegraphics[width=\textwidth]{figures/fibonacci_grid.png}
     \caption{Visualization of the Fibonacci grid with $N_{\text{patches}} = 273$ patches, each covering approximately $10 \times 10$\,deg$^2$. 
     After the optimization and masking, the number of patches is reduced to $N_{\text{patches}} = 262$, effectively covering $64 \%$ of the sky.
     Each panel show the patches distribution on the Front, Top and Side view.}\label{fig:fibonacci}
 \end{figure}
 
-To verify the absence of overlap between patches, we calculated the vertices of each patch and conducted pairwise overlap checks with all other patches. For a Fibonacci grid center characterized by coordinates \( (\theta_i, \phi_i) \), the vertices of the corresponding patch are defined as:
+Figure~\ref{fig:fibonacci_extraction} showcases an extracted patch from the full-sky convergence map, and additional handling of the patches to get the desireed shape.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/fibonacci_extraction.png}
+    \caption{Extraction of a patch from the full-sky convergence map using a Fibonacci grid. The patch covers an area of $10^\circ \times 10^\circ$ and is centered at the vertices of the Fibonacci grid. From the left to the right, the panels show the original extracted patch, patch rotated $45^\circ$ around the center and the final patch after the second rotation. The red shaded region represents the final patch we used for analysis.
+    } \label{fig:fibonacci_extraction}
+\end{figure}
+
+Following \citet{2023MNRAS.524.5591F}, we can obtain the maximum number of patches by align the diagonal of square patches with the longitude lines. Nonetheless, we have to extract patches which their sides are aligned with the latitude lines due to the programming reason. Therefore, we first obtain a patch with wider side length and then rotate and crop the patch to get the desired shape.
+
+For a Fibonacci grid center characterized by coordinates \( (\theta_i, \phi_i) \), we first employed the \texttt{gnomview} function from the \texttt{healpy} library \citep{Zonca2019} to project each spherical patch onto a flat plane via a gnomonic projection. Then for each patch, we rotated them by $45^\circ$ around the center of the patch to align the diagonal of the patch with the longitude lines. Finally, we cropped the patch according to the corresponding vertices:
 \begin{align}
     \left( \theta_i - \Delta \theta,\, \phi_i - \Delta \phi \right), \quad &\left( \theta_i - \Delta \theta,\, \phi_i + \Delta \phi \right), \nonumber \\
     \left( \theta_i + \Delta \theta,\, \phi_i - \Delta \phi \right), \quad &\left( \theta_i + \Delta \theta,\, \phi_i + \Delta \phi \right),
 \end{align}
-where
+with
 \begin{align}
     \Delta \theta = 5\sqrt{2}\, \mathrm{\deg}, \quad \Delta \phi = 5\sqrt{2}\sin \theta_i \, \mathrm{\deg}.
 \end{align}
 
-Using the vertices of the Fibonacci grid as centers, we employed the \texttt{gnomview} function from the \texttt{healpy} library \citep{Zonca2019} to project each spherical patch onto a flat plane via a gnomonic projection. Each patch is represented by a $2048 \times 2048$ grid of pixels, resulting in a pixel size of:
+The number of patches, denoted \( N_{\text{patches}} \), was optimized to ensure that individual patches do not overlap, except in regions near the poles where overlapping patches were subsequently discarded. The optimization process commenced with an initial count of \( N_{\text{patches}} = 400 \) and involved iteratively reducing this number until a configuration was achieved wherein the patches remained non-overlapping, except for centers located within \( 10\sqrt{2}^\circ \, \mathrm{\deg}\) of the poles, that is $|\theta_i| \geq 10\sqrt{2}^\circ$ and $|\phi_i| \leq \pi - 10\sqrt{2}^\circ$. Additionally, patches include points heavily tiled along with line of sight and near the equator are excluded to avoid severe Box Replication Effect (see Sec.~\ref{sec:boxreplication} for further check).
+
+After optimization and masking, the number of patches was set to $N_{\text{patches}} = 273$, effectively reducing to $N_{\text{patches}} = 262$, effectively cover $64 \%$ of the sky. 
+Each patch is represented by a $2048 \times 2048$ grid of pixels, resulting in a pixel size of:
 \begin{equation}
     \Delta \theta = \frac{10^\circ}{2048} \approx 0.00488^\circ \approx 0.293' \quad \text{per pixel}.
 \end{equation}
-
-The analysis utilizes 11 realizations from the BIGBOX simulation and 20 realizations from the TILED simulation. For each realization, the covariance is computed using 262 patches extracted from the full-sky map of each simulation.
+For each realization, the covariance is computed using 262 patches extracted from the full-sky map of each simulation.
 Therefore, we obtain a total of 2882 patches from the BIGBOX simulation and 5240 patches from the TILED simulation. 
 
 \section{Gaussian Smoothing}
@@ -134,10 +144,17 @@ Figure~\ref{fig:smoothing} demonstrates the application of Gaussian smoothing to
 \label{fig:smoothing}
 \end{figure}
 
-\section{Measurements}
-In order to characterize the influence of super-sample covariance on higher-order statistics, this study concentrates on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals. These statistical measures offer complementary insights into the underlying matter distribution and exhibit sensitivity to distinct features of the gravitational lensing signal.
+For the non-Gaussian statistics, we adapt Gaussian smoothing. The statistics are then calculated from the smoothed convergence maps. The application of smoothing kernel to the convergence maps wash out the small-scale structures and therefore change the range of $\kappa$ values. To avoid the smoothing issues and the complex binning to consider, we normalize $\kappa$ values by the standard deviation of each patch's convergence map, $\sigma_{\kappa}$. Figure~\ref{fig:avg_sigma0} shows the average standard deviation of the noiseless convergence maps for the BIGBOX and TILED simulations. Obiviously, the standard deviation of convergence maps goes higher as the redshift or the smoothing scale decreases, while subtle difference between the BIGBOX and TILED simulations can be observed.
 
-\subsection{Statistical Measures and Computational Methods}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/avg_sigma0.png}
+    \caption{Average standard deviation of the noiseless convergence maps for the BIGBOX and TILED simulations. The standard deviation increases with redshift and smoothing scale, with a subtle difference between the BIGBOX and TILED simulations.} \label{fig:avg_sigma0}
+\end{figure}
+
+\section{Measurements}
+In order to characterize the influence of super-sample covariance on higher-order statistics, this study concentrates on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals. 
+
 Table~\ref{tab:statistics} delineates the range of values and the computational subroutines employed for each statistical measure. Each statistic is computed both for full-sky analyses and sky patches, utilizing the appropriate methodologies as specified.
 \begin{table*}[htbp]
     \centering
@@ -150,17 +167,42 @@ Table~\ref{tab:statistics} delineates the range of values and the computational 
     Peak Counts & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & \texttt{lenstools.peakCount} \\
     Minima Counts & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & \texttt{lenstools.peakCount} \\
     Probability Distribution Function (PDF) & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & \texttt{lenstools.pdf} \\
-    Minkowski Functionals & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & \texttt{lenstools.minkowskiFunctionals} \\
+    Minkowski Functionals & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & own implementation \\
     \bottomrule
     \end{tabular}
     \caption{Summary of the statistical measures employed in this investigation, including their respective value ranges and computational subroutines utilized for both full-sky and sky-patch analyses.}\label{tab:statistics}
 \end{table*}
-The angular power spectrum, denoted as $C_{\ell}^{\kappa\kappa}$, alongside three configurations of the bispectrum, $B_{\ell_1\ell_2\ell_3}^{\kappa\kappa\kappa}$, are derived from unsmoothed convergence maps. The bispectrum calculations encompass three distinct configurations: equilateral ($\ell_1 = \ell_2 = \ell_3$), squeezed ($\ell_1 = \ell_2 = 10\ell_3$), and isosceles ($\ell_1 = \ell_2 = 2\ell_3$). 
-All bispectrum and angular power spectrum computations are confined within the multipole range $\ell \in [300, 3000]$ with eight bins, consistent with the multipole selection in the HSC Y3 cosmic shear analysis \citep{2023PhRvD.108l3519D}. We adopt a logarithmic binning approach to effectively sample the range of scales, dividing the multipole interval into 8 bins that are evenly spaced in logarithmic space. 
 
-Conversely, the PDF, peak counts, minima counts, and Minkowski functionals are derived from smoothed convergence maps, where the smoothing angle is fixed at 2 arcminutes for the primary results. These measurements are conducted within the normalized range $-4 \leq \kappa/\sigma_{\kappa} \leq 4$, linearly divided into 8 bins following \citet{2021A&A...648A.115M}. $\sigma_{\kappa}$ denotes the standard deviation of each patch's convergence map.
+\subsection{Angular Power Spectrum}
+The angular power spectrum ($C_{\ell}^{\kappa\kappa}$) is calculated directly from the simulated convergence maps using \texttt{lenstools} \citep{2016A&C....17...73P} without performing any prior smoothing of the maps. We consider an angular multipole range from $\ell = 300$ to $\ell = 3000$ with $8$ logarithmically spaced bins. The number of bins is chosen to match the multipole selection in the HSC Y3 cosmic shear analysis \citep{2023PhRvD.108l3519D}. As the goal of this work is to investigate higher-order statistics, we choose the lower limit of $\ell = 300$ to avoid the large-scale regimes. The upper limit of $\ell = 3000$ is selected to ensure that the analysis reach the small-scale regime where the super-sample effect is more pronounced.
 
-All statistical computations are performed using the \texttt{lenstools} package \citep{2016A&C....17...73P}.
+For a reference, we compute the theoretical prediction using \texttt{Halofit} \citep{2012ApJ...761..152T} and compare it with the measured angular power spectrum. 
+The theoretical prediction is calculated using the same cosmological parameters as the simulations. 
+
+\subsection{Bispectrum}
+The bispectrum ($B_{\ell_1\ell_2\ell_3}^{\kappa\kappa\kappa}$) is computed from the unsmoothed convergence maps using \texttt{lenstools}. We consider three distinct configurations: equilateral ($\ell_1 = \ell_2 = \ell_3$), squeezed ($\ell_1 = \ell_2 = 10\ell_3$), and isosceles ($\ell_1 = \ell_2 = 2\ell_3$). 
+Those configurations are chosen to capture the different shapes of the bispectrum and provide complementary information about the underlying matter distribution.
+The bispectrum calculations are confined within the multipole range $\ell \in [300, 3000]$ with $8$ logarithmically spaced bins, same as the angular power spectrum. Though the bispectrum is more senstive to the noise and the small-scale structures, we choose the same multipole range to compare the results with the angular power spectrum.
+
+For the bispectrum, we also compute the theoretical prediction using the \texttt{BiHalofit} code~\citep{2020ApJ...895..113T} and compare it with the measured bispectrum. The theoretical prediction is calculated using the same cosmological parameters as the simulations.
+
+\subsection{PDF}
+The PDF of the convergence field is computed from the smoothed convergence maps using \texttt{lenstools}. The PDF is calculated within the normalized range $-4 \leq \kappa/\sigma_{\kappa} \leq 4$, linearly divided into 8 bins. $\sigma_{\kappa}$ denotes the standard deviation of each patch's convergence map.
+
+The thoretical prediction for the PDF is calculated using the \texttt{hmpdf} code~\cite{2020PhRvD.102l3545T} and compared with the measured PDF. The theoretical prediction is calculated based on the same linear matter power spectrum as the simulations.
+
+\subsection{Peak/Mimina Counts}
+The peak and minima counts are computed from the smoothed convergence maps using \texttt{lenstools}. The peak and minima counts are calculated within the normalized range $-4 \leq \kappa/\sigma_{\kappa} \leq 4$, linearly divided into 8 bins. Thought the highest/lowest peaks contain only few data points, we choose to include them in the analysis to match the range of the PDF.
+
+\subsection{Minkowski Functionals}
+The Minkowski functionals are computed from the smoothed convergence maps using our own implementation naively follow the definition in Section~\ref{sec:minkowski_functionals}. They are calculated within the normalized range $-4 \leq \kappa/\sigma_{\kappa} \leq 4$, linearly divided into 8 bins. We show $\sigma_1 = \sqrt{\kappa_{x}^2 + \kappa_{y}^2}$ which used to calculate the Minkowski functionals in Figure~\ref{fig:avg_sigma1}. The values decrease as the smoothing scale increases, while the difference between the BIGBOX and TILED simulations or the redshifts is subtle.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/avg_sigma1.png}
+    \caption{Average $\sigma_1 = \sqrt{\kappa_{x}^2 + \kappa_{y}^2}$ of the noiseless convergence maps for the BIGBOX and TILED simulations. They are calculated for the smoothing scales $\theta_{\mathrm{G}} = 2'$, $5'$, $8'$, and $10'$. The values decrease as the smoothing scale increases, while the difference between the BIGBOX and TILED simulations or the redshifts is subtle.
+    } \label{fig:avg_sigma1}
+\end{figure}
 
 \subsection{Covariance Matrix Estimation}
 Following the measurement phase, this study examines the influence of super-sample covariance on the covariance matrices associated with the aforementioned statistical measures. To achieve this, we employ an unbiased estimator for the covariance matrix as previously defined in Equation~\ref{eq:covariance}. 
