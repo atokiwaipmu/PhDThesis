@@ -308,28 +308,99 @@ The main steps of the \texttt{FASTPM} algorithm follow the standard PM method di
 
 \section{Weak Lensing Map Generation}
 \label{sec:weak-lensing-generation}
-\subsection{Ray-Tracing Algorithm}
-Weak gravitational lensing distorts the shapes of background galaxies, providing a powerful probe of the large-scale structure of the Universe. The ray-tracing algorithm simulates the lensing effect by tracing light rays from background galaxies through the gravitational potential of the foreground matter distribution. The algorithm consists of the following steps:
+To extract statistics from N-body simulations, it is necessary to generate detailed WL maps by simulating the propagation of a vast number of virtual light rays from source galaxies to the observer. This process involves calculating the distortions and magnifications of the source images caused by the cumulative gravitational deflections from the intervening matter distribution along each line of sight.
 
-\subsection{}
+\subsection{Conventional Ray-Tracing Algorithm}
+\label{subsec:conventional-ray-tracing}
+Conventional ray-tracing algorithms are fundamental tools for generating WL maps from N-body simulations. These algorithms simplify the complex three-dimensional matter distribution by projecting it onto a series of two-dimensional lens planes. This projection employs the \textit{discrete lens-plane approximation}, which assumes that gravitational deflections occur only at discrete planes along the light path \citep{2000ApJ...530..547J, 2009A&A...499...31H}. 
 
-For each shell, the three-dimensional matter density $\delta(\mathbf{x}, z_i)$ was projected onto a two-dimensional plane perpendicular to the line of sight. The projected surface density $\Sigma(\hat{\mathbf{n}}, \chi_i)$ at an angular position $\hat{\mathbf{n}}$ was computed by integrating the matter density within the shell along the radial direction:
-\begin{equation}
-    \Sigma(\hat{\mathbf{n}}, \chi_i) = \int_{\chi_i}^{\chi_{i+1}} \delta(\chi \hat{\mathbf{n}}, z(\chi)) \, d\chi.
-\end{equation}
-In practice, the surface density was mapped onto a HEALPix grid \citep{Górski_2005} to create a full-sky map $\Sigma(n_j, \chi_i)$, where $n_j$ represents discretized angular positions. The HEALPix grid resolution was set to $N_{\text{side}} = 8192$, providing an angular resolution of approximately $0.43$ arcminutes, which is sufficient to capture small-scale structures relevant to weak lensing studies.
+The numerical implementation of the ray-tracing algorithm involves several key computational steps, outlined below:
 
-The convergence $\kappa(n_j; z_s)$ at each pixel of the HEALPix grid was then obtained by summing contributions from all the shells up to the source redshift:
-\begin{equation}
-    \kappa(n_j; z_s) = \sum_{i} W(\chi_i, \chi_s) \Sigma(n_j, \chi_i) \Delta \chi_i,
-\end{equation}
-where $W(\chi, \chi_s)$ is the lensing efficiency function.
-The effective comoving distance to the center of the $j$-th shell, $\chi^j$, is calculated as \citep{2015MNRAS.453.3043S}:
-\begin{equation}
-    \chi^j = \frac{\int_{\chi_{\min}}^{\chi_{\max}} \chi^3 \, \mathrm{d}\chi}{\int_{\chi_{\min}}^{\chi_{\max}} \chi^2 \, \mathrm{d}\chi} = \frac{3}{4} \frac{\chi_{\max}^4 - \chi_{\min}^4}{\chi_{\max}^3 - \chi_{\min}^3},
-\end{equation}
-The density contrast within the $i$-th pixel of the $j$-th shell, $\delta^j(\hat{\boldsymbol{n}}_i)$, is determined by:
-\begin{equation}
-    \delta^j(\hat{\boldsymbol{n}}_i) = \frac{n_{\mathrm{part}, i}^j}{\bar{n}_{\mathrm{part}}^j} - 1,
-\end{equation}
-where $n_{\mathrm{part}, i}^j$ is the number of particles in the $i$-th pixel of the $j$-th shell, and $\bar{n}_{\mathrm{part}}^j$ is the average number of particles per pixel in that shell.
+\begin{enumerate}
+    \item \textbf{Lens Plane Generation:} 
+    The first step involves constructing the surface mass density $\Delta_\Sigma^j(\boldsymbol{\theta})$ for each lens plane $j$. This is achieved by projecting the three-dimensional matter density $\rho(\chi, \chi\boldsymbol{\theta})$ within a spherical shell bounded by comoving distances $\chi_j$ and $\chi_{j+1}$ onto a two-dimensional plane:
+    \begin{equation}
+        \Delta_\Sigma^j(\boldsymbol{\theta}) = \int_{\chi_j}^{\chi_{j+1}} \left[ \rho(\chi, \chi\boldsymbol{\theta}) - \bar{\rho}(\chi) \right] \chi^2 \, \mathrm{d}\chi,
+    \end{equation}
+    where $\bar{\rho}(\chi)$ is the mean matter density at distance $\chi$. 
+    The effective comoving distance to the center of the $j$-th shell, $\chi^j$, is calculated as \citep{2015MNRAS.453.3043S}:
+    \begin{equation}
+        \chi^j = \frac{\int_{\chi_{\min}}^{\chi_{\max}} \chi^3 \, \mathrm{d}\chi}{\int_{\chi_{\min}}^{\chi_{\max}} \chi^2 \, \mathrm{d}\chi} = \frac{3}{4} \frac{\chi_{\max}^4 - \chi_{\min}^4}{\chi_{\max}^3 - \chi_{\min}^3},
+    \end{equation}
+    where $\chi_{\min}$ and $\chi_{\max}$ are the minimum and maximum comoving distances of the shell, respectively.
+    The convergence field $\kappa_j(\boldsymbol{\theta})$ for the $j$-th lens plane is then computed as:
+    \begin{equation}
+        \kappa_j(\boldsymbol{\theta}) = \frac{4\pi G}{c^2} \frac{\Delta_\Sigma^j(\boldsymbol{\theta})}{a_j \chi_j},
+    \end{equation}
+    with $a_j$ being the scale factor and $\chi_j$ the comoving distance to the $j$-th lens plane.
+
+    To express $\kappa_j(\boldsymbol{\theta})$ in terms of the simulation parameters, we consider the following quantities:
+    \begin{itemize}
+        \item $V_{\mathrm{sim}}$: The simulation volume.
+        \item $N_{\mathrm{part}}$: The total number of particles in the simulation.
+        \item $N_{\mathrm{pix}}$: The number of pixels on each lens plane.
+        \item $n_{\mathrm{part}}^j$: The number of particles in the $j$-th shell.
+        \item $\bar{n}_{\mathrm{part}}^j$: The mean number of particles per pixel in the $j$-th shell.
+    \end{itemize}
+    The convergence field is then given by:
+    \begin{equation}
+        \kappa_j(\boldsymbol{\theta}) = \frac{3H_0^2\Omega_m}{2c^2 a_j \chi_j} \frac{V_{\mathrm{sim}}}{N_{\mathrm{part}}} \frac{N_{\mathrm{pix}}}{4\pi} \left( n_{\mathrm{part}}^j - \bar{n}_{\mathrm{part}}^j \right),
+    \end{equation}
+
+    \item \textbf{Potential Calculation:} 
+    To facilitate the computation of lensing effects, the lensing potential $\psi^j(\boldsymbol{\theta})$ for each lens plane is derived from the convergence field $\kappa_j(\boldsymbol{\theta})$. This is efficiently done using spherical harmonics:
+    \begin{equation}
+        \psi_{lm}^j = \frac{2}{l(l+1)} \kappa_{lm}^j \quad \text{for} \quad l \neq 0,
+    \end{equation}
+    and $\psi_{lm}^j = 0$ for $l = 0$. Subsequently, the lensing potential in real space is reconstructed, allowing the calculation of the deflection field $\boldsymbol{\alpha}^j(\boldsymbol{\theta})$ and the optical tidal matrix $U_{ik}^j(\boldsymbol{\theta})$ through:
+    \begin{equation}
+        \alpha_i^j = -\nabla_i \psi^j, \quad U_{ik}^j = \nabla_i \nabla_k \psi^j.
+    \end{equation}
+
+    \item \textbf{Deflection Angle Determination:} 
+        The deflection field $\boldsymbol{\alpha}^j(\boldsymbol{\theta})$ and the optical tidal matrix $U_{ik}^j(\boldsymbol{\theta})$ are interpolated to arbitrary positions on each lens plane. The lensing matrix $\mathcal{A}^j_{ik}$ at each plane is then updated using the recurrence relation:
+        \begin{equation}
+            \begin{aligned}
+                \mathcal{A}_{i k}^{j+1} & = \left(1 - \frac{\chi_j}{\chi_{j+1}} \frac{\chi_{j+1} - \chi_{j-1}}{\chi_j - \chi_{j-1}} \right) \mathcal{A}_{i k}^{j-1} + \frac{\chi_j}{\chi_{j+1}} \frac{\chi_{j+1} - \chi_{j-1}}{\chi_j - \chi_{j-1}} \mathcal{A}_{i k}^j \\
+                & \quad - \frac{\chi_{j+1} - \chi_j}{\chi_{j-1}} U_{i m}^j \mathcal{A}_{m k}^j,
+            \end{aligned}
+        \end{equation}
+        with the initial conditions:
+        \begin{equation}
+            \mathcal{A}_{i k}^1 = \delta_{i k}, \quad \mathcal{A}_{i k}^0 = \delta_{i k},
+        \end{equation}
+    for $j \geq 1$. The closest lens plane to the observer is designated as $j = 0$.
+
+    \item \textbf{Ray Propagation:} 
+    Light rays are propagated from the source galaxies to the observer through the sequence of lens planes. At each plane, the accumulated deflection angles are updated based on the lensing matrix $\mathcal{A}^j_{ik}$. 
+
+    \item \textbf{Map Assembly:} 
+    After propagating all light rays through the lens planes, the convergence $\kappa(\boldsymbol{\theta})$ and shear $\gamma(\boldsymbol{\theta})$ fields are compiled into full-sky maps. These maps are typically represented on the \texttt{HEALPix} grid.
+\end{enumerate}
+
+\subsection{Born-approximated Ray-tracing}
+The Born approximation offers a simplified approach to weak lensing map generation by assuming that light rays travel along their unperturbed, straight-line paths from the source galaxies to the observer. This approximation neglects the bending of light rays due to gravitational deflections between lens planes, thereby reducing the computational complexity of the ray-tracing process. While this simplification can lead to faster computations, it introduces certain limitations in accurately capturing multiple deflections and non-linear lensing effects.
+
+The Born-approximated ray-tracing algorithm comprises the following key steps:
+
+\begin{enumerate}
+    \item \textbf{Lens Plane Calculation:} 
+    For each lens plane $j$, the convergence contribution $\kappa_j(\boldsymbol{\theta})$ is computed independently, incorporating the lensing efficiency function $W(\chi_j, \chi_s)$, where $\chi_j$ is the comoving distance to the $j$-th lens plane and $\chi_s$ is the comoving distance to the source galaxy. The convergence on the $j$-th plane is given by
+    \begin{equation}
+        \kappa_j(\boldsymbol{\theta}) = W(\chi_j, \chi_s) \delta_j(\boldsymbol{\theta}) \Delta \chi_j,
+        \label{eq:kappa_born}
+    \end{equation}
+    where $\delta_j(\boldsymbol{\theta}) = \frac{n_{\mathrm{part}}^j(\boldsymbol{\theta})}{\bar{n}_{\mathrm{part}}^j} - 1$ represents the projected matter density contrast on the $j$-th lens plane, and $\Delta \chi_j$ is the comoving thickness of the $j$-th lens plane. The lensing efficiency function, previously defined in Eq.~\eqref{eq:lensing_efficiency_flat}, is discreditized for each lens plane as:
+    \begin{equation}
+        W(\chi_j, \chi_s) = \frac{3 H_0^2 \Omega_m}{2 c^2} \frac{( \chi_s - \chi_j )}{ \chi_s } \frac{ \chi_j }{ a_j },
+    \end{equation}
+
+    \item \textbf{Convergence Field Assembly:} 
+    The total convergence field $\kappa(\boldsymbol{\theta})$ is obtained by summing the contributions from all individual lens planes:
+    \begin{equation}
+        \kappa(\boldsymbol{\theta}) = \sum_{j} \kappa_j(\boldsymbol{\theta}).
+        \label{eq:total_kappa}
+    \end{equation}
+    This linear superposition is a direct consequence of the Born approximation, which assumes that each lens plane contributes independently to the total convergence without accounting for the altered path of the light ray due to previous deflections.
+
+\end{enumerate}
