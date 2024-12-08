@@ -312,9 +312,7 @@ To extract statistics from N-body simulations, it is necessary to generate detai
 
 \subsection{Conventional Ray-Tracing Algorithm}
 \label{subsec:conventional-ray-tracing}
-Conventional ray-tracing algorithms are fundamental tools for generating WL maps from N-body simulations. These algorithms simplify the complex three-dimensional matter distribution by projecting it onto a series of two-dimensional lens planes. This projection employs the \textit{discrete lens-plane approximation}, which assumes that gravitational deflections occur only at discrete planes along the light path \citep{2000ApJ...530..547J, 2009A&A...499...31H}. 
-
-The numerical implementation of the ray-tracing algorithm involves several key computational steps, outlined below:
+Conventional ray-tracing algorithms are fundamental tools for generating WL maps from N-body simulations. These algorithms simplify the complex three-dimensional matter distribution by projecting it onto a series of two-dimensional lens planes. The numerical implementation of the ray-tracing algorithm involves several key computational steps, outlined below \citep{2008ApJ...682....1D, 2009A&A...497..335T, 2015MNRAS.453.3043S}:
 
 \begin{enumerate}
     \item \textbf{Lens Plane Generation:} 
@@ -390,7 +388,7 @@ The Born-approximated ray-tracing algorithm comprises the following key steps:
         \kappa_j(\boldsymbol{\theta}) = W(\chi_j, \chi_s) \delta_j(\boldsymbol{\theta}) \Delta \chi_j,
         \label{eq:kappa_born}
     \end{equation}
-    where $\delta_j(\boldsymbol{\theta}) = \frac{n_{\mathrm{part}}^j(\boldsymbol{\theta})}{\bar{n}_{\mathrm{part}}^j} - 1$ represents the projected matter density contrast on the $j$-th lens plane, and $\Delta \chi_j$ is the comoving thickness of the $j$-th lens plane. The lensing efficiency function, previously defined in Eq.~\eqref{eq:lensing_efficiency_flat}, is discreditized for each lens plane as:
+    where $\delta_j(\boldsymbol{\theta}) = n_{\mathrm{part}}^j(\boldsymbol{\theta}) / \bar{n}_{\mathrm{part}}^j - 1$ represents the projected matter density contrast on the $j$-th lens plane, and $\Delta \chi_j$ is the comoving thickness of the $j$-th lens plane. The lensing efficiency function, previously defined in Eq.~\eqref{eq:lensing_efficiency_flat}, is discreditized for each lens plane as:
     \begin{equation}
         W(\chi_j, \chi_s) = \frac{3 H_0^2 \Omega_m}{2 c^2} \frac{( \chi_s - \chi_j )}{ \chi_s } \frac{ \chi_j }{ a_j },
     \end{equation}
