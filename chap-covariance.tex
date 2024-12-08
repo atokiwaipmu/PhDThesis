@@ -13,7 +13,13 @@ For an unbiased estimator, the covariance matrix is given by:
 where \( N_{\mathrm{sim}} \) is the number of simulations, and \( \mathcal{O}_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
 
 \section{Role of the Covariance Matrix}
-Though we leave the Fisher forecast using the covariance matrix for future work, it is worthful to discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. When comparing theoretical models to observational data, we often compute a likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$, where $\mathbf{d}$ represents the data vector and $\mathbf{p}$ denotes the set of cosmological parameters. For Gaussian-distributed data, the likelihood function is given by:
+Though we leave the Fisher forecast using the covariance matrix for future work, it is worthful to discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. When comparing theoretical models to observational data, we often compute a likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$, where $\mathbf{d}$ represents the data vector and $\mathbf{p}$ denotes the set of cosmological parameters. 
+According to Bayes's theorem, the posterior distribution $P(\mathbf{p} | \mathbf{d})$ of the model parameters $\mathbf{p}$ given the data $\mathbf{d}$ is given by:
+\begin{equation}
+    P(\mathbf{p} | \mathbf{d}) = \frac{\mathcal{L}(\mathbf{d} | \mathbf{p}) \pi(\mathbf{p})}{\mathbf{\mathcal{\epsilon}}(\mathbf{d})},
+\end{equation}
+where $\pi(\mathbf{p})$ is the prior distribution of the parameters, and $\mathbf{\mathcal{\epsilon}}(\mathbf{d})$ is the evidence, which normalizes the posterior distribution. 
+For Gaussian-distributed data, the likelihood function is given by:
 \begin{equation}
     \ln \mathcal{L}(\mathbf{d} | \mathbf{p}) = -\frac{1}{2}(\mathbf{d} - \mathbf{m}(\mathbf{p}))^{\mathrm{T}} \mathbf{C}^{-1} (\mathbf{d} - \mathbf{m}(\mathbf{p})) + \mathrm{const},
 \end{equation}
@@ -27,11 +33,19 @@ In the case of Gaussian likelihoods, the Fisher information matrix is simplified
 \begin{equation}
     \mathcal{F}_{\alpha\beta} = \frac{1}{2} \mathrm{Tr} \left[ \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\alpha} \mathbf{C}^{-1} \frac{\partial \mathbf{C}}{\partial p_\beta} \right]\Bigg|_{p_\alpha = \mu_\alpha} + \left(\frac{\partial \mu}{\partial p_\alpha}\right)^{\mathrm{T}} \mathbf{C}^{-1} \frac{\partial \mu}{\partial p_\beta},
 \end{equation}
-where $\mathbf{\mu}$ is the mean of the data vector $\mathbf{d}$. The Fisher matrix allows us to forecast the expected uncertainties on the parameters via the Cramér-Rao bound:
+where $\mathbf{\mu}$ is the mean of the data vector $\mathbf{d}$. 
+As assumed in most studies, the covariance matrix $\mathbf{C}$ is model independent, so that the Fisher information matrix can be reduced to:
+\begin{equation}
+    \mathcal{F}_{\alpha\beta} = \left(\frac{\partial \mu}{\partial p_\alpha}\right)^{\mathrm{T}} \mathbf{C}^{-1} \frac{\partial \mu}{\partial p_\beta},
+\end{equation}
+The Fisher matrix allows us to forecast the expected uncertainties on the parameters via the Cramér-Rao bound:
 \begin{equation}
     \left\langle (\Delta p_\alpha)^2 \right\rangle \geq (\mathcal{F}^{-1})_{\alpha\alpha},
 \end{equation}
-where $\Delta p_\alpha$ is the uncertainty on the $\alpha$-th parameter. Note that this condition is marginalized over all other parameters, $p_\beta$ ($\beta \neq \alpha$).
+where $\Delta p_\alpha$ is the uncertainty on the $\alpha$-th parameter. Note that this condition is marginalized over all other parameters, $p_\beta$ ($\beta \neq \alpha$). The correlation coefficient between two parameters $p_\alpha$ and $p_\beta$ is given by:
+\begin{equation}
+    \rho_{\alpha\beta} = \frac{(\mathcal{F}^{-1})_{\alpha\beta}}{\sqrt{(\mathcal{F}^{-1})_{\alpha\alpha} (\mathcal{F}^{-1})_{\beta\beta}}}.
+\end{equation}
 
 \section{Covariance of the Matter Power Spectrum}
 Understanding the covariance matrix of the matter power spectrum \( P_m(k) \) is crucial before delving into two-dimensional weak lensing statistics. 
