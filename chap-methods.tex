@@ -94,9 +94,25 @@ where $N$ is the number of patches and $\varphi = (1 + \sqrt{5})/2$ is the golde
     \centering
     \includegraphics[width=\textwidth]{figures/fibonacci_grid.png}
     \caption{Visualization of the Fibonacci grid with $N_{\text{patches}} = 273$ patches, each covering approximately $10 \times 10$\,deg$^2$. 
-    After the optimization and masking, the number of patches is reduced to $N_{\text{patches}} = 262$, effectively covering $64 \%$ of the sky.
-    Each panel show the patches distribution on the Front, Top and Side view.}\label{fig:fibonacci}
+    After the optimization and masking, the number of patches is reduced to $N_{\text{patches}} = 194$, effectively covering $47 \%$ of the sky.
+    Each panel show the patches distribution on the Front, Top view and the final patches from the front.}\label{fig:fibonacci}
 \end{figure}
+
+Following \citet{2023MNRAS.524.5591F}, we can obtain the maximum number of patches by align the diagonal of square patches with the longitude lines. Nonetheless, we have to extract patches which their sides are aligned with the latitude lines due to the programming reason. Therefore, we first obtain a patch with wider side length and then rotate and crop the patch to get the desired shape.
+
+Before extracting the patches, we first optimize the number of patches to extract from the full-sky map. The number of patches, denoted \( N_{\text{patches}} \), was optimized to ensure that individual patches do not overlap, except in regions near the poles where overlapping patches were subsequently discarded. 
+Each patch on the full-sky map is defined as:
+\begin{align}
+    \left( \theta_i - R_{\text{patch}},\, \phi_i + R_{\text{patch}} \sin \theta_i \right),  \quad & \left( \theta_i + R_{\text{patch}},\, \phi_i + R_{\text{patch}} \sin \theta_i \right), \nonumber \\
+    \left( \theta_i - R_{\text{patch}},\, \phi_i - R_{\text{patch}} \sin \theta_i \right), \quad &
+    \left( \theta_i + R_{\text{patch}},\, \phi_i - R_{\text{patch}} \sin \theta_i \right)
+\end{align}
+with \( R_{\text{patch}} = 5\sqrt{2}\, \mathrm{\deg} \), the half diagonal length of the patch.
+The optimization process commenced with an initial count of \( N_{\text{patches}} = 400 \) and involved iteratively reducing this number until a configuration was achieved wherein the patches remained non-overlapping, except for centers located within \( 2R_{\text{patch}}\) of the poles, that is $|\theta_i| \geq 2R_{\text{patch}}$ and $|\phi_i| \leq \pi - 2R_{\text{patch}}$. This threshold was selected to ensure that the patches were not including the poles.
+
+After optimization and masking, the number of patches was set to $N_{\text{patches}} = 273$, effectively reducing to $N_{\text{patches}} = 265$, effectively cover $64 \%$ of the sky. Additionally, patches include points heavily tiled along with line of sight are excluded to avoid severe Box Replication Effect (see Sec.~\ref{sec:boxreplication} for further check). Hence, the final number of patches used for analysis is $N_{\text{patches}} = 194$, covering $47 \%$ of the sky.
+
+For a Fibonacci grid center characterized by coordinates \( (\theta_i, \phi_i) \), we first employed the \texttt{gnomview} function from the \texttt{healpy} library \citep{Zonca2019} to project each spherical patch onto a flat plane via a gnomonic projection. Then for each patch, we rotated them by $45^\circ$ around the center of the patch to align the diagonal of the patch with the longitude lines. Finally, we cropped the patch according to the corresponding vertices.
 
 Figure~\ref{fig:fibonacci_extraction} showcases an extracted patch from the full-sky convergence map, and additional handling of the patches to get the desireed shape.
 
@@ -107,27 +123,12 @@ Figure~\ref{fig:fibonacci_extraction} showcases an extracted patch from the full
     } \label{fig:fibonacci_extraction}
 \end{figure}
 
-Following \citet{2023MNRAS.524.5591F}, we can obtain the maximum number of patches by align the diagonal of square patches with the longitude lines. Nonetheless, we have to extract patches which their sides are aligned with the latitude lines due to the programming reason. Therefore, we first obtain a patch with wider side length and then rotate and crop the patch to get the desired shape.
-
-For a Fibonacci grid center characterized by coordinates \( (\theta_i, \phi_i) \), we first employed the \texttt{gnomview} function from the \texttt{healpy} library \citep{Zonca2019} to project each spherical patch onto a flat plane via a gnomonic projection. Then for each patch, we rotated them by $45^\circ$ around the center of the patch to align the diagonal of the patch with the longitude lines. Finally, we cropped the patch according to the corresponding vertices:
-\begin{align}
-    \left( \theta_i - \Delta \theta,\, \phi_i - \Delta \phi \right), \quad &\left( \theta_i - \Delta \theta,\, \phi_i + \Delta \phi \right), \nonumber \\
-    \left( \theta_i + \Delta \theta,\, \phi_i - \Delta \phi \right), \quad &\left( \theta_i + \Delta \theta,\, \phi_i + \Delta \phi \right),
-\end{align}
-with
-\begin{align}
-    \Delta \theta = 5\sqrt{2}\, \mathrm{\deg}, \quad \Delta \phi = 5\sqrt{2}\sin \theta_i \, \mathrm{\deg}.
-\end{align}
-
-The number of patches, denoted \( N_{\text{patches}} \), was optimized to ensure that individual patches do not overlap, except in regions near the poles where overlapping patches were subsequently discarded. The optimization process commenced with an initial count of \( N_{\text{patches}} = 400 \) and involved iteratively reducing this number until a configuration was achieved wherein the patches remained non-overlapping, except for centers located within \( 10\sqrt{2}^\circ \, \mathrm{\deg}\) of the poles, that is $|\theta_i| \geq 10\sqrt{2}^\circ$ and $|\phi_i| \leq \pi - 10\sqrt{2}^\circ$. Additionally, patches include points heavily tiled along with line of sight and near the equator are excluded to avoid severe Box Replication Effect (see Sec.~\ref{sec:boxreplication} for further check).
-
-After optimization and masking, the number of patches was set to $N_{\text{patches}} = 273$, effectively reducing to $N_{\text{patches}} = 262$, effectively cover $64 \%$ of the sky. 
 Each patch is represented by a $2048 \times 2048$ grid of pixels, resulting in a pixel size of:
 \begin{equation}
     \Delta \theta = \frac{10^\circ}{2048} \approx 0.00488^\circ \approx 0.293' \quad \text{per pixel}.
 \end{equation}
-For each realization, the covariance is computed using 262 patches extracted from the full-sky map of each simulation.
-Therefore, we obtain a total of 2882 patches from the BIGBOX simulation and 5240 patches from the TILED simulation. 
+For each realization, the covariance is computed using 194 patches extracted from the full-sky map of each simulation.
+Therefore, we obtain a total of 2134 patches from the BIGBOX simulation and 3880 patches from the TILED simulation. 
 
 \section{Gaussian Smoothing}
 Shape noise predominantly affects small angular scales. To mitigate this noise and enhance the detection of the underlying lensing signal, we applied Gaussian smoothing to the noisy convergence maps. The Gaussian filter used is defined by:
@@ -160,7 +161,7 @@ For the non-Gaussian statistics, we adapt Gaussian smoothing. The statistics are
 \section{Measurements}
 In order to characterize the influence of super-sample covariance on higher-order statistics, this study concentrates on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals. 
 
-Table~\ref{tab:statistics} delineates the range of values and the computational subroutines employed for each statistical measure. Each statistic is computed both for full-sky analyses and sky patches, utilizing the appropriate methodologies as specified.
+Table~\ref{tab:statistics} delineates the range of values and the computational subroutines employed for each statistical measure. 
 \begin{table*}[htbp]
     \centering
     \begin{tabular}{lcc}
@@ -175,7 +176,7 @@ Table~\ref{tab:statistics} delineates the range of values and the computational 
     Minkowski Functionals & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & own implementation \\
     \bottomrule
     \end{tabular}
-    \caption{Summary of the statistical measures employed in this investigation, including their respective value ranges and computational subroutines utilized for both full-sky and sky-patch analyses.}\label{tab:statistics}
+    \caption{Summary of the statistical measures employed in this investigation, including their respective value ranges and computational subroutines utilized for analyses.}\label{tab:statistics}
 \end{table*}
 
 \subsection{Angular Power Spectrum}
@@ -221,8 +222,6 @@ Additionally, we also compute the correlation matrix for each statistical measur
     \rho_{ij} = \frac{\text{Cov}(\mathcal{O}_i, \mathcal{O}_j)}{\sqrt{\text{Cov}(\mathcal{O}_i, \mathcal{O}_i)\text{Cov}(\mathcal{O}_j, \mathcal{O}_j)}},
 \end{equation}
 where $\mathcal{O}_i$ and $\mathcal{O}_j$ represent the $i$-th and $j$-th statistical measures, respectively.
-
-To 
 
 After the covariance and correlation matrices are computed for both the BIGBOX and TILED simulations, we compare the matrices to quantify the impact of super-sample covariance on the statistical measures. The comparison is conducted by calculating the ratio between the covariance and correlation matrices of the BIGBOX and TILED simulations. 
 
