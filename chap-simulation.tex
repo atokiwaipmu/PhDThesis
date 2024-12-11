@@ -4,7 +4,7 @@ Since the 1980s, numerical cosmology has developed algorithms to mitigate the co
 
 Advancements in algorithms and software optimization have increased the number of particles in cosmological simulations beyond what direct summation methods allow. Since 1990, gravity-only simulations have exhibited a super-exponential growth trend, indicated by the quadratic regression in Figure~\ref{fig:particle-count}, reflecting significant methodological innovations beyond hardware improvements~\citep{leclercq2020}.
 
-\begin{figure} \centering \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png} \caption{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
+\begin{figure} \centering \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png} \caption[Evolution of the number of particles used in $N$-body simulations]{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
 
 \section{Initial Condition Generation}
 As we have seen in Section~\ref{sec:initial_conditions}, the primodial power spectrum $P(k)$ is a key ingredient in generating initial conditions for cosmological simulations. Based on the linear power spectrum, we will review the process of generating initial conditions for $N$-body simulations.
@@ -181,7 +181,7 @@ Figure~\ref{fig:mass-assignment} illustrates the mass assignment process for a p
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/weight_functions.png}
-    \caption{Illustration of three mass assignment schemes—Nearest Grid Point (NGP), Cloud-In-Cell (CIC), and Triangular-Shaped Cloud (TSC)—used to map a particle's mass onto a 1D grid.}
+    \caption[Illustration of three mass assignment schemes]{Illustration of three mass assignment schemes—Nearest Grid Point (NGP), Cloud-In-Cell (CIC), and Triangular-Shaped Cloud (TSC)—used to map a particle's mass onto a 1D grid.}
     \label{fig:mass-assignment}
 \end{figure}
 
@@ -203,7 +203,7 @@ with $\theta$ being a predefined threshold.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/adaptive_mesh_refinement.png}
-    \caption{Illustration of adaptive mesh refinement (AMR) applied to a 2D image with two Gaussian kernels. The left panel shows the initial coarse grid structure over the image. The middle and right panels demonstrate progressively finer levels of mesh refinement in regions of higher intensity, where the Gaussian kernels are located. The red grid outlines indicate the adaptively refined mesh hierarchy, ensuring higher resolution where needed while maintaining computational efficiency in lower-intensity regions.}
+    \caption[Illustration of adaptive mesh refinement]{Illustration of adaptive mesh refinement (AMR) applied to a 2D image with two Gaussian kernels. The left panel shows the initial coarse grid structure over the image. The middle and right panels demonstrate progressively finer levels of mesh refinement in regions of higher intensity, where the Gaussian kernels are located. The red grid outlines indicate the adaptively refined mesh hierarchy, ensuring higher resolution where needed while maintaining computational efficiency in lower-intensity regions.}
     \label{fig:amr}
 \end{figure}
 Figure~\ref{fig:amr} demonstrates the application of Adaptive Mesh Refinement (AMR) to a two-dimensional image containing two Gaussian kernels. Initially, a uniformly coarse grid overlays the entire image (left panel). As the refinement process progresses, the mesh becomes increasingly finer in regions with higher intensity, specifically around the Gaussian kernels (middle and right panels). The red grid lines represent the hierarchy of the refined meshes, enabling higher resolution where it is most needed and optimizing computational resources by keeping a coarser grid in less significant areas.
@@ -219,7 +219,7 @@ One of the popular algorithms for tree construction is the Barnes-Hut Octree \ci
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/Octree.png}
-    \caption{Illustration of an Octree decomposition for a 3D volume containing four particles. The left panel showcases the spatial subdivision of the volume into hierarchical grid cells, with color-coding indicating different levels of refinement. The right panel presents the corresponding Octree data structure, highlighting the hierarchical relationships between nodes. Credit by \citet{Powell2023}}
+    \caption[Illustration of an Octree decomposition]{Illustration of an Octree decomposition for a 3D volume containing four particles. The left panel showcases the spatial subdivision of the volume into hierarchical grid cells, with color-coding indicating different levels of refinement. The right panel presents the corresponding Octree data structure, highlighting the hierarchical relationships between nodes. Credit by \citet{Powell2023}}
     \label{fig:barnes-hut}
 \end{figure}
 

@@ -40,6 +40,7 @@
 \RequirePackage{booktabs}  % Professional tables
 \RequirePackage{enumitem}  % Customize lists
 \RequirePackage{comment}   % Comment environment
+\RequirePackage{tocloft}  % Customize table of contents
 \RequirePackage{geometry}          % For page layout
 \RequirePackage{graphicx}          % For including graphics
 \RequirePackage{amsmath, amssymb}  % For mathematical symbols and environments

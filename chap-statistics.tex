@@ -6,9 +6,9 @@ The matter power spectrum, \( P(k) \), is a fundamental quantity in cosmology th
 \end{equation}
 where \( \tilde{\delta}(\mathbf{k}) \) represents the Fourier transform of the density contrast \( \delta(\mathbf{x}) \), and \( \delta^{(3)} \) is the three-dimensional Dirac delta function ensuring statistical isotropy and homogeneity.
 
-In the context of weak gravitational lensing, the matter power spectrum \( P(k) \) is not directly observable. Instead, observations yield the angular power spectrum of the convergence field, \( C_{\ell}^{\kappa\kappa} \), which encapsulates the statistical properties of the convergence \( \kappa(\boldsymbol{\theta}) \) across the sky \citep{2001PhR...340..291B}. The convergence power spectrum, \( P_{\kappa}(\ell) \), is defined through the relation:
+In the context of weak gravitational lensing, the matter power spectrum \( P(k) \) is not directly observable. Instead, observations yield the angular power spectrum of the convergence field, \( C_{\ell}^{\kappa\kappa} \), which encapsulates the statistical properties of the convergence \( \kappa(\boldsymbol{\theta}) \) across the sky \citep{2001PhR...340..291B}. The convergence power spectrum, \( C_{\ell}^{\kappa\kappa} \), is defined through the relation:
 \begin{equation}
-    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle = (2\pi)^2 \delta^{(2)}(\boldsymbol{\ell} + \boldsymbol{\ell}') P_{\kappa}(\ell),
+    \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle = (2\pi)^2 \delta^{(2)}(\boldsymbol{\ell} + \boldsymbol{\ell}') C^{\kappa\kappa}_\ell,
     \label{eq:convergence_power_spectrum}
 \end{equation}
 where \( \tilde{\kappa}(\boldsymbol{\ell}) \) is the Fourier transform of the convergence field \( \kappa(\boldsymbol{\theta}) \), and \( \delta^{(2)} \) is the two-dimensional Dirac delta function.
@@ -35,7 +35,7 @@ where \( \mathbf{x} = (\chi \boldsymbol{\theta}, \chi) \) is the comoving positi
 \end{eqnarray}
 where \( \mathbf{k}_\perp \) and \( k_\parallel \) are the components of \( \mathbf{k} \) perpendicular and parallel to the line of sight, respectively.
 
-Next, we compute the ensemble average of the Fourier transform of the convergence field:
+Next, we evaluate the ensemble average of the Fourier transform of the convergence field. Starting from the definition, we have:
 \begin{eqnarray}
     \langle \tilde{\kappa}(\boldsymbol{\ell}) \tilde{\kappa}(\boldsymbol{\ell}') \rangle 
     &=& \int_0^{\chi_s} d\chi \, \frac{W(\chi)}{\chi^2} \int_0^{\chi_s} d\chi' \, \frac{W(\chi')}{\chi'^2} 
@@ -50,7 +50,10 @@ Next, we compute the ensemble average of the Fourier transform of the convergenc
        P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \nonumber 
     \label{eq:kappa_power_spectrum}
 \end{eqnarray}
-where in the last step we have applied the Limber approximation \citep{1954ApJ...119..655L}, which assumes \( k_\parallel \ll \ell/\chi \).
+
+To proceed, we invoke the Limber approximation \citep{1954ApJ...119..655L}. This approximation assumes that the dominant contributions arise from modes close to the line of sight, implying \( k_\parallel \ll \ell/\chi \).
+Physically, this corresponds to the limit of small angular separations (or large multipole number $\ell$) where the geometry of the problem simplifies. In this regime, functions that vary slowly along the line of sight can be factored out of integrals, and the highly oscillatory spherical Bessel functions that would appear in a full-sky calculation can be approximated by their limiting behavior. 
+
 Under the Limber approximation, the integral simplifies as:
 \begin{equation}
     \int \frac{dk_\parallel}{2\pi} e^{i k_\parallel (\chi - \chi')} P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \approx P_m\left(\frac{\ell}{\chi}\right) \delta(\chi - \chi'),
@@ -203,13 +206,13 @@ These conditions ensure that peaks are local maxima and minima are local minima 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/peaks_minima.png}
-    \caption{Identification of peaks and minima in a smoothed convergence map. The left panel shows the smoothed convergence field $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$ with peaks (red circles) satisfying the peak condition (Equation~\eqref{eq:peak_condition}), and the right panel highlights the minima (blue circles) satisfying the minimum condition (Equation~\eqref{eq:min_condition}).}
+    \caption[Concept of Peaks/Minima Identification]{Identification of peaks and minima in a smoothed convergence map. The left panel shows the smoothed convergence field $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$ with peaks (red circles) satisfying the peak condition (Equation~\eqref{eq:peak_condition}), and the right panel highlights the minima (blue circles) satisfying the minimum condition (Equation~\eqref{eq:min_condition}).}
     \label{fig:peak_min}
 \end{figure}
 
 The noise properties of peaks can be analytically described using Gaussian statistics \citep{1986ApJ...304...15B, 1987MNRAS.226..655B}. Due to the symmetry of a Gaussian field, the expected number density of minima below $-\nu$ is equal to that of peaks above $\nu$, $N_{\mathrm{\min}}(-\nu) = N_{\mathrm{peak}}(\nu)$.
 
-Different approaches to analytically predict weak lensing peak counts have been developed over the recent years. One milestone is the model for Gaussian random Field developed by \citet{1986ApJ...304...15B}, and the extention to the weak lensing field by \citet{2010A&A...519A..23M}. Another popular way to analyze weak lensing data is to compare the measured peak counts to weak lensing maps generated by N-body simulations \citep{2016MNRAS.463.3653K, 2018MNRAS.474..712M, 2021JCAP...01..028Z}.
+Different approaches to analytically predict weak lensing peak counts have been developed over the recent years. One milestone is the model for Gaussian random Field developed by \citet{1986ApJ...304...15B}, and the extention to the weak lensing field by \citet{2010A&A...519A..23M}. Another popular way to analyze weak lensing data is to compare the measured peak counts to weak lensing maps generated by N-body simulations \citep{2010PhRvD..81h3505M, 2016MNRAS.463.3653K, 2018MNRAS.474..712M, 2021JCAP...01..028Z}.
 
 \section{Minkowski Functionals}
 \label{sec:minkowski_functionals}
@@ -223,7 +226,7 @@ Figure~\ref{fig:excursion_sets} shows $\Sigma(\nu_0)$ for increasing threshold v
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/threshold_comparison.png}
-    \caption{Excursion sets $\Sigma(\nu) = \{ \kappa > \nu \sigma_0 \}$ for increasing thresholds ($\nu = 0.5, 1, 1.5, 2$). Black regions indicate areas where $\kappa$ exceeds $\nu \sigma_0$, showing reduced size and connectivity as $\nu$ increases.}
+    \caption[Excursion sets of different thresholds]{Excursion sets $\Sigma(\nu) = \{ \kappa > \nu \sigma_0 \}$ for increasing thresholds ($\nu = 0.5, 1, 1.5, 2$). Black regions indicate areas where $\kappa$ exceeds $\nu \sigma_0$, showing reduced size and connectivity as $\nu$ increases.}
     \label{fig:excursion_sets}
 \end{figure}
 

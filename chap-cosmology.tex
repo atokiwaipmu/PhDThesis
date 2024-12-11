@@ -13,7 +13,7 @@ where $\Lambda$ is the cosmological constant, $G$ is the gravitational constant,
     G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu},
     \label{eq:einstein_tensor}
 \end{equation}
-the $R_{\mu\nu}$ is the Riemann tensor, described by the Christoffel symbols $\Gamma^\lambda_{\mu\nu}$ as:
+the $R_{\mu\nu}$ is the Ricci tensor, described by the Christoffel symbols $\Gamma^\lambda_{\mu\nu}$ as:
 \begin{equation}
     R_{\mu\nu} = \partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\lambda_{\lambda\sigma} \Gamma^\sigma_{\mu\nu} - \Gamma^\lambda_{\mu\sigma} \Gamma^\sigma_{\lambda\nu},
     \label{eq:ricci_curvature_tensor}
@@ -44,7 +44,7 @@ Different speices of matter and energy contribute to the energy density \( \rho 
     w = \frac{p}{\rho}.
     \label{eq:equation_of_state}
 \end{equation}
-For perfect fluids, the equation of state parameter can be derived by considering the trace of the stress-energy tensor:
+For radiation, the equation of state parameter can be derived by considering the trace of the stress-energy tensor:
 \begin{equation}
     0 = T = g^{\mu\nu} T_{\mu\nu} = (\rho + p)(-1) + 4p = -\rho + 3p,
     \label{eq:stress_energy_trace}
@@ -240,7 +240,7 @@ Figure~\ref{fig:cmb_power_spectrum} illustrates the CMB temperature power spectr
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/Planck_power_spectrum.jpg}
-    \caption{Angular Power Spectrum of Cosmic Microwave Background Temperature Fluctuations as a function of the multipole moment (\( \ell \)) and the corresponding angular scale. The observational data are depicted by red markers with associated error bars, whereas the theoretical prediction derived from the \(\Lambda\)CDM cosmological model is represented by the green curve \citep{2014A&A...571A..15P}. The primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
+    \caption[Angular Power Spectrum of CMB Temperature]{Angular Power Spectrum of Cosmic Microwave Background Temperature Fluctuations as a function of the multipole moment (\( \ell \)) and the corresponding angular scale. The observational data are depicted by red markers with associated error bars, whereas the theoretical prediction derived from the \(\Lambda\)CDM cosmological model is represented by the green curve \citep{2014A&A...571A..15P}. The primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
     }
     \label{fig:cmb_power_spectrum}
 \end{figure}
@@ -282,7 +282,7 @@ Figure~\ref{fig:linear_power_spectrum} shows the linear matter power spectrum co
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/class.png}
-    \caption{The linear matter power spectrum as a function of the wavenumber \( k \) computed using the \texttt{CLASS} code. The transition from the radiation-dominated to the matter-dominated era is evident around \( k_{\text{eq}} = 0.0104\, h/\text{Mpc} \) \citep{2020A&A...641A...6P}.
+    \caption[Linear Matter Power Spectrum by \texttt{CLASS}]{The linear matter power spectrum as a function of the wavenumber \( k \) computed using the \texttt{CLASS} code. The transition from the radiation-dominated to the matter-dominated era is evident around \( k_{\text{eq}} = 0.0104\, h/\text{Mpc} \) \citep{2020A&A...641A...6P}.
     }
     \label{fig:linear_power_spectrum}
 \end{figure}

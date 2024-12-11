@@ -32,7 +32,7 @@ The TILED simulation covers a smaller volume with side length $L = 625$ Mpc/h, p
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/light_cone_configuration.png}
-    \caption{Spatial and redshift setup for the BIGBOX and TILED simulations. Dashed blue grids partition the overall simulation volume into smaller, manageable tiling regions where each tile is a replication of the TILED simulation. The lower horizontal axis represents the line-of-sight distance measured in $\mathrm{Mpc}/h$, with the corresponding redshift values displayed on the top axis.} \label{fig:simulationsetting}
+    \caption[Spatial and redshift setup for the BIGBOX and TILED simulations]{Spatial and redshift setup for the BIGBOX and TILED simulations. Dashed blue grids partition the overall simulation volume into smaller, manageable tiling regions where each tile is a replication of the TILED simulation. The lower horizontal axis represents the line-of-sight distance measured in $\mathrm{Mpc}/h$, with the corresponding redshift values displayed on the top axis.} \label{fig:simulationsetting}
 \end{figure}
 
 Both simulations commence at an initial redshift of $z = 9$, utilizing an initial linear matter power spectrum at $z = 0$ generated via the \texttt{CLASS} code \citep{2011JCAP...07..034B}. We evolved the simulations over $60$ time steps, reaching the present day ($z = 0$). The resulting particle distributions are returned in $80$ shells spanning scale factors from $a = 0.2$ to $a = 1.0$ with a uniform spacing of $\Delta a = 0.01$. At each scale factor $a_i$, particles within the shells are projected onto a HEALPix grid \citep{Górski_2005} with $N_{\text{side}} = 8192$, providing an angular resolution of approximately $0.43$ arcminutes, to create mass maps.
@@ -46,7 +46,7 @@ It is important to note that the observer is positioned at the corner point shar
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/samplepatch.png}
-    \caption{Illustration of a $5 \times 5$ patch around $(\theta, \phi)= (\pi/2, 0)$ extracted from the TILED and BIGBOX simulations. The TILED simulation exhibits a distinct Kaleidoscope pattern due to box replication, resulting in heavily tiled regions along the line of sight and near the equator.} 
+    \caption[Illustration of a $5 \times 5$ patch]{Illustration of a $5 \times 5$ patch around $(\theta, \phi)= (\pi/2, 0)$ extracted from the TILED and BIGBOX simulations. The TILED simulation exhibits a distinct Kaleidoscope pattern due to box replication, resulting in heavily tiled regions along the line of sight and near the equator.} 
     \label{fig:boxreplication_patch}
 \end{figure}
 
@@ -58,7 +58,7 @@ Figure~\ref{fig:lensing_efficiency} presents the normalized lensing efficiency a
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/lensefficiency.png}
-    \caption{Normalized lensing efficiency as a function of comoving distance for multiple source redshifts. The lensing efficiency peaks at intermediate comoving distances, indicating regions where the distribution of matter enhances the gravitational lensing signal.} \label{fig:lensing_efficiency}
+    \caption[Normalized lensing efficiency for multiple source redshifts]{Normalized lensing efficiency as a function of comoving distance for multiple source redshifts. The lensing efficiency peaks at intermediate comoving distances, indicating regions where the distribution of matter enhances the gravitational lensing signal.} \label{fig:lensing_efficiency}
 \end{figure}
 
 We considered source redshifts $z_s = [0.5, 1.0, 1.5, 2.0, 2.5]$ covering the range of distances relevant for current and future galaxy surveys. At redshift $z < 1$, both simulation suffer from the super-sample effect, while at redshift $z > 1$, the effect is more pronounced in the BIGBOX simulation. Figure~\ref{fig:convergence_maps} illustrates the convergence maps generated from the BIGBOX and TILED simulations for source redshift $z_s = 1.5$. 
@@ -66,7 +66,7 @@ We considered source redshifts $z_s = [0.5, 1.0, 1.5, 2.0, 2.5]$ covering the ra
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/samplemap.png}
-    \caption{Convergence maps generated from the BIGBOX and TILED simulations for source redshift $z_s = 1.5$. The yellow regions represent positive convergence, while the blue regions indicate negative convergence. The convergence maps exhibit similar large-scale structures.} \label{fig:convergence_maps}
+    \caption[Convergence maps generated from the BIGBOX and TILED simulations]{Convergence maps generated from the BIGBOX and TILED simulations for source redshift $z_s = 1.5$. The yellow regions represent positive convergence, while the blue regions indicate negative convergence. The convergence maps exhibit similar large-scale structures.} \label{fig:convergence_maps}
 \end{figure}
 
 
@@ -93,7 +93,7 @@ where $N$ is the number of patches and $\varphi = (1 + \sqrt{5})/2$ is the golde
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/fibonacci_grid.png}
-    \caption{Visualization of the Fibonacci grid with $N_{\text{patches}} = 273$ patches, each covering approximately $10 \times 10$\,deg$^2$. 
+    \caption[Visualization of the Fibonacci grids]{Visualization of the Fibonacci grid with $N_{\text{patches}} = 273$ patches, each covering approximately $10 \times 10$\,deg$^2$. 
     After the optimization and masking, the number of patches is reduced to $N_{\text{patches}} = 194$, effectively covering $47 \%$ of the sky.
     Each panel show the patches distribution on the Front, Top view and the final patches from the front.}\label{fig:fibonacci}
 \end{figure}
@@ -119,7 +119,7 @@ Figure~\ref{fig:fibonacci_extraction} showcases an extracted patch from the full
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures/fibonacci_extraction.png}
-    \caption{Extraction of a patch from the full-sky convergence map using a Fibonacci grid. The patch covers an area of $10^\circ \times 10^\circ$ and is centered at the vertices of the Fibonacci grid. From the left to the right, the panels show the original extracted patch, patch rotated $45^\circ$ around the center and the final patch after the second rotation. The red shaded region represents the final patch we used for analysis.
+    \caption[Extraction of a patch from the full-sky convergence map using a Fibonacci grid]{Extraction of a patch from the full-sky convergence map using a Fibonacci grid. The patch covers an area of $10^\circ \times 10^\circ$ and is centered at the vertices of the Fibonacci grid. From the left to the right, the panels show the original extracted patch, patch rotated $45^\circ$ around the center and the final patch after the second rotation. The red shaded region represents the final patch we used for analysis.
     } \label{fig:fibonacci_extraction}
 \end{figure}
 
@@ -146,7 +146,7 @@ Figure~\ref{fig:smoothing} demonstrates the application of Gaussian smoothing to
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/smoothed_comparison.png}
-    \caption{Effect of Gaussian smoothing on a noisy convergence map. Each panel shows the result of applying a Gaussian filter with a different smoothing scale $\theta_{\mathrm{G}} = 2'$, $5'$, $8'$, and $10'$. As the smoothing scale increases, small-scale noise is progressively suppressed, and large-scale structures become more prominent. This demonstrates how Gaussian smoothing effectively reduces shape noise while enhancing the detection of the underlying lensing signal.}
+    \caption[Gaussian smoothing on a noisy convergence map for multiple smoothing scales]{Effect of Gaussian smoothing on a noisy convergence map. Each panel shows the result of applying a Gaussian filter with a different smoothing scale $\theta_{\mathrm{G}} = 2'$, $5'$, $8'$, and $10'$. As the smoothing scale increases, small-scale noise is progressively suppressed, and large-scale structures become more prominent. This demonstrates how Gaussian smoothing effectively reduces shape noise while enhancing the detection of the underlying lensing signal.}
 \label{fig:smoothing}
 \end{figure}
 
@@ -155,7 +155,7 @@ For the non-Gaussian statistics, we adapt Gaussian smoothing. The statistics are
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/avg_sigma0.png}
-    \caption{Average standard deviation of the noiseless convergence maps for the BIGBOX and TILED simulations. The standard deviation increases with redshift and smoothing scale, with a subtle difference between the BIGBOX and TILED simulations.} \label{fig:avg_sigma0}
+    \caption[Average standard deviation of the noiseless convergence maps]{Average standard deviation of the noiseless convergence maps for the BIGBOX and TILED simulations. The standard deviation increases with redshift and smoothing scale, with a subtle difference between the BIGBOX and TILED simulations.} \label{fig:avg_sigma0}
 \end{figure}
 
 \section{Measurements}
@@ -206,7 +206,7 @@ The Minkowski functionals are computed from the smoothed convergence maps using 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/avg_sigma1.png}
-    \caption{Average $\sigma_1 = \sqrt{\kappa_{x}^2 + \kappa_{y}^2}$ of the noiseless convergence maps for the BIGBOX and TILED simulations. They are calculated for the smoothing scales $\theta_{\mathrm{G}} = 2'$, $5'$, $8'$, and $10'$. The values decrease as the smoothing scale increases, while the difference between the BIGBOX and TILED simulations or the redshifts is subtle.
+    \caption[Average $\sigma_1 = \sqrt{\kappa_{x}^2 + \kappa_{y}^2}$ of the noiseless convergence maps]{Average $\sigma_1 = \sqrt{\kappa_{x}^2 + \kappa_{y}^2}$ of the noiseless convergence maps for the BIGBOX and TILED simulations. They are calculated for the smoothing scales $\theta_{\mathrm{G}} = 2'$, $5'$, $8'$, and $10'$. The values decrease as the smoothing scale increases, while the difference between the BIGBOX and TILED simulations or the redshifts is subtle.
     } \label{fig:avg_sigma1}
 \end{figure}
 

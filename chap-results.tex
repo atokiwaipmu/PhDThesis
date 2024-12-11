@@ -14,25 +14,25 @@ Overall, these findings support the hypothesis that super-sample covariance sign
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/cl_main.png}
-    \caption{Comparison of the mean values of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) for different source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$) obtained from the BIGBOX (solid lines) and TILED (dashed lines) simulations. The lower subplots show the ratio of the TILED to BIGBOX mean values, with a reference line at unity to facilitate the assessment of agreement between the two simulations.}
+    \caption[$C_\ell^{\kappa\kappa}$ Mean and Variance]{Comparison of the mean values of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) for different source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$) obtained from the BIGBOX (solid lines) and TILED (dashed lines) simulations. The lower subplots show the ratio of the TILED to BIGBOX mean values, with a reference line at unity to facilitate the assessment of agreement between the two simulations.}
     \label{fig:cl_main}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/cl_cov.png}
-    \caption{Comparison of the covariance matrices and correlation matrices of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) between the BIGBOX and TILED simulations for various source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$). The displayed ratios represent the element-wise division of the covariance and correlation matrices from the TILED simulations by those from the BIGBOX simulations. The `avg' denotes the average ratio of the considered matrix elements.}
+    \caption[$C_\ell^{\kappa\kappa}$ Correlation and Covariance Ratio]{Comparison of the covariance matrices and correlation matrices of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) between the BIGBOX and TILED simulations for various source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$). The displayed ratios represent the element-wise division of the covariance and correlation matrices from the TILED simulations by those from the BIGBOX simulations. The `avg' denotes the average ratio of the considered matrix elements.}
     \label{fig:cl_cov}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/bl_main.png}
-    \caption{Same as Figure~\ref{fig:cl_main}, but for the bispectrum. }
+    \caption[Bispectrum Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for the bispectrum. }
     \label{fig:bl_main}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/bl_corr.png}
-    \caption{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of bispectrum. The noisy nature of the bispectrum covariance makes it challenging to discern clear trends between the simulations.}
+    \caption[Bispectrum Correlation and Covariance]{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of bispectrum. The noisy nature of the bispectrum covariance makes it challenging to discern clear trends between the simulations.}
     \label{fig:bl_cov}
     \vspace{0.5cm}
     \includegraphics[width=\textwidth]{figures/results/bl_cov.png}
@@ -41,47 +41,47 @@ Overall, these findings support the hypothesis that super-sample covariance sign
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/pdf_main.png}
-    \caption{Same as Figure~\ref{fig:cl_main}, but for the probability density function (PDF) of the convergence field. The comparison highlights the agreement in mean PDF values between the simulations across different redshifts.}
+    \caption[PDF Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for the probability density function (PDF) of the convergence field. The comparison highlights the agreement in mean PDF values between the simulations across different redshifts.}
     \label{fig:pdf_main}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/pdf_cov.png}
-    \caption{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of the PDF. The covariance ratios indicate higher covariance in the BIGBOX simulations, particularly at higher redshifts.}
+    \caption[PDF Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of the PDF. The covariance ratios indicate higher covariance in the BIGBOX simulations, particularly at higher redshifts.}
     \label{fig:pdf_cov}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/peaks_main.png}
-    \caption{Same as Figure~\ref{fig:cl_main}, but for peak counts in the convergence maps. The analysis reveals deviations at low $\nu$ values due to resolution limitations affecting low-density regions.}
+    \caption[Peak Counts Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for peak counts in the convergence maps. The analysis reveals deviations at low $\nu$ values due to resolution limitations affecting low-density regions.}
     \label{fig:peak_main}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/peaks_cov.png}
-    \caption{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of peak counts. The covariance ratios suggest increased covariance in the BIGBOX simulations, with pronounced effects at higher redshifts.}
+    \caption[Peak Counts Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of peak counts. The covariance ratios suggest increased covariance in the BIGBOX simulations, with pronounced effects at higher redshifts.}
     \label{fig:peak_cov}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/minima_main.png}
-    \caption{Same as Figure~\ref{fig:cl_main}, but for minima in the convergence maps. The comparison underscores the simulation's limitations at resolving low-density minima accurately.}
+    \caption[Minima Counts Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for minima in the convergence maps. The comparison underscores the simulation's limitations at resolving low-density minima accurately.}
     \label{fig:min_main}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/minima_cov.png}
-    \caption{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of minima. The covariance ratios reflect higher values in the BIGBOX simulations, consistent with other statistical measures.}
+    \caption[Minima Counts Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of minima. The covariance ratios reflect higher values in the BIGBOX simulations, consistent with other statistical measures.}
     \label{fig:min_cov}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/mfs_main.png}
-    \caption{Same as Figure~\ref{fig:cl_main}, but for Minkowski Functionals (area $V_0$, perimeter $V_1$, and genus $V_2$). The agreement in mean values between simulations is generally good, with some discrepancies at extreme density thresholds.}
+    \caption[Minkowski Functionals Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for Minkowski Functionals (area $V_0$, perimeter $V_1$, and genus $V_2$). The agreement in mean values between simulations is generally good, with some discrepancies at extreme density thresholds.}
     \label{fig:mfs_main}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/mfs_corr.png}
-    \caption{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of Minkowski Functionals. }
+    \caption[Minkowski Functionals Correlation and Covariance]{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of Minkowski Functionals.}
     \label{fig:mfs_cov}
     \vspace{0.5cm}
     \includegraphics[width=\textwidth]{figures/results/mfs_cov.png}
@@ -95,22 +95,22 @@ Figures~\ref{fig:avg_noise_cov} and~\ref{fig:avg_noise_corr} illustrate how the 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/avg_cov_ratio_ngal.png}
-    \caption{Average ratio of covariance matrices of statistical measures between the BIGBOX and TILED simulations for different shape noise levels (see Table~\ref{tab:survey_comparison}). The increasing trend indicates does not affected by the noise level.}
+    \caption[Average BIGBOX/TILED Ratio of Covariance for multiple noise levels]{Average ratio of covariance matrices of statistical measures between the BIGBOX and TILED simulations for different shape noise levels (see Table~\ref{tab:survey_comparison}). The increasing trend indicates does not affected by the noise level.}
     \label{fig:avg_noise_cov}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/avg_corr_ratio_ngal.png}
-    \caption{Same as Figure~\ref{fig:avg_noise_cov}, but for the correlation matrices. The off-diagonal elements compared to the diagonal elements do not show a clear trend with noise levels.}
+    \caption[Average BIGBOX/TILED Ratio of Correlation for multiple noise levels]{Same as Figure~\ref{fig:avg_noise_cov}, but for the correlation matrices. The off-diagonal elements compared to the diagonal elements do not show a clear trend with noise levels.}
     \label{fig:avg_noise_corr}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{figures/results/avg_cov_ratio_sl.png}
-    \caption{Average ratio of covariance matrices of statistical measures between the BIGBOX and TILED simulations for different smoothing scales. Larger smoothing scales lead to increased discrepancies in covariance estimates due to the loss of small-scale information.}
+    \caption[Average BIGBOX/TILED Ratio of Covariance for multiple smoothing scales]{Average ratio of covariance matrices of statistical measures between the BIGBOX and TILED simulations for different smoothing scales. Larger smoothing scales lead to increased discrepancies in covariance estimates due to the loss of small-scale information.}
     \label{fig:avg_sl_cov}
     \vspace{2cm}
     \includegraphics[width=\textwidth]{figures/results/avg_corr_ratio_sl.png}
-    \caption{Same as Figure~\ref{fig:avg_sl_cov}, but for the correlation matrices. The instability at larger smoothing scales reflects the challenges in capturing correlations at reduced resolutions.}
+    \caption[Average BIGBOX/TILED Ratio of Correlation for multiple smoothing scales]{Same as Figure~\ref{fig:avg_sl_cov}, but for the correlation matrices. The instability at larger smoothing scales reflects the challenges in capturing correlations at reduced resolutions.}
     \label{fig:avg_sl_corr}
 \end{figure}
 
@@ -119,11 +119,11 @@ Figures~\ref{fig:cl_noise} and~\ref{fig:ng_noise} demonstrate how the ratios of 
 \begin{figure}[p]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/results/correlation_cov_noise.png}
-    \caption{Ratio of covariance matrices of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) between the BIGBOX and TILED simulations for different shape noise levels (see Table~\ref{tab:survey_comparison}). The sensitivity of the power spectrum to noise is evident from the fluctuating covariance ratios with higher noise levels.}
+    \caption[BIGBOX/TILED Ratio of Covariance Matricies for multiple noise levels: $C^{\kappa\kappa}_{\ell}$]{Ratio of covariance matrices of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) between the BIGBOX and TILED simulations for different shape noise levels (see Table~\ref{tab:survey_comparison}). The sensitivity of the power spectrum to noise is evident from the fluctuating covariance ratios with higher noise levels.}
     \label{fig:cl_noise}
     \vspace{0.5cm}
     \includegraphics[width=0.8\textwidth]{figures/results/nongaussian_cov_noise.png}
-    \caption{Same as Figure~\ref{fig:cl_noise}, but for the non-Gaussian statistical measures. The robustness of these measures against noise variations is reflected in the relatively stable covariance ratios.}
+    \caption[BIGBOX/TILED Ratio of Covariance Matricies for multiple noise levels: Non-Gaussian Statistics]{Same as Figure~\ref{fig:cl_noise}, but for the non-Gaussian statistical measures. The robustness of these measures against noise variations is reflected in the relatively stable covariance ratios.}
     \label{fig:ng_noise}
 \end{figure}
 
@@ -137,6 +137,6 @@ Figure~\ref{fig:ng_smoothing} illustrates the effects of smoothing scale on non-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/results/nongaussian_cov_sl.png}
-    \caption{Same as Figure~\ref{fig:ng_noise}, but showing the impact of different smoothing scales on the covariance matrices of non-Gaussian statistical measures. The results emphasize how increased smoothing affects the detection and characterization of small-scale features.}
+    \caption[BIGBOX/TILED Ratio of Covariance Matricies for multiple smoothing scales: Non-Gaussian Statistics]{Same as Figure~\ref{fig:ng_noise}, but showing the impact of different smoothing scales on the covariance matrices of non-Gaussian statistical measures. The results emphasize how increased smoothing affects the detection and characterization of small-scale features.}
     \label{fig:ng_smoothing}
 \end{figure}

@@ -15,16 +15,16 @@ We found that the patches including the point $(\theta_i, \phi_i) = (\pi/2, 0)$ 
 
 Finally, we obtain $70$ patches from each realization, and $1400$ patches for TILED simulations and $770$ patches for BIGBOX simulations in total.
 
-Figure~\ref{fig:boxreplication_ell_cov} and Figure~\ref{fig:boxreplication_nu_cov} show the average ratios of the covariance matrices and correlation matrices between BIGBOX and TILED simulations. Regardless the noisy behavior of bispectrum, the ratio are much closer to unity for the suspected patches. This implies that the box replication effect is significantly enhance the covariance matrix.
+Figure~\ref{fig:boxreplication_cov} and Figure~\ref{fig:boxreplication_corr} show the average ratios of the covariance matrices and correlation matrices between BIGBOX and TILED simulations. Regardless the noisy behavior of bispectrum, the ratio are much closer to unity for the suspected patches. This implies that the box replication effect is significantly enhance the covariance matrix.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/BR/BR_ratio_ell_cov.png}
-    \caption{The ratios of covariance matrices and correlation matrices of power spectrum and bispectrum between the patches around special directions and the rest of the patches. }
-    \label{fig:boxreplication_ell_cov}
-    \includegraphics[width=\textwidth]{figures/BR/BR_ratio_nu_cov.png}
-    \caption{The same as Figure~\ref{fig:boxreplication_ell_cov}, but for PDF, peak/minima counts and Minkowski functionals. The box replication effect significantly enhances the covariance matrix.}
-    \label{fig:boxreplication_nu_cov}
+    \includegraphics[width=\textwidth]{figures/BR_ratio_cov.png}
+    \caption{The BIGBOX / TILED ratios of covariance matrices, for the case of the patches around special directions and the rest of the patches. }
+    \label{fig:boxreplication_cov}
+    \includegraphics[width=\textwidth]{figures/BR_ratio_corr.png}
+    \caption{The same as Figure~\ref{fig:boxreplication_cov}, but for correlation matrices.}
+    \label{fig:boxreplication_corr}
 \end{figure}
 
 Figure~\ref{fig:boxreplication_ell} and~\ref{fig:boxreplication_nu} show the comparison of the ratios of mean and variance of each Statistics. Clearly, the suspected patches have biased mean values. The variance ratios are closer to unity, which means that the variance of the suspected patches is larger than the rest of the patches.
