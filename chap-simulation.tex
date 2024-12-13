@@ -1,10 +1,16 @@
-Numerical simulations are crucial in physics and astronomy for studying complex systems of interacting particles, such as galaxies and the Universe's large-scale structure, where analytical solutions are often impractical due to complexity and nonlinearity. This section provides an overview of $N$-body simulations commonly used in cosmology.
+Numerical simulations are crucial in physics and astronomy for studying complex systems of interacting particles, such as galaxies and the Universe's large-scale structure, where analytical solutions are often impractical due to complexity and nonlinearity \citep{1981csup.book.....H, 1985ApJS...57..241E, 2005Natur.435..629S, 2005MNRAS.364.1105S}. This section provides an overview of $N$-body simulations commonly used in cosmology.
+
+In cosmology and astrophysics, simulation can be grouped into two main categories: dark matter-only simulations and hydrodynamical simulations. 
+
+Dark matter simulations are used to study the large-scale structure of the universe, the formation of dark matter halos, and the evolution of dark matter particles under the influence of gravity. Since dark matter is effectively collisionless and interacts primarily through gravity, it can be modeled as a collection of particles that evolve under the influence of gravitational forces \citep{1985ApJS...57..241E}. 
+
+Hydrodynamical simulations, on the other hand, include the effects of gas dynamics, star formation, and feedback processes from supernovae and active galactic nuclei (AGN) \citep{1989ApJS...70..419H, 2005Natur.435..629S, 2005MNRAS.364.1105S}. These simulations are more computationally expensive and require additional physics beyond gravity, such as hydrodynamics, radiative transfer, and chemistry.
 
 Since the 1980s, numerical cosmology has developed algorithms to mitigate the computational challenges posed by long-range gravitational interactions by reducing global communication across the computational domain. Key algorithms include mesh-based methods, tree codes, and multipole expansions~\citep{1981csup.book.....H}. Figure~\ref{fig:particle-count} displays the number of particles used in selected $N$-body simulations employing these techniques. Symbols and colors indicate the gravitational solvers: particle-particle-particle-mesh (P$^3$M) and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR).
 
 Advancements in algorithms and software optimization have increased the number of particles in cosmological simulations beyond what direct summation methods allow. Since 1990, gravity-only simulations have exhibited a super-exponential growth trend, indicated by the quadratic regression in Figure~\ref{fig:particle-count}, reflecting significant methodological innovations beyond hardware improvements~\citep{leclercq2020}.
 
-\begin{figure} \centering \includegraphics[width=0.6\textwidth]{figures/Moore_law_cosmosims.png} \caption[Evolution of the number of particles used in $N$-body simulations]{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
+\begin{figure} \centering \includegraphics[width=\textwidth]{figures/Moore_law_cosmosims.png} \caption[Evolution of the number of particles used in $N$-body simulations]{Evolution of the number of particles used in $N$-body simulations as a function of the year of publication~\citep{leclercq2020}. The symbols and colors indicate the gravitational solver employed: P$^3$M and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR). Hydrodynamic simulations are represented by black squares.} \label{fig:particle-count} \end{figure}
 
 \section{Initial Condition Generation}
 As we have seen in Section~\ref{sec:initial_conditions}, the primodial power spectrum $P(k)$ is a key ingredient in generating initial conditions for cosmological simulations. Based on the linear power spectrum, we will review the process of generating initial conditions for $N$-body simulations.
@@ -58,8 +64,28 @@ where $a$ is the scale factor, $H$ is the Hubble parameter, and $f(a)$ is the gr
 \section{Simulation Basics}
 We outline the fundamental concepts and algorithms used in $N$-body simulations, including direct summation, particle-mesh methods, particle-particle particle-mesh (P3M) methods, and tree-particle-mesh (Tree-PM) methods.
 
+Table~\ref{tab:simulation-methods} summarizes the key features of these methods, including computational complexity and example objectives they are best suited for.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Method} & \textbf{Complexity} & \textbf{Objective} & \textbf{Key Features} \\
+        \midrule
+        Direct Summation & $\mathcal{O}(N^2)$ & Globular Clusters & Accurate, computationally intensive \\
+        PM & $\mathcal{O}(N + M \log M)$ & Large-Scale Structure & Fast, smooths small-scale forces \\
+        P3M & $\mathcal{O}(N \log N)$ & Large-Scale Structure & Combines direct summation and PM \\
+        Tree-PM & $\mathcal{O}(N \log N)$ & Large-Scale Structure & Tree algorithm for short-range forces \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of $N$-body simulation methods}
+    \label{tab:simulation-methods}
+\end{table}
+
 \subsection{Direct Summation}
-Direct Summation calculates gravitational forces between all particle pairs directly, scaling as $\mathcal{O}(N^2)$ and becoming computationally intensive for large $N$. Each particle $i$ has position $\mathbf{r}_i$, velocity $\mathbf{v}_i$, and mass $m_i$. At each time step $t$:
+Direct Summation calculates gravitational forces between all particle pairs directly, scaling as $\mathcal{O}(N^2)$ and becoming computationally intensive for large $N$. 
+Therefore, direct summation is typically used for small systems like globular clusters, where accuracy is paramount \citep{2015MNRAS.450.4070W, 2019MNRAS.484.3279P}.
+Each particle $i$ has position $\mathbf{r}_i$, velocity $\mathbf{v}_i$, and mass $m_i$. At each time step $t$:
 \begin{enumerate}
     \item \textbf{Compute Forces:}
     \[
@@ -78,8 +104,7 @@ Direct Summation calculates gravitational forces between all particle pairs dire
 \end{enumerate}
 
 \subsection{Particle-Mesh (PM) Method} \label{sec:pm-method}
-The PM method approximates gravitational forces by mapping particles onto a grid and solving for the gravitational potential, reducing computational cost to $\mathcal{O}(N + M \log M)$, where $M$ is the number of grid points. While efficient for large-scale simulations, it smooths out small-scale forces.
-
+The PM method approximates gravitational forces by mapping particles onto a grid and solving for the gravitational potential, reducing computational cost to $\mathcal{O}(N + M \log M)$, where $M$ is the number of grid points. Combining with Adaptive Mesh Refinement (AMR), PM simulations can achieve high resolution in regions of interest while maintaining efficiency so that it is used in Hydrodynamical simulations recently \citep{2018MNRAS.475..676S, 2021A&A...653A.154T}.
 The main difference between the PM method and direct summation is the grid-based force calculation:
 \begin{enumerate}
     \item \textbf{Assign Particles to Grid:} See Section~\ref{sec:mass-assignment}.
@@ -98,7 +123,9 @@ The main difference between the PM method and direct summation is the grid-based
 \end{enumerate}
 
 \subsection{Particle-Particle Particle-Mesh (P3M) Method}
-The P$^3$M method combines direct summation for short-range forces with the PM approach for long-range interactions, achieving $\mathcal{O}(N \log N)$ complexity while enhancing accuracy for nearby particles. Key parameters include mesh size, softening parameter $\epsilon$, and force resolution.
+The P$^3$M method combines direct summation for short-range forces with the PM approach for long-range interactions, achieving $\mathcal{O}(N \log N)$ complexity while enhancing accuracy for nearby particles. Due to its balance between accuracy and efficiency, the P$^3$M (or the Adaptive P$^3$M \citep{1991ApJ...368L..23C}) method is widely used in hydrodynamical simulations \citep{1995ApJ...452..797C, 2002A&A...385..337T}.
+
+Key parameters include mesh size, softening parameter $\epsilon$, and force resolution.
 
 The difference between the P$^3$M method and the PM method lies in the force calculation:
 \begin{enumerate}
@@ -122,7 +149,8 @@ The difference between the P$^3$M method and the PM method lies in the force cal
 \end{enumerate}
 
 \subsection{Tree-Particle-Mesh (Tree-PM) Method}
-The Tree-PM method integrates the PM approach for long-range forces with a tree algorithm for short-range interactions, reducing complexity to $\mathcal{O}(N \log N)$. Proper tuning of parameters like grid size, softening length $\epsilon$, and opening angle $\theta_{\text{max}}$ is essential.
+The Tree-PM method integrates the PM approach for long-range forces with a tree algorithm for short-range interactions, reducing complexity to $\mathcal{O}(N \log N)$ \citep{1986Natur.324..446B}. Several popular simulations such as Illustris \citep{2014MNRAS.444.1518V} and EAGLE \citep{2015MNRAS.446..521S, 2015MNRAS.450.1937C, 2017arXiv170609899T} use the Tree-PM method.
+Proper tuning of parameters like grid size, softening length $\epsilon$, and opening angle $\theta_{\text{max}}$ is essential.
 
 The main updates in the Tree-PM method compared to the P$^3$M method are in the tree construction when calculating short-range forces:
 \begin{enumerate}
@@ -194,7 +222,10 @@ Parallelization accelerates computations in large-scale simulations by leveragin
 \end{itemize}
 
 \subsection{Adaptive Mesh Refinement}
-Adaptive Mesh Refinement (AMR) dynamically adjusts grid resolution, refining the mesh where higher accuracy is needed (e.g., regions with high density gradients) and coarsening it elsewhere \citep{1989JCoPh..82...64B}. This creates a hierarchy of grids with increasing resolution and optimizes computational resources. Refinement is typically triggered when: 
+Adaptive Mesh Refinement (AMR) dynamically adjusts grid resolution, refining the mesh where higher accuracy is needed (e.g., regions with high density gradients) and coarsening it elsewhere \citep{1989JCoPh..82...64B}. This technique is typically used in hydrodynamical simulations to capture complex fluid dynamics and shock fronts accurately.
+Because N-body simulations with discrete particles do not require continuous field solution and have more efficient methods like Tree-PM, AMR is not commonly used in N-body simulations.
+
+This creates a hierarchy of grids with increasing resolution and optimizes computational resources. Refinement is typically triggered when: 
 \begin{equation}
     \left| \nabla \phi(\mathbf{x}) \right| > \theta,
 \end{equation}
