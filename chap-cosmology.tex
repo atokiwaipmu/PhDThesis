@@ -1,9 +1,9 @@
-In this chapter, we provide an overview of the fundamental concepts and equations that underpin the field of cosmology following textbooks \citet{2003moco.book.....D} and \citet{2008cosm.book.....W}.
+In this chapter, we provide an overview of the fundamental concepts and equations that underpin the field of cosmology following  \citet{2003moco.book.....D} and \citet{2008cosm.book.....W} textbooks.
 
 \section{Einstein Field Equations}
-The Einstein Field Equations are the fundamental equations of General Relativity, describing how matter and energy influence the curvature of spacetime. Introduced by \citet{1915SPAW.......844E}, these equations extend Newton's law of universal gravitation to a relativistic context, accounting for the effects of high velocities and strong gravitational fields.
+The Einstein Field Equations (EFE) are the fundamental equations of General Relativity, describing how matter and energy influence the curvature of spacetime. Introduced by \citet{1915SPAW.......844E}, these equations extend Newton's law of universal gravitation to a relativistic context, generalizing the defintion of inertial observer in a spacetime which can be curved under the presence of a strong gravitational potential.
 
-The EFE establish a relationship between the geometry of spacetime and the distribution of matter within it. They are expressed with the metric $g_{\mu\nu}$, which describes the curvature of spacetime, and the stress-energy tensor $T_{\mu\nu}$, which characterizes the distribution of matter and energy. The EFE are given by:
+The EFE establish a relationship between the geometry of spacetime and the distribution of matter within it. They are expressed with the Minkowski Metric $g_{\mu\nu}$, which describes the curvature of spacetime, and the stress-energy tensor $T_{\mu\nu}$, which characterizes the distribution of matter and energy. The EFE are given by:
 \begin{equation}
     G_{\mu\nu} + \Lambda g_{\mu\nu}= \frac{8\pi G}{c^4} T_{\mu\nu},
     \label{eq:einstein_field_equations}
@@ -13,7 +13,7 @@ where $\Lambda$ is the cosmological constant, $G$ is the gravitational constant,
     G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu},
     \label{eq:einstein_tensor}
 \end{equation}
-the $R_{\mu\nu}$ is the Ricci tensor, described by the Christoffel symbols $\Gamma^\lambda_{\mu\nu}$ as:
+the $R_{\mu\nu}$ is the Ricci tensor, which can be written using the Christoffel symbols $\Gamma^\lambda_{\mu\nu}$ of metric connection as:
 \begin{equation}
     R_{\mu\nu} = \partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\lambda_{\lambda\sigma} \Gamma^\sigma_{\mu\nu} - \Gamma^\lambda_{\mu\sigma} \Gamma^\sigma_{\lambda\nu},
     \label{eq:ricci_curvature_tensor}
@@ -78,20 +78,23 @@ where \( i \) denotes the different components of the universe. Therefore, the t
 \begin{equation}
     \rho = \sum_i \rho_i, \quad p = \sum_i p_i.
 \end{equation}
-In the late universe, where each component evolves adiabatically, the energy density scales as:
-\begin{equation}
-    \rho_i \propto a^{-3(1 + w_i)},
+Unlike the conditions in the early Universe, when photons and baryons were tightly coupled, we now consider an epoch in which each component evolves independently, without any exchange of heat or other forms of energy. Under these assumptions, the conservation of energy-momentum for each component may be derived from the first law of thermodynamics. Specifically:
+\begin{eqnarray}
+    d\left(\rho_i a^3\right) &=& -p_i d(a^3) \nonumber \\
+    a^3 d\rho_i &=& -\rho_i (1 + w_i) d(a^3) \quad (p_i = w_i \rho_i) \nonumber \\
+    \ln \rho_i &=& -3(1 + w_i) \ln a + const. \nonumber \\
+    \rho_i &\propto& a^{-3(1 + w_i)}.
     \label{eq:energy_density_scaling}
-\end{equation}
-where \( a \) is the scale factor, and \( w_i \) is the equation of state parameter for the \( i \)-th component. 
+\end{eqnarray}
+where \( w_i \) is the equation of state parameter for the \( i \)-th component. 
 
 \section{FLRW Metric and the Friedmann Equations}\label{sec:flrw_metric}
-The Friedmann-Lemaître-Robertson-Walker (FLRW) metric describes a homogeneous and isotropic universe and is given by~\citet{1972gcpa.book.....W}:
+The Friedmann-Lemaître-Robertson-Walker (FLRW) metric describes a homogeneous and isotropic universe. As obtained by~\citet{1972gcpa.book.....W}:
 \begin{equation}
     ds^2 = -c^2 dt^2 + a^2(t) \left[ d\chi^2 + f_K^2(\chi) \left( d\theta^2 + \sin^2\theta \, d\phi^2 \right) \right],
     \label{eq:flrw_metric}
 \end{equation}
-where \( a(t) \) is the scale factor, \( \chi \) is the comoving radial coordinate, and \( d\Omega^2 = d\theta^2 + \sin^2\theta \, d\phi^2 \) represents the metric on the unit two-sphere. The function \( f_K(\chi) \) encodes the spatial curvature of the universe and is defined as:
+where \( a(t) \) is the time evolving scale factor, \( \chi \) is the comoving radial coordinate, and \( d\Omega^2 = d\theta^2 + \sin^2\theta \, d\phi^2 \) represents the metric on the unit two-sphere. The function \( f_K(\chi) \) encodes the spatial curvature of the universe and is defined as:
 \begin{equation}
     f_K(\chi) = 
     \begin{cases}
@@ -178,7 +181,7 @@ where the subscript \( 0 \) denotes present-day values, and \( H_0 \) is the cur
     H_0 = 100 \, h \, \text{km s}^{-1} \text{Mpc}^{-1},
     \label{eq:hubble_parameter_current}
 \end{equation}
-where \( h \) is a dimensionless parameter that accounts for the uncertainty in the exact value of \( H_0 \). It allows cosmological quantities to be expressed in a way that separates the dependence on the $H_0$.
+where \( h \) is a dimensionless parameter that accounts for the uncertainty in the exact value of \( H_0 \) and the cosmology assumed. It allows cosmological quantities to be expressed in a way that separates the dependence on the $H_0$.
 Combining these expressions, the Friedmann equation~\eqref{eq:friedmann_density_parameters} can be rewritten in terms of the present-day density parameters:
 \begin{equation}
     \left( \frac{H(a)}{H_0} \right)^2 = \Omega_{r0} a^{-4} + \Omega_{m0} a^{-3} + \Omega_{K0} a^{-2} + \Omega_{\Lambda0},
@@ -186,28 +189,48 @@ Combining these expressions, the Friedmann equation~\eqref{eq:friedmann_density_
 \end{equation}
 which describes the evolution of the Hubble parameter with scale factor \( a \) in terms of the contributions from radiation, matter, curvature, and the cosmological constant.
 
-\section{Cosmological Distances}
-For light-like (null) geodesics, the spacetime interval \( ds^2 \) is zero. Thus, the radial coordinate distance for a photon traveling from a source to the observer is obtained from the null condition:
+\section{Cosmological Redshift and Distances}
+The expansion of the universe causes the wavelength of light to stretch as it propagates through space. This effect, known as cosmological redshift, is a direct consequence of the expansion of the universe and is described by the scale factor \( a(t) \). 
+Before going into the details of the redshift, we first introduce the concept of the null geodesic $ds^2 = 0$, which describes the path of light in a curved spacetime. Then, the radial coordinate distance for a photon traveling from a source to the observer is obtained from the null condition:
 \begin{equation}
     ds^2 = 0 \quad \Rightarrow \quad d\chi = \frac{c \, dt}{a(t)}.
     \label{eq:null_geodesic_condition}
 \end{equation}
-Integrating this expression, we obtain the comoving radial distance \( \chi(z) \) as a function of redshift \( z \):
+Integrating this expression, we obtain the comoving radial distance \( \chi \) as:
 \begin{equation}
-    \chi(z) = \int_{t(z)}^{t_0} \frac{c \, dt'}{a(t')} = \int_{0}^{z} \frac{c \, dz'}{H(z')},
+    \chi = \int_{t_e}^{t_0} \frac{c \, dt'}{a(t')}
     \label{eq:comoving_radial_distance}
 \end{equation}
-where \( t_0 \) is the present time. The redshift \( z \) is related to the scale factor by \( 1 + z = \tfrac{a_0}{a(t)} \), with \( a_0 \equiv a(t_0) = 1 \) for the present universe.
-
-In the late universe, where radiation is negligible compared to matter and dark energy, the Hubble parameter \( H(z) \) is given by the Friedmann Eq.~\eqref{eq:friedmann_rewritten}:
+where \( t_0 \) is the present time, and \( t_e \) is the time at which the light is emitted. Supose a light is emitted at time \( t = t_e \) with wavelength \( \lambda_e \) and received at time \( t = t_0 \) with wavelength \( \lambda_0 \). Then, the same phase emitted at time \( t = t_e + \Delta t_e \) is received at time \( t = t_0 + \Delta t_0 \).
+The comoving distance between the source and the observer is given by:
 \begin{equation}
-    H(z) = H_0 \sqrt{\Omega_{m0}(1+z)^3 + \Omega_{K0}(1+z)^2 + \Omega_{\Lambda0}},
-    \label{eq:hubble_parameter_late_universe}
+    \chi = \int_{t_e}^{t_0} \frac{c \, dt'}{a(t')} = \int_{t_e + \Delta t_e}^{t_0 + \Delta t_0} \frac{c \, dt'}{a(t')}.
+    \label{eq:comoving_distance}
 \end{equation}
-where \( H_0 \) is the present-day Hubble constant, and \( \Omega_{m0} \), \( \Omega_{K0} \), and \( \Omega_{\Lambda0} \) are the present-day density parameters for matter, curvature, and dark energy, respectively.
+Assuming the scale factor \( a(t) \) change is negligible over the time interval \( \Delta t \), we can expand the integrand in Eq.~\eqref{eq:comoving_distance} to first order:
+\begin{equation}
+    \int_{t_e + \Delta t_e}^{t_0 + \Delta t_0} \frac{c \, dt'}{a(t')} - \int_{t_e}^{t_0} \frac{c \, dt'}{a(t')} = \frac{c \, \Delta t_e}{a(t_e)} - \frac{c \, \Delta t_0}{a(t_0)} = 0.
+\end{equation}
+Therefore, the fractional change in the wavelength of light is given by:
+\begin{equation}
+    \frac{\lambda_0 - \lambda_e}{\lambda_e} = \frac{a(t_0)}{a(t_e)} - 1,
+    \label{eq:redshift_definition}
+\end{equation}
+This shift in the wavelength of light is known as the cosmological redshift \( z \), defined as:
+\begin{equation}
+    z := \frac{\lambda_0 - \lambda_e}{\lambda_e} = \frac{a(t_0)}{a(t_e)} - 1,
+    \label{eq:redshift_definition_2}
+\end{equation}
+Therefore, the redshift $z$ serves us a measure of position in the expanding universe, with $z = 0$ corresponding to the present time and $z \to \infty$ corresponding to the time of the Big Bang. However, the space-time is not static nor flat, there are several distance measures that are used to describe the separation between two objects in the universe. 
+A characteristic length scale is the Hubble distance, defined as the inverse of the Hubble parameter:
+\begin{equation}
+    d_H = \frac{c}{H_0} = 9.26 \times 10^{25} \, h^{-1}\text{m} 
+    \label{eq:hubble_distance}
+\end{equation}
+The most common distance measures are the comoving distance, the luminosity distance, and the angular diameter distance.
 
 \subsection{Luminosity Distance}
-The luminosity distance \( d_L(z) \) is a key concept in observational cosmology, relating the intrinsic luminosity \( L \) of an astronomical object to the observed flux \( F \) via the inverse-square law~\citep{1992ARA&A..30..499C}:
+The luminosity distance \( d_L(z) \) is a measure of observed distance broadly used in Astornomy and Cosmology, relating the intrinsic luminosity \( L \) of a source to the observed flux \( F \) via the inverse-square law~\citep{1992ARA&A..30..499C}:
 \begin{equation}
     F = \frac{L}{4\pi d_L^2}.
     \label{eq:luminosity_flux}
@@ -217,7 +240,7 @@ In an expanding universe, the luminosity distance accounts for the effects of re
     d_L(z) = (1 + z) \, f_K(\chi(z)).
     \label{eq:luminosity_distance}
 \end{equation}
-The luminosity distance is crucial for determining cosmological parameters using standard candles, such as Type Ia supernovae, whose intrinsic luminosities are known~\cite{1998AJ....116.1009R}. By measuring the observed flux \( F \) and applying Eq.~\eqref{eq:luminosity_flux}, we can infer \( d_L(z) \) and constrain cosmological models.
+The luminosity distance is crucial for determining cosmological parameters using standard candles, such as Type Ia supernovae, whose intrinsic luminosities are known~\citep{1998AJ....116.1009R}. By measuring the observed flux \( F \) and applying Eq.~\eqref{eq:luminosity_flux}, we can infer \( d_L(z) \) and constrain cosmological models.
 
 \subsection{Angular Diameter Distance}
 The angular diameter distance \( d_A(z) \) relates the physical size \( D \) of an object to its observed angular size:
@@ -234,19 +257,19 @@ The angular diameter distance is essential for studying standard rulers, such as
 
 \section{Initial Conditions}
 \label{sec:initial_conditions}
-The initial conditions of the universe are believed to originate from quantum fluctuations during the inflationary epoch. These fluctuations are imprinted on the cosmic microwave background (CMB) radiation, which provides a snapshot of the universe at the time of recombination, and these primordial perturbations served as the seeds for the formation of the large-scale structures (LSS) observed today
+The initial conditions of the universe are believed to originate from quantum fluctuations during the inflationary epoch. These fluctuations are imprinted on the cosmic microwave background (CMB) radiation, which provides a snapshot of the universe at the time of recombination ($z \sim 1100$), and these primordial perturbations served as the seeds for the formation of the large-scale structures (LSS) observed today
 
-Figure~\ref{fig:cmb_power_spectrum} illustrates the CMB temperature power spectrum measured by the Planck satellite \citep{2014A&A...571A..15P}, showing the primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
+Figure~\ref{fig:cmb_power_spectrum} illustrates the CMB temperature power spectrum (TT) measured by the Planck satellite \citep{2014A&A...571A..15P}, showing the primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/Planck_power_spectrum.jpg}
-    \caption[Angular Power Spectrum of CMB Temperature]{Angular Power Spectrum of Cosmic Microwave Background Temperature Fluctuations as a function of the multipole moment (\( \ell \)) and the corresponding angular scale. The observational data are depicted by red markers with associated error bars, whereas the theoretical prediction derived from the \(\Lambda\)CDM cosmological model is represented by the green curve \citep{2014A&A...571A..15P}. The primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
+    \caption[Angular Power Spectrum (TT) of CMB Anisotropy]{Angular Power Spectrum of Cosmic Microwave Background Temperature Fluctuations as a function of the multipole moment (\( \ell \)) and the corresponding angular scale. The observational data are depicted by red markers with associated error bars, whereas the theoretical prediction derived from the \(\Lambda\)CDM cosmological model is represented by the green curve \citep{2014A&A...571A..15P}. The primordial fluctuations imprinted at large angular scales (\( \ell \lesssim 30 \)).
     }
     \label{fig:cmb_power_spectrum}
 \end{figure}
 
 \subsection{Primodial Power Spectrum}
-The standard single-field slow-roll inflation model predicts that the primordial fluctuations are nearly scale-invariant and Gaussian. The power spectrum of these primordial curvature perturbations is described by a nearly scale-invariant power-law form \citep{2003moco.book.....D}:
+The standard single-field slow-roll inflation model predicts that the primordial fluctuations are nearly scale-invariant and Gaussian \citep{2003moco.book.....D}. The matter power spectrum of these primordial curvature perturbations is described by a nearly scale-invariant power-law form:
 \begin{equation}
     P_p(k) = A_s \left(\frac{k}{k_*}\right)^{n_s - 1},
 \end{equation}
@@ -274,8 +297,8 @@ Since in the radiation-dominant era, the growth of perturbations on super-horizo
 \begin{equation}
     T(k) \propto 
     \begin{cases}
-        1 & \text{for } k \ll k_{\text{eq}}, \\
-        k^{-2} & \text{for } k \gg k_{\text{eq}}.
+        1 & \text{for } k \ll k_{\text{eq}}\, \text{Top-hat} , \\
+        k^{-2} & \text{for } k \gg k_{\text{eq}}\, \text{Power-law}.
     \end{cases}
 \end{equation}
 Figure~\ref{fig:linear_power_spectrum} shows the linear matter power spectrum computed using the \texttt{CLASS} code. It is clear that the scaling of the linear power spectrum changes around $k_{\text{eq}}$. The wiggles around \( k \sim 0.1\, h/\text{Mpc} \) are due to Baryon Acoustic Oscillations (BAOs) imprinted.
@@ -302,13 +325,13 @@ The propagation of acoustic waves within the photon-baryon plasma is governed by
 \end{eqnarray}
 where \( p_\gamma \) and \( \rho_\gamma \) are the photon pressure and energy density, respectively. 
 
-The acoustic oscillations in the photon-baryon plasma can be described by solutions to the linearized perturbation equations (Eq.~\eqref{eq:delta_oscillatory_mode}; we will discuss in the next section). 
-e find that the perturbations in the photon density, \( \delta_\gamma \), exhibit harmonic oscillations with a wavenumber \( k \) and phase constant \( \phi \):
+The acoustic oscillations in the photon-baryon plasma can be described by solutions to the linearized perturbation equations (Eq~\eqref{eq:delta_oscillatory_mode}; we will discuss in the next section). 
+Therefore, the evolution of the photon-baryon plasma scales as:
 \begin{equation}
-\delta_\gamma(k, t) \propto \cos(k c_s t + \phi),
-\label{eq:gamma_oscillations}
+    \delta_\gamma(k, t) \propto \cos(k c_s t + \phi),
+    \label{eq:gamma_oscillations}
 \end{equation}
-where \( \phi \) is a phase constant. Solutions of this form describe sound waves, propagating through the photon-baryon fluid.
+where \( k \) is the wavenumber and \( \phi \) is the phase constant. 
 
 \section{The linear evolution of density fluctuations}
 Density fluctuations arise from quantum fluctuations during inflation and grow under the influence of gravity. 
@@ -429,10 +452,10 @@ Therefore, when the linear density contrast exceeds $\delta_L \approx 1.69$, the
 
 \section{Dark Matter Halo}
 \label{sec:halo}
-Dark matter halos are the fundamental building blocks of cosmic structures. They form through the gravitational collapse of overdense regions in the early universe and provide the potential wells in which baryonic matter accumulates to form galaxies and clusters. 
+Dark matter halos are the fundamental building blocks of cosmic structures. They form through the gravitational collapse of overdense regions in the early universe and provide the potential wells in which baryonic matter accumulates to form galaxies and galaxy clusters. 
 
 \subsection{Halo Mass Function}
-The halo mass function (HMF) describes the number density of dark matter halos as a function of their mass and redshift. The Press-Schechter (PS) formalism \citep{1974ApJ...187..425P} provides an analytical approach to calculate the HMF based on the initial density field and the theory of gravitational collapse.
+The halo mass function (HMF) describes the number density of dark matter halos as a function of their mass and redshift. The Press-Schechter (PS) formalism \citep{1974ApJ...187..425P} provides an analytical approach to calculate the HMF based on the initial Gaussian density field and the theory of gravitational collapse.
 
 Let us consider the density field which follows Gaussian distribution at each position. The probability distribution function is:
 \begin{equation}
@@ -473,7 +496,7 @@ Finally, we can construct the Press-Schechter mass function only from the linear
 In reality, matter collapses into halos non-spherically. One of the most popular extensions of the Press-Schechter formalism is the Sheth-Tormen mass function \citep{1999MNRAS.308..119S}, which provides a better fit to numerical simulations by incorporating ellipsoidal collapse.
 
 \subsection{Halo Bias}
-Halo bias quantifies how dark matter halos are biased tracers of the underlying matter distribution. Massive halos tend to form in regions of higher density contrast, leading to a scale-dependent and mass-dependent bias factor $b(M)$.
+Halo bias quantifies how dark matter halos are biased tracers of the underlying matter distribution. Massive halos tend to form in regions of higher density contrast, leading to a mass-dependent bias factor $b(M)$ which is indeopendent for a convinient scale.
 \citet{1996MNRAS.282..347M} proposed a simple model for halo bias based on the Press-Schechter formalism and the spherical collapse model. They derive the analytical expression for the linear halo bias, which defined as:
 \begin{equation}
     b_h(M, z) := \frac{\delta_h(M, z)}{\delta_m}
@@ -501,7 +524,7 @@ with
 \end{equation}
 where $c_{\text{vir}} = r_{\text{vir}}/r_s$ is the concentration parameter. 
 
-Another widely used profile is the Einasto profile \citep{1965TrAlm...5...87E}, which provides a better fit to numerical simulations at small radii. The Einasto profile is given by:
+Another widely used profile is the Einasto profile \citep{1965TrAlm...5...87E}, which provides an alternative fitting function with more accurancy at relatively small halo radius. The Einasto profile is given by:
 \begin{equation}
     \rho_{\text{Ein}}(r) = \rho_s \exp \left( -\frac{2}{\alpha} \left[ \left( \frac{r}{r_s} \right)^\alpha - 1 \right] \right)
 \end{equation}

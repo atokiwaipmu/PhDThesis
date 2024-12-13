@@ -373,12 +373,29 @@ Conventional ray-tracing algorithms are fundamental tools for generating WL maps
     Light rays are propagated from the source galaxies to the observer through the sequence of lens planes. At each plane, the accumulated deflection angles are updated based on the lensing matrix $\mathcal{A}^j_{ik}$. 
 
     \item \textbf{Map Assembly:} 
-    After propagating all light rays through the lens planes, the convergence $\kappa(\boldsymbol{\theta})$ and shear $\gamma(\boldsymbol{\theta})$ fields are compiled into full-sky maps. These maps are typically represented on the \texttt{HEALPix} grid.
+    After propagating all light rays through the lens planes, the convergence $\kappa(\boldsymbol{\theta})$ and shear $\gamma(\boldsymbol{\theta})$ fields are compiled into full-sky maps, using Eq.~\eqref{eq:jacobian_matrix}. These maps are typically represented on the \texttt{HEALPix} grid.
 \end{enumerate}
 
 \subsection{Born-approximated Ray-tracing}
-The Born approximation offers a simplified approach to weak lensing map generation by assuming that light rays travel along their unperturbed, straight-line paths from the source galaxies to the observer. This approximation neglects the bending of light rays due to gravitational deflections between lens planes, thereby reducing the computational complexity of the ray-tracing process. While this simplification can lead to faster computations, it introduces certain limitations in accurately capturing multiple deflections and non-linear lensing effects.
+The Born approximation offers a simplified approach to weak lensing map generation by assuming that light rays travel along their unperturbed, straight-line paths from the source galaxies to the observer. This approximation neglects the bending of light rays due to gravitational deflections between lens planes, thereby reducing the computational complexity of the ray-tracing process \citep{2006glsw.conf..269S}. 
 
+While this simplification can lead to faster computations, it introduces certain limitations in accurately capturing multiple deflections and non-linear lensing effects. 
+To overcome these limitations, researchers have developed Post-Born corrections \citep{2002ApJ...574...19C, 2005PhRvD..72j3004D} that account for the deflection during ray propagation and for the so-called lens-lens coupling, which describes how gravitational lenses at different redshifts can interact to generate rotational modes in the observable fields. It is shown that the Post-Born corrections can impact the higher-order moments or peak statistics of galxy weak lensing convergence maps \citep{2017PhRvD..95l3503P, 2019JCAP...10..057F}. Figure~\ref{fig:born-approximation} \citep{2017PhRvD..95l3503P} illustrates the parameter bias induced by the Born approximation in the convergence power spectrum and moments of the convergence field. The Born approximation is accurate in predicting the convergence power spectrum, but it leads to significant biases in the moments of the convergence field.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/bias_ngal_convergence_powerSN_s0_nb100.pdf}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{figures/bias_ngal_convergence_momentsSN_s50_nb9.pdf}
+    \end{subfigure}
+    \caption[Parameter bias induced by the Born approximation]{Parameter bias induced by the Born approximation in the convergence power spectrum (Left Panel) and moments of the convergence field (Right Panel). While the Born approximation is accurate in predicting the convergence power spectrum, it leads to significant biases in the moments of the convergence field. credit by \citet{2017PhRvD..95l3503P}}
+    \label{fig:born-approximation}
+\end{figure}
+
+Nonetheless, the Born-approximation remains a valuable tool for generating weak lensing maps in large-scale structure studies \citep{2008MNRAS.391..435F, 2009A&A...499...31H, 2015MNRAS.447.1319F}.
 The Born-approximated ray-tracing algorithm comprises the following key steps:
 
 \begin{enumerate}

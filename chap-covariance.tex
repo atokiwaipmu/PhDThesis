@@ -13,17 +13,26 @@ For an unbiased estimator, the covariance matrix is given by:
 where \( N_{\mathrm{sim}} \) is the number of simulations, and \( \mathcal{O}_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
 
 \section{Role of the Covariance Matrix}
-Though we leave the Fisher forecast using the covariance matrix for future work, it is worthful to discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. When comparing theoretical models to observational data, we often compute a likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$, where $\mathbf{d}$ represents the data vector and $\mathbf{p}$ denotes the set of cosmological parameters. 
-According to Bayes's theorem, the posterior distribution $P(\mathbf{p} | \mathbf{d})$ of the model parameters $\mathbf{p}$ given the data $\mathbf{d}$ is given by:
+The study of the covariance matrix is essential for Fisher information analyses, but we will defer a comprehensive discussion to future work. Nonetheless, it is instructive to briefly discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. In particular, the covariance matrix serves as a fundamental ingredient in quantifying the uncertainties, correlations, and overall statistical properties of the data.
+
+In cosmology, as in many areas of science, we want to determine the values of underlying model parameters $\mathbf{p}$ that best describe the data $\mathbf{d}$. This process is typically done within a Bayesian framework:
 \begin{equation}
     P(\mathbf{p} | \mathbf{d}) = \frac{\mathcal{L}(\mathbf{d} | \mathbf{p}) \pi(\mathbf{p})}{\mathbf{\mathcal{\epsilon}}(\mathbf{d})},
 \end{equation}
-where $\pi(\mathbf{p})$ is the prior distribution of the parameters, and $\mathbf{\mathcal{\epsilon}}(\mathbf{d})$ is the evidence, which normalizes the posterior distribution. 
-For Gaussian-distributed data, the likelihood function is given by:
+where $P(\mathbf{p} | \mathbf{d})$ is the posterior distribution, $\pi(\mathbf{p})$ is the prior distribution of the parameters, and $\mathbf{\mathcal{\epsilon}}(\mathbf{d})$ is the evidence, which normalizes the posterior distribution:
+\begin{equation}
+    \mathbf{\mathcal{\epsilon}}(\mathbf{d}) = \int \mathcal{L}(\mathbf{d} | \mathbf{p}) \pi(\mathbf{p}) \, \mathrm{d} \mathbf{p}.
+\end{equation}
+
+The likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$ quantifies the probability of observing the data $\mathbf{d}$ given the model parameters $\mathbf{p}$. Suppose we have a set of data points $\mathbf{d} = \{d_1, d_2, \ldots, d_N\}$, the joint probability of observing the data is obtained as:
+\begin{equation}
+    \mathcal{L}(\mathbf{d} | \mathbf{p}) = \prod_{i=1}^{N} \mathcal{L}(d_i | \mathbf{p}),
+\end{equation}
+For Gaussian-distributed data, it can be simply combine into a multivariate Gaussian distribution, and thus the likelihood function can be expressed as:
 \begin{equation}
     \ln \mathcal{L}(\mathbf{d} | \mathbf{p}) = -\frac{1}{2}(\mathbf{d} - \mathbf{m}(\mathbf{p}))^{\mathrm{T}} \mathbf{C}^{-1} (\mathbf{d} - \mathbf{m}(\mathbf{p})) + \mathrm{const},
 \end{equation}
-where $\mathbf{m}(\mathbf{p})$ is the model prediction for the data vector $\mathbf{d}$, and $N$ is the number of data points. The covariance matrix $\mathbf{C}$ quantifies the uncertainties and correlations between different data points.
+where $\mathbf{m}(\mathbf{p})$ is the model prediction for the data vector $\mathbf{d}$. The covariance matrix $\mathbf{C}$ quantifies the uncertainties and correlations between different data points.
 
 Based on the likelihood function, we can construct the Fisher information matrix $\mathcal{F}_{\alpha\beta}$, which quantifies the sensitivity of the likelihood function to changes in the model parameters $\mathbf{p}$. The Fisher information matrix is defined as:
 \begin{equation}
@@ -46,6 +55,7 @@ where $\Delta p_\alpha$ is the uncertainty on the $\alpha$-th parameter. Note th
 \begin{equation}
     \rho_{\alpha\beta} = \frac{(\mathcal{F}^{-1})_{\alpha\beta}}{\sqrt{(\mathcal{F}^{-1})_{\alpha\alpha} (\mathcal{F}^{-1})_{\beta\beta}}}.
 \end{equation}
+Therefore, the prior information $\pi(\mathbf{p})$ together with the likelihood function $\mathcal{L}(\mathbf{d} | \mathbf{p})$ can be used to infer the posterior distribution $P(\mathbf{p} | \mathbf{d})$.
 
 \section{Covariance of the Matter Power Spectrum}
 Understanding the covariance matrix of the matter power spectrum \( P_m(k) \) is crucial before delving into two-dimensional weak lensing statistics. 
@@ -64,7 +74,7 @@ To derive the covariance matrix, we substitute the estimator \( \hat{P}_m(k) \) 
 \begin{equation}
     \mathrm{Cov}(\mathbf{k}, \mathbf{k'}) = V_f^2 \left( \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle - \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \right\rangle \left\langle \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle\right)
 \end{equation}
-The four-point correlation function \( \left\langle \tilde{\delta}(\mathbf{k}_1) \tilde{\delta}(\mathbf{k}_2) \tilde{\delta}(\mathbf{k}_3) \tilde{\delta}(\mathbf{k}_4) \right\rangle \) can be decomposed using Wick's theorem (valid for Gaussian fields) into products of two-point functions \citep{PhysRev.80.268}:
+The four-point correlation function \( \left\langle \tilde{\delta}(\mathbf{k}_1) \tilde{\delta}(\mathbf{k}_2) \tilde{\delta}(\mathbf{k}_3) \tilde{\delta}(\mathbf{k}_4) \right\rangle \) can be decomposed using Wick's theorem into products of two-point functions \citep{PhysRev.80.268}:
 \begin{eqnarray}
     \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle 
     &=& \left\langle \tilde{\delta}(\mathbf{k}) \tilde{\delta}(-\mathbf{k}) \right\rangle \left\langle \tilde{\delta}(\mathbf{k'}) \tilde{\delta}(-\mathbf{k'}) \right\rangle \nonumber \\
@@ -78,7 +88,13 @@ Using the properties of the Dirac delta function and assuming statistical isotro
 \begin{equation}
     \mathrm{Cov}(k, k') = \frac{2 P_m(k)^2}{N(k)} \delta_{k,k'} + \frac{T(k, k')}{V}
 \end{equation}
-where \( N(k) = V_s(k) / V_f \) is the number of independent modes in the shell at wavenumber \( k \). The first term represents the Gaussian (disconnected) contribution, and the second term accounts for the non-Gaussian (connected) contribution from the trispectrum.
+where \( N(k) = V_s(k) / V_f \) is the number of independent modes in the shell at wavenumber \( k \). The first term represents the Gaussian (disconnected) contribution, and the second term accounts for the non-Gaussian (connected) contribution from the trispectrum. The first term indicates the unavoidable cosmic variance because we are only able to measure from only one realization of the Universe.
+
+In practice, we can only observe from discrete tracers, such as galaxies, which introduce shot noise into the power spectrum. The shot noise term can be included in the matter power spectrum as:
+\begin{equation}
+    P_{\text{obs}}(k) = P_{\mathrm{m}}(k) + \frac{1}{\bar{n}},
+\end{equation}
+where \( \bar{n} \) is the number density of galaxies.
 
 In the presence of a finite survey volume, super-sample covariance arises due to modes larger than the survey size influencing the observed modes \citep{PhysRevD.87.123504}. This effect adds an additional term to the covariance matrix:
 \begin{equation}
@@ -168,3 +184,5 @@ A rigorous super-sample covariance for line-of-sight integrated observable $\mat
     \right)
     \sigma_b^2, 
 \end{equation}
+
+In most cases, the accurate estimation of such covariance matrices still necessitates averaging over numerous realizations of N-body simulations. These simulations capture the relevant mode-coupling and environmental dependencies that are difficult to model analytically, ensuring that the resulting covariance matrices are both realistic and robust. This approach is exactly what we will adopt in this study to quantify the uncertainties due to super-sample covariance in higher-order statistics. 

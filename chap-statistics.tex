@@ -1,3 +1,6 @@
+\section{Two-point Correlation Function}
+\red{Overdensity, 2PCF, galaxy bias}
+
 \section{Convergence Power Spectrum}
 The matter power spectrum, \( P(k) \), is a fundamental quantity in cosmology that characterizes the distribution of dark matter density fluctuations in Fourier space. It is defined as the Fourier transform of the two-point correlation function of the dark matter density field, \( \delta(\mathbf{x}) \) \citep{2001PhR...340..291B}. Mathematically, the matter power spectrum is expressed as:
 \begin{equation}
@@ -50,6 +53,7 @@ Next, we evaluate the ensemble average of the Fourier transform of the convergen
        P_m\left(\sqrt{k_\parallel^2 + \frac{\ell^2}{\chi^2}}\right) \nonumber 
     \label{eq:kappa_power_spectrum}
 \end{eqnarray}
+with \( P_m(k) \) being the matter power spectrum.
 
 To proceed, we invoke the Limber approximation \citep{1954ApJ...119..655L}. This approximation assumes that the dominant contributions arise from modes close to the line of sight, implying \( k_\parallel \ll \ell/\chi \).
 Physically, this corresponds to the limit of small angular separations (or large multipole number $\ell$) where the geometry of the problem simplifies. In this regime, functions that vary slowly along the line of sight can be factored out of integrals, and the highly oscillatory spherical Bessel functions that would appear in a full-sky calculation can be approximated by their limiting behavior. 
@@ -71,7 +75,7 @@ Finally, equating this result with the definition of the convergence power spect
     C_{\ell}^{\kappa\kappa} = \int_0^{\chi_s} d\chi \, \frac{W^2(\chi)}{\chi^2} P_m\left(\frac{\ell}{\chi}; \chi\right).
     \label{eq:convergence_power_spectrum_final}
 \end{equation}
-This relation demonstrates how the observable convergence power spectrum \( C_{\ell}^{\kappa\kappa} \) is sourced by the underlying matter power spectrum \( P_m(k; \chi) \) integrated along the line of sight.
+This relation demonstrates how the observable convergence angular power spectrum \( C_{\ell}^{\kappa\kappa} \) is sourced by the underlying matter power spectrum \( P_m(k; \chi) \) integrated along the line of sight.
 
 \subsection{\texttt{Halofit} Model}
 Based on the halo models (discussed in Sec.~\ref{sec:halo}), Halofit model is a widely used prescription to compute the non-linear matter power spectrum \( P(k) \) from the linear power spectrum \( P_{\mathrm{L}}(k) \) \citep{2003MNRAS.341.1311S, 2012ApJ...761..152T}. In the Halofit regime, the power spectrum is consists of two terms:
@@ -95,7 +99,7 @@ Those two terms are then approximated into empirical fitting formulae and calibr
 The one-halo term resembles a shot noise spectrum on large scales but is progressively reduced on small scales due to the filtering effects of halo profiles and the mass function. Conversely, the two-halo term modifies the relative correlations of halos beyond what is predicted by linear theory and becomes negligible on small scales. 
 
 \section{Convergence Bispectrum}
-The bispectrum, \( B(k) \), serves as the Fourier counterpart to the three-point correlation function and is the lowest-order statistical quantity capable of characterizing non-Gaussianity in the matter distribution \citep{2002PhR...367....1B}. While the power spectrum effectively captures Gaussian fluctuations through two-point statistics, the bispectrum provides deeper insights by incorporating three-point correlations, thereby unveiling more complex structures in the cosmic density field \citep{1999ApJ...517..531S, 2004MNRAS.348..897T}.
+The bispectrum, \( B(k) \), serves as the Fourier counterpart to the three-point correlation function and is the lowest-order statistical quantity capable of characterizing non-Gaussianity in the matter distribution \citep{2002PhR...367....1B}. While the power spectrum effectively captures Gaussian fluctuations through two-point statistics, the bispectrum provides deeper insights by incorporating three-point correlations, thereby unveiling more complex structures in the cosmic density field \citep{1999ApJ...517..531S, 2004MNRAS.348..897T}. In a purely Gaussian scenario, the bispectrum vanishes, whereas any non-zero measurement directly signals skewness and reveals the presence of non-Gaussian features in the matter distribution.
 
 Analogous to the angular power spectrum, the convergence bispectrum can be expressed as the ensemble average of three Fourier-transformed convergence modes, \( \tilde{\kappa} \) \citep{2005PhRvD..72h3001D}:
 \begin{equation}
@@ -109,7 +113,7 @@ Building upon the derivations analogous to Equations~\eqref{eq:kappa_fourier_fin
 \end{equation}
 where \( B_m(k_1, k_2, k_3, z) \) denotes the matter bispectrum at redshift \( z \), and \( W(\chi) \) is the lensing kernel. 
 
-The bispectrum depends not only on the magnitudes of the wavevectors but also on the shapes formed by the triplet \( (\boldsymbol{k}_1, \boldsymbol{k}_2, \boldsymbol{k}_3) \), constrained by the condition \( \boldsymbol{k}_1 + \boldsymbol{k}_2 + \boldsymbol{k}_3 = 0 \). Different triangle configurations (e.g.\, equilateral, squeezed, isoceles) probe different physical processes and scales in the Universe \citep{2005PhRvD..72h3001D}.
+The bispectrum depends not only on the magnitudes of the wavevectors but also on the shapes formed by the triplet \( (\boldsymbol{k}_1, \boldsymbol{k}_2, \boldsymbol{k}_3) \), constrained by the condition \( \boldsymbol{k}_1 + \boldsymbol{k}_2 + \boldsymbol{k}_3 = 0 \). Different triangle configurations (e.g.\, equilateral, squeezed, isoceles) probe different physical processes and scales in the Universe \citep{2005PhRvD..72h3001D}. For instance, equilateral triangles are sensitive to primordial non-Gaussianity, while squeezed triangles probe the growth of structure and the impact of gravity on large scales.
 
 \subsection{\texttt{BiHalofit} Model}
 The \texttt{BiHalofit} model \citep{2020ApJ...895..113T} extends the Halofit prescription to compute the non-linear matter bispectrum \( B_m(k_1, k_2, k_3) \) from the linear matter power spectrum \( P_{\mathrm{L}}(k) \). The bispectrum is decomposed into one-halo and three-halo terms, given by:
@@ -141,7 +145,6 @@ and
 \end{equation}
 which is given at the tree level (leading order) in perturbation theory \citep{2002PhR...367....1B}.
 
-
 \section{Probability Density Functions} \label{sec:pdfs}
 The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field.
 
@@ -155,7 +158,7 @@ where $W(\theta)$ is the Gaussian smoothing kernel given by:
     W(\theta) = \frac{1}{2\pi \sigma_{\theta}^2} \exp\left( -\frac{\theta^2}{2 \sigma_{\theta}^2} \right),
     \label{eq:gaussian_kernel}
 \end{equation}
-with $\theta = \arccos(\hat{\mathbf{n}} \cdot \hat{\mathbf{n}}')$ representing the angular separation between the points $\hat{\mathbf{n}}$ and $\hat{\mathbf{n}}'$ on the unit sphere $S^2$, and $\sigma_{\theta}$ is the smoothing scale. To standardize the statistical analysis, the smoothed convergence values are normalized by their standard deviation. The normalized smoothed convergence, $\tilde{\kappa}_{\mathrm{smooth}, i}$, is defined as:
+with $\theta = \arccos(\hat{\mathbf{n}} \cdot \hat{\mathbf{n}}')$ representing the angular separation between the points $\hat{\mathbf{n}}$ and $\hat{\mathbf{n}}'$ with $\hat{\mathbf{n}}$, the unitary normal vector over the unit sphere $S^2$, and $\sigma_{\theta}$ is the smoothing scale. To standardize the statistical analysis, the smoothed convergence values are normalized by their standard deviation. The normalized smoothed convergence, $\tilde{\kappa}_{\mathrm{smooth}, i}$, is defined as:
 \begin{equation}
     \nu_{i} = \frac{\kappa_{\mathrm{smooth}, i} - \langle \kappa_{\mathrm{smooth}} \rangle}{\sigma_{\mathrm{smooth}}},
     \label{eq:kappa_smooth_normalized}
@@ -216,7 +219,7 @@ Different approaches to analytically predict weak lensing peak counts have been 
 
 \section{Minkowski Functionals}
 \label{sec:minkowski_functionals}
-Minkowski functionals are powerful morphological descriptors derived from integral geometry, widely used to quantify the geometry and topology of spatial structures \citep{2024arXiv241000401A}. 
+Minkowski functionals provide an algebraic description of the geometrical properties of a field and are widely used to quantify the morphology of cosmic structures \citep{1994A&A...288..697M}. In cosmology,  they measure the features of the patterns formed by large-scale structure of the Universe \citep{1996dmu..conf..281S, 1997ApJ...482L...1S}.
 
 For a two-dimensional normalized convergence field $\nu(\hat{\mathbf{n}})$ with zero mean and variance $\sigma_0^2$, the excursion set $\Sigma(\nu_0)$ at threshold $\nu_0$ is defined as the set of points where the field exceeds a certain threshold value:
 \begin{equation}
