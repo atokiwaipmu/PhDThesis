@@ -1,9 +1,14 @@
 This chapter compares a suite of weak lensing statistics derived from two sets of simulations: BIGBOX and TILED. Our goal is to quantify differences in mean values, covariance, and correlation matrices to assess how super-sample covariance and other systematic effects influence these measurements. We will also examine how shape noise, smoothing scales, and box replication artifacts affect the results.
 
 \section{Comparison of Mean and Variance for Statistical Measures}
-We compare the mean values and variances of various statistical measures derived from the BIGBOX and TILED simulations. The results show that the mean values are generally consistent between the two simulations, with differences below $1\%$ for most statistics. However, deviations are observed at low $\nu$ values for peak counts, minima, and Minkowski Functionals, indicating limitations in resolving low-density regions.
+We compare the mean values $\mu$ and variances $\sigma^2$ of statistical measures derived from the BIGBOX and TILED simulations. 
+Figures~\ref{fig:ell_main} and~\ref{fig:nu_main} present the comparisons of both mean and variance for the angular power spectrum, bispectrum, and other higher-order statistics.
 
-Variance comparisons reveal that the two simulations exhibit similar levels of statistical fluctuations, with no significant discrepancies. This suggests that the variance of the statistical measures is robust against differences in simulation setups.
+The mean values are generally consistent between the two simulations, with differences below $1\%$ in the ratio $R_{\mu}$ for most statistics. However, common deviations are observed at low $\nu$ values for peak counts, minima, and Minkowski Functionals. These deviations indicate limitations in the TILED simulations to resolve low-density regions. 
+
+Variance ratios $R_{\sigma^2}$ highlight the impact of super-sample covariance, particularly evident in the diagonal elements of the covariance matrices. As expected, the angular power spectrum in the BIGBOX simulations demonstrates increased power at high $\ell$ values due to super-sample effects. Moreover, the discrepancy between the BIGBOX and TILED simulations increases with source redshift, as the TILED simulations lose more large-scale modes.
+
+All $\nu$-binned statistics display higher variances in the BIGBOX simulations across nearly all $\nu$ bins, and the ratios of variances increase with source redshift. This trend suggests the presence of super-sample covariance in these statistical measures, underscoring its significant influence on the covariance structures.
 
 \begin{figure}[ht]
     \centering
@@ -16,15 +21,34 @@ Variance comparisons reveal that the two simulations exhibit similar levels of s
     \centering
     \includegraphics[width=\textwidth]{figures/results/nu_main.png}
     \caption[Comparison of the mean and variance of Non-Correlation Statistics]{Comparison of the mean and variance of the probability density function (PDF), peak/minima counts, and Minkowski Functionals ($V_0, V_1, V_2$) between the BIGBOX and TILED simulations for multiple source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$).}
+    \label{fig:nu_main}
 \end{figure}
 
-\newpage
+\section{Analysis of Covariance and Correlation Matrices}
+To quantify the super-sample covariance effects on off-diagonal terms, we also compare the covariance and correlation matrices of the statistical measures. Figures~\ref{fig:cov_main} and~\ref{fig:cov_ratio_main} give the covariance matrices $\text{Cov}_{ij}$ and their ratios $R^{\text{Cov}}_{ij}$ for each statistic at multiple source redshifts, while Figures~\ref{fig:corr_main} and~\ref{fig:corr_ratio_main} show the correlation matrices $\rho_{ij}$ and their ratios $R^{\rho}_{ij}$.
 
-\section{Detailed Analysis of Covariance and Correlation Matrices}
-Examining covariance matrices reveals that BIGBOX tends to produce systematically higher covariance values than TILED, particularly at higher source redshifts. Correlation matrices highlight that, for some statistics, large-scale modes outside the sampled volume induce significant off-diagonal correlations. The angular power spectrum, in particular, shows increasing off-diagonal elements that align with theoretical expectations of super-sample effects.
+The figure indicate that $R_{\text{Cov}}$, the ratios of covariance matrix elements between the BIGBOX and TILED simulations, are consistently $10\%$ to $30\%$ higher than unity for most statistics.
+This indicates that the BIGBOX simulations yield the same trend as in the diagonal terms, with higher covariance values compared to the TILED simulations. Moreover, the discrepancy between the BIGBOX and TILED simulations increases with source redshift. They supports the hypothesis that super-sample covariance significantly impacts the covariance structures of these statistics. 
+
+$R_{\rho}$, the ratios of correlation matrix elements, indicate the presence of off-diagonal correlations in the angular power spectrum. For power spectrum, the correlation between small and large $\ell$ bins can be seen, which is consistent with the super-sample covariance effect. For PDF, peak counts, and Minkowski Functionals, the ratio are generally $ < 5\%$, indicating that the the super-sample effect is not only in the diagonal terms but also in the off-diagonal terms, lifting the overall covariance matrix.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/cov_bigbox.png}
+    \caption[Covariance Matrices of Statistical Measures in BIGBOX Simulations]{Covariance matrices of statistical measures in the BIGBOX simulations for multiple source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$).}
+    \label{fig:cov_bigbox}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/cov_tiled.png}
+    \caption[Covariance Matrices of Statistical Measures in TILED Simulations]{Covariance matrices of statistical measures in the TILED simulations for multiple source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$).}
+    \label{fig:cov_tiled}
+\end{figure}
 
 \section{Effects of Noise on Statistical Measures}
-Introducing various levels of shape noise shows that while certain statistics, such as $C_\ell^{\kappa\kappa}$ and Minima Counts, are sensitive to noise-induced changes, other non-Gaussian measures remain relatively stable. This indicates that some statistical observables are more robust against observational uncertainties and that careful noise modeling is essential when interpreting cosmological signals.
+Introducing various levels of shape noise shows that while certain statistics, such as $C_\ell^{\kappa\kappa}$ and Minima Counts, are sensitive to noise-induced changes, other non-Gaussian measures remain relatively stable. This indicates that super-sample covariance could be commonly exist in the non-Gaussian statistics, and the noise level does not affect the covariance structures of these statistics.
+
 
 \section{Influence of Smoothing Scale}
 We investigate how applying different Gaussian smoothing scales alters the statistical measures. As smoothing increases, small-scale features are diminished and the distribution of signal intensities changes. Covariance ratios become more unstable as structures blur, underscoring that the choice of smoothing scale affects both the amplitude and the covariance patterns of measured statistics.
@@ -41,92 +65,6 @@ Our findings confirm that super-sample covariance significantly impacts higher-o
 
 
 
-\section{Overview}
-Figures~\ref{fig:cl_main} through~\ref{fig:mfs_cov} provide detailed visualizations of the mean values, variances, covariance matrices, and correlation matrices for each statistical measure under consideration. For each statistic, one figure illustrates the comparison of mean values and variances, while another figure presents the comparison of covariance and correlation matrices. 
-
-From these figures, we observe that the mean values of most statistical measures exhibit excellent agreement between the BIGBOX and TILED simulations, with differences remaining below $1\%$ across the majority of the studied range. However, notable deviations occur at low $\nu$ values for peak counts, minima, and the Minkowski Functionals $V_1$ and $V_2$. These deviations are attributed to the limited resolution of the simulations, which affects the accurate detection of regions with the lowest density contrasts.
-
-Analyzing the covariance matrices reveals that, except for the bispectrum, the ratios of covariance matrix elements between the BIGBOX and TILED simulations are consistently greater than unity. This indicates that the BIGBOX simulations yield higher covariance values compared to the TILED simulations, and this discrepancy becomes more pronounced at higher source redshifts. The bispectrum, on the other hand, exhibits noisy covariance matrices without a clear trend, making it challenging to draw definitive conclusions for this statistic.
-
-Examining the correlation matrices further, we focus on the off-diagonal elements to assess the degree of inter-bin correlations. For statistical measures that are not inherently correlated, the off-diagonal elements remain close to unity, as expected. In contrast, the power spectrum shows off-diagonal elements that exceed unity, displaying a clear increasing trend with higher source redshifts. This behavior aligns with theoretical predictions of super-sample covariance effects, as detailed in \citet{PhysRevD.87.123504}, suggesting that larger-scale modes beyond the survey volume contribute to the observed correlations.
-
-Overall, these findings support the hypothesis that super-sample covariance significantly impacts the statistical measures derived from our simulations. The discrepancies observed between the BIGBOX and TILED simulations emphasize the importance of considering super-sample effects in cosmological analyses. We will explore these effects in greater depth and seek further validation in the subsequent discussion chapter.
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/cl_main.png}
-    \caption[$C_\ell^{\kappa\kappa}$ Mean and Variance]{Comparison of the mean values of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) for different source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$) obtained from the BIGBOX (solid lines) and TILED (dashed lines) simulations. The lower subplots show the ratio of the TILED to BIGBOX mean values, with a reference line at unity to facilitate the assessment of agreement between the two simulations.}
-    \label{fig:cl_main}
-    \vspace{2cm}
-    \includegraphics[width=\textwidth]{figures/results/cl_cov.png}
-    \caption[$C_\ell^{\kappa\kappa}$ Correlation and Covariance Ratio]{Comparison of the covariance matrices and correlation matrices of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) between the BIGBOX and TILED simulations for various source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$). The displayed ratios represent the element-wise division of the covariance and correlation matrices from the TILED simulations by those from the BIGBOX simulations. The `avg' denotes the average ratio of the considered matrix elements.}
-    \label{fig:cl_cov}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/bl_main.png}
-    \caption[Bispectrum Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for the bispectrum. }
-    \label{fig:bl_main}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/bl_corr.png}
-    \caption[Bispectrum Correlation and Covariance]{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of bispectrum. The noisy nature of the bispectrum covariance makes it challenging to discern clear trends between the simulations.}
-    \label{fig:bl_cov}
-    \vspace{0.5cm}
-    \includegraphics[width=\textwidth]{figures/results/bl_cov.png}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/pdf_main.png}
-    \caption[PDF Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for the probability density function (PDF) of the convergence field. The comparison highlights the agreement in mean PDF values between the simulations across different redshifts.}
-    \label{fig:pdf_main}
-    \vspace{2cm}
-    \includegraphics[width=\textwidth]{figures/results/pdf_cov.png}
-    \caption[PDF Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of the PDF. The covariance ratios indicate higher covariance in the BIGBOX simulations, particularly at higher redshifts.}
-    \label{fig:pdf_cov}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/peaks_main.png}
-    \caption[Peak Counts Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for peak counts in the convergence maps. The analysis reveals deviations at low $\nu$ values due to resolution limitations affecting low-density regions.}
-    \label{fig:peak_main}
-    \vspace{2cm}
-    \includegraphics[width=\textwidth]{figures/results/peaks_cov.png}
-    \caption[Peak Counts Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of peak counts. The covariance ratios suggest increased covariance in the BIGBOX simulations, with pronounced effects at higher redshifts.}
-    \label{fig:peak_cov}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/minima_main.png}
-    \caption[Minima Counts Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for minima in the convergence maps. The comparison underscores the simulation's limitations at resolving low-density minima accurately.}
-    \label{fig:min_main}
-    \vspace{2cm}
-    \includegraphics[width=\textwidth]{figures/results/minima_cov.png}
-    \caption[Minima Counts Covariance]{Same as Figure~\ref{fig:cl_cov}, but for the covariance matrices of minima. The covariance ratios reflect higher values in the BIGBOX simulations, consistent with other statistical measures.}
-    \label{fig:min_cov}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/mfs_main.png}
-    \caption[Minkowski Functionals Mean and Variance]{Same as Figure~\ref{fig:cl_main}, but for Minkowski Functionals (area $V_0$, perimeter $V_1$, and genus $V_2$). The agreement in mean values between simulations is generally good, with some discrepancies at extreme density thresholds.}
-    \label{fig:mfs_main}
-\end{figure}
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=\textwidth]{figures/results/mfs_corr.png}
-    \caption[Minkowski Functionals Correlation and Covariance]{Similar to Figure~\ref{fig:cl_cov}, but for the correlation (upper) and covariance (lower) of Minkowski Functionals.}
-    \label{fig:mfs_cov}
-    \vspace{0.5cm}
-    \includegraphics[width=\textwidth]{figures/results/mfs_cov.png}
-\end{figure}
 
 \section{Effects of Noise}
 To assess the impact of observational noise, we have introduced five different shape noise levels into the simulations. Due to the significant influence of noise on higher-order statistics, the bispectrum has been excluded from this part of the analysis.
