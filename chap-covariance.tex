@@ -12,9 +12,10 @@ For an unbiased estimator, the covariance matrix is given by:
 \end{equation}
 where \( N_{\mathrm{sim}} \) is the number of simulations, and \( \mathcal{O}_i^{(n)} \) is the \( i \)-th realization of the statistic in the \( n \)-th simulation.
 
-\section{Role of the Covariance Matrix}
+\section{The Role of the Covariance Matrix in Parameter Inference}
 The study of the covariance matrix is essential for Fisher information analyses, but we will defer a comprehensive discussion to future work. Nonetheless, it is instructive to briefly discuss the importance of the covariance matrix in the context of weak lensing statistics \citep{2004MNRAS.348..897T, 2005A&A...442...69K}. In particular, the covariance matrix serves as a fundamental ingredient in quantifying the uncertainties, correlations, and overall statistical properties of the data.
 
+\subsection{Likelihood Functions and the Gaussian Approximation}
 In cosmology, as in many areas of science, we want to determine the values of underlying model parameters $\mathbf{p}$ that best describe the data $\mathbf{d}$. This process is typically done within a Bayesian framework:
 \begin{equation}
     P(\mathbf{p} | \mathbf{d}) = \frac{\mathcal{L}(\mathbf{d} | \mathbf{p}) \pi(\mathbf{p})}{\mathbf{\mathcal{\epsilon}}(\mathbf{d})},
@@ -34,6 +35,7 @@ For Gaussian-distributed data, it can be simply combine into a multivariate Gaus
 \end{equation}
 where $\mathbf{m}(\mathbf{p})$ is the model prediction for the data vector $\mathbf{d}$. The covariance matrix $\mathbf{C}$ quantifies the uncertainties and correlations between different data points.
 
+\subsection{Fisher Information and Parameter Constraints}
 Based on the likelihood function, we can construct the Fisher information matrix $\mathcal{F}_{\alpha\beta}$, which quantifies the sensitivity of the likelihood function to changes in the model parameters $\mathbf{p}$. The Fisher information matrix is defined as:
 \begin{equation}
     \mathcal{F}_{\alpha\beta} = -\left\langle \frac{\partial^2 \ln \mathcal{L}}{\partial p_\alpha \partial p_\beta} \right\rangle,
@@ -90,6 +92,7 @@ Using the properties of the Dirac delta function and assuming statistical isotro
 \end{equation}
 where \( N(k) = V_s(k) / V_f \) is the number of independent modes in the shell at wavenumber \( k \). The first term represents the Gaussian (disconnected) contribution, and the second term accounts for the non-Gaussian (connected) contribution from the trispectrum. The first term indicates the unavoidable cosmic variance because we are only able to measure from only one realization of the Universe.
 
+\subsection{Shot Noise and Super-Sample Covariance}
 In practice, we can only observe from discrete tracers, such as galaxies, which introduce shot noise into the power spectrum. The shot noise term can be included in the matter power spectrum as:
 \begin{equation}
     P_{\text{obs}}(k) = P_{\mathrm{m}}(k) + \frac{1}{\bar{n}},
@@ -107,7 +110,7 @@ where \( \delta_b \) represents the large-scale (background) density fluctuation
 with \( \tilde{W}(\mathbf{k}) \) being the Fourier transform of the survey window function \( W(\mathbf{x}) \).
 The derivatives \( \partial P_m(k) / \partial \delta_b \) quantify the response of the power spectrum to changes in the background density and can be related to the concept of the response function or integrated perturbation theory \citep{2014PhRvD..89h3519L}.
 
-\section{Covariance of the Angular Power Spectrum}
+\section{Covariance of the Angular Convergence Power Spectrum}
 We consider a cosmological survey characterized by a window function \( \mathcal{W}(\boldsymbol{\theta}) \) and a total survey area \( \Omega_{\mathcal{W}} \), defined as the integral of the window function over the sky \citep{PhysRevD.87.123504}:
 \begin{equation}
     \Omega_{\mathcal{W}} = \int \mathrm{d}^2 \theta \, \mathcal{W}(\boldsymbol{\theta}).
@@ -167,7 +170,7 @@ with:
 where \( P_L(k) \) is the linear matter power spectrum.
 Notably, the SSC term \( \mathrm{Cov}^{\mathrm{SSC}}(\ell_1, \ell_2) \) arises from the large-scale density fluctuations modulating the observed power spectrum within the survey area \citep{PhysRevD.87.123504}.
 
-\section{Covariance of Higher-Order Statistics}
+\section{Covariance of Higher-Order Weak Lensing Statistics}
 Despite some successes in analytical modeling (\citealt{2018PhRvD..97d3532C, 2018A&A...611A..83L, 2019A&A...624A..61L, 2023OJAp....6E...1U}), computing the covariance matrices for higher-order statistics  still need to rely on simulations. Drawing an analogy with the matter power spectrum, the covariance matrix for higher-order statistics can be expressed as:
 \begin{equation}
     \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \mathrm{Cov}^{\mathrm{noSSC}}(\mathcal{O}_i, \mathcal{O}_j) + \mathrm{Cov}^{\mathrm{SSC}}(\mathcal{O}_i, \mathcal{O}_j),

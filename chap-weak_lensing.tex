@@ -1,7 +1,7 @@
 Weak gravitational lensing (WL), also known as cosmic shear, refers to the subtle distortions in the images of distant source caused by the gravitational fields of intervening mass distributions. Unlike strong lensing, which produces noticeable effects such as multiple images or arcs, weak lensing induces small, coherent distortions that require statistical analysis to detect and interpret. For the standard approach to lensing, we refer to \citet{1992grle.book.....S}, \citet{2001PhR...340..291B} and \citet{2010CQGra..27w3001B}.
 
-\section{Lens Equation}
-\subsection{Derivation}
+\section{Introduction to Weak Gravitational Lensing}
+\subsection{Derivation of the Lens Equation }
 To derive the lens equation, we consider a perturbed FLRW metric, which incorporates gravitational potential perturbations. The metric is expressed as
 \begin{equation}
     ds^2 = -\left(1 + \frac{2\Phi}{c^2}\right)c^2 dt^2 + a^2(t) \left(1 - \frac{2\Psi}{c^2}\right) \left[ d\chi^2 + f_K^2(\chi) \, \omega_{ab} \, dx^a dx^b \right] \quad (a, b = 2, 3),
@@ -71,7 +71,7 @@ Applying the Born approximation \citep{1926ZPhy...38..803B}, and assume that $\P
 \end{equation}
 This final expression constitutes the lens equation, encapsulating the deflection of light due to the gravitational potentials \( \Phi \) and \( \Psi \) along the line of sight. 
 
-\subsection{Lensing Matrix}
+\subsection{The Jacobian (Lensing) Matrix $\mathcal{A}$}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/Lens_overview_Oguri.png}
@@ -117,8 +117,8 @@ Figure~\ref{fig:distortion} illustrates the effects of gravitational lensing on 
     \label{fig:distortion}
 \end{figure}
 
-\section{Convergence} \label{sec:convergence}
-\subsection{Definition}
+\section[Convergence Field]{Convergence: Mass Distribution to Lensing} \label{sec:convergence}
+\subsection{Definition of Convergence in Real and Fourier Space}
 From the lensing matrix in Eq.~\eqref{eq:jacobian_matrix}, the convergence $\kappa$ is defined as:
 \begin{equation}
     \label{eq:convergence}
@@ -131,7 +131,8 @@ In Fourier space, the convergence field could be expressed as:
     \tilde{\kappa}(\boldsymbol{\ell}) = \int d^2\theta \, e^{-i\boldsymbol{\ell} \cdot \boldsymbol{\theta}} \kappa(\boldsymbol{\theta}) = \frac{1}{2} \ell^2 \tilde{\psi}(\boldsymbol{\ell}),
 \end{equation}
 where $\tilde{(\quad)}$ denotes the Fourier transform of the corresponding quantity and $\ell = |\boldsymbol{\ell}|$ is the Fourier counterpart to the angular position $\boldsymbol{\theta}$.
-\subsection{Convergence from Density Contrast}
+
+\subsection[Convergence from Density Contrast]{Convergence from Density Contrast and the Lensing Efficiency Function}
 In a flat universe, the Poisson equation in comoving coordinates is expressed as
 \begin{align}
 \label{eq:poisson_flat}
@@ -159,9 +160,9 @@ In a flat universe ($f_K(\chi) = \chi$), this simplifies to:
     W(\chi, \chi_s) = \frac{3 \Omega_m H_0^2}{2 c^2} a^{-1}(\chi) \frac{\chi (\chi_s - \chi)}{\chi_s}.
 \end{equation}
 
-\section{Shear}
+\section[Shear Field]{Shear: Anisotropic Distortions of Background Sources}
 The shear $\gamma$ encapsulates the anisotropic stretching of galaxy images induced by gravitational lensing. Unlike convergence, which affects the size and brightness of images isotropically, shear induces distortions that alter the shapes of background galaxies coherently. 
-\subsection{Definition}
+\subsection{Definition of Shear}[Shear Components and Complex Representation]
 The shear components $\gamma_1$ and $\gamma_2$ describe distortions along different axes and are related to the lensing potential $\psi$ by:
 \begin{equation}
     \label{eq:physical_shear}
@@ -184,7 +185,8 @@ Therefore, the shear field in Fourier space is directly related to the convergen
     \tilde{\kappa}(\boldsymbol{\ell}) = \frac{\ell_1^2 - \ell_2^2 + 2i\ell_1\ell_2}{\ell^2} \tilde{\gamma}(\boldsymbol{\ell}).
     \label{eq:kappa_gamma_relation}
 \end{equation}
-\subsection{E-mode and B-mode}
+
+\subsection{E-mode and B-mode Decomposition}
 The shear field can be decomposed into two distinct modes: the \textbf{E-mode} (gradient component) and the \textbf{B-mode} (curl component). 
 By rotating the complex shear field to align with the principal axes of the shear $\tilde{\gamma}_{EB} = e^{-2i\phi_l} \tilde{\gamma}$, we can express the shear field in terms of the E-mode and B-mode components:
 \begin{equation}
@@ -211,11 +213,11 @@ For standard gravitational lensing by density fluctuations, the B-mode component
     \label{eq:EB_decomposition_standard}
 \end{equation}
 
-\section{Estimation of Lensing Fields}
+\section[Lensing Estimation]{Estimating Lensing Fields from Observables}
 In the case of cosmic shear, not the convergence but the shear is measured from the observed galaxy shapes. Theoretical predictions of the convergence can be related to the observed shear using the relationship in Eq.~\eqref{eq:kappa_gamma_relation}. 
 Here, we introduce a concept of the reduced shear. Furthermore, a convergence field can be estimated from the observed galaxy shapes \citep{1993ApJ...404..441K} and can be estimated from magnification \citep{2001PhR...340..291B}.
 
-\subsection{Ellipticity and Reduced Shear}
+\subsection{Galaxy Ellipticity and Reduced Shear}
 To quantify the shapes of galaxies, we use the second moments of their surface brightness distributions $I(\theta)$. For each galaxy, the second moments $Q_{ab}$ are defined as \citep{2001PhR...340..291B}:
 \begin{equation}
     Q_{ab} := \frac{\int d^2\theta\, I(\theta) \theta_a \theta_b}{\int d^2\theta\, I(\theta)},
@@ -265,7 +267,7 @@ where $N$ is the number of galaxies used in the shear estimation. It is known th
 where $\lambda$ is a arbitary constant. This degree of freedom in the convergence
 field is known as the mass-sheet degeneracy \citep{1985ApJ...289L...1F}.
 
-\subsection{From Shear to Convergence}
+\subsection[From Shear to Convergence]{Inversion Techniques: From Shear to Convergence}
 As we have seen in Eq.~\eqref{eq:kappa_gamma_relation}, shear and convergence are related through the Fourier transform. Following \citet{1993ApJ...404..441K}, the relation between the shear and convergence fields in real space can be expressed as:
 \begin{equation}
     \gamma(\boldsymbol{\theta}) = \frac{1}{\pi} \int d^2\theta' \, \mathcal{D}(\boldsymbol{\theta} - \boldsymbol{\theta'}) \kappa(\boldsymbol{\theta'}),

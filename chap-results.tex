@@ -1,4 +1,45 @@
-In this chapter, we initiate a comprehensive analysis by systematically comparing each statistical measure derived from our simulations. We focus on evaluating the mean values, covariance matrices, and correlation matrices obtained from the BIGBOX and TILED simulations to assess their consistency and understand the underlying discrepancies.
+This chapter compares a suite of weak lensing statistics derived from two sets of simulations: BIGBOX and TILED. Our goal is to quantify differences in mean values, covariance, and correlation matrices to assess how super-sample covariance and other systematic effects influence these measurements. We will also examine how shape noise, smoothing scales, and box replication artifacts affect the results.
+
+\section{Comparison of Mean and Variance for Statistical Measures}
+We compare the mean values and variances of various statistical measures derived from the BIGBOX and TILED simulations. The results show that the mean values are generally consistent between the two simulations, with differences below $1\%$ for most statistics. However, deviations are observed at low $\nu$ values for peak counts, minima, and Minkowski Functionals, indicating limitations in resolving low-density regions.
+
+Variance comparisons reveal that the two simulations exhibit similar levels of statistical fluctuations, with no significant discrepancies. This suggests that the variance of the statistical measures is robust against differences in simulation setups.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/ell_main.png}
+    \caption[Comparison of the mean and variance of $C^{\kappa\kappa}_{\ell}$ and Bispectrum]{Comparison of the mean and variance of the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) and bispectrum of three configurations ($B_{\ell}^{(eq)}, B_{\ell}^{(iso)}, B_{\ell}^{(sq)}$) between the BIGBOX and TILED simulations for multiple source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$).}
+    \label{fig:ell_main}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/nu_main.png}
+    \caption[Comparison of the mean and variance of Non-Correlation Statistics]{Comparison of the mean and variance of the probability density function (PDF), peak/minima counts, and Minkowski Functionals ($V_0, V_1, V_2$) between the BIGBOX and TILED simulations for multiple source redshifts ($z_s = 0.5, 1.0, 1.5, 2.0, 2.5$).}
+\end{figure}
+
+\newpage
+
+\section{Detailed Analysis of Covariance and Correlation Matrices}
+Examining covariance matrices reveals that BIGBOX tends to produce systematically higher covariance values than TILED, particularly at higher source redshifts. Correlation matrices highlight that, for some statistics, large-scale modes outside the sampled volume induce significant off-diagonal correlations. The angular power spectrum, in particular, shows increasing off-diagonal elements that align with theoretical expectations of super-sample effects.
+
+\section{Effects of Noise on Statistical Measures}
+Introducing various levels of shape noise shows that while certain statistics, such as $C_\ell^{\kappa\kappa}$ and Minima Counts, are sensitive to noise-induced changes, other non-Gaussian measures remain relatively stable. This indicates that some statistical observables are more robust against observational uncertainties and that careful noise modeling is essential when interpreting cosmological signals.
+
+\section{Influence of Smoothing Scale}
+We investigate how applying different Gaussian smoothing scales alters the statistical measures. As smoothing increases, small-scale features are diminished and the distribution of signal intensities changes. Covariance ratios become more unstable as structures blur, underscoring that the choice of smoothing scale affects both the amplitude and the covariance patterns of measured statistics.
+
+\section{Identifying and Addressing Systematic Effects}
+\subsection{Box Replication Effect}
+We isolate patches most affected by the repeated tiling of the simulation box and find that these regions introduce biases into mean values and inflations in covariance. Removing or carefully handling these regions reduces discrepancies between BIGBOX and TILED, demonstrating the importance of mitigating this systematic.
+
+\subsection{Flat-sky vs. Full-sky}
+We test how well the flat-sky approximation holds by comparing statistics measured over small patches to their full-sky counterparts. While adequate for limited sky areas, the approximation breaks down at larger scales, affecting both mean values and covariance structures
+
+\section{Summary}
+Our findings confirm that super-sample covariance significantly impacts higher-order weak lensing statistics. The elevated covariance in BIGBOX simulations, sensitive dependence on source redshift, and systematic biases from box replication and smoothing all underscore the complexities in accurately modeling covariance. These insights are directly relevant for upcoming surveys, where understanding and accounting for such effects will be crucial for precise cosmological inference.
+
+
 
 \section{Overview}
 Figures~\ref{fig:cl_main} through~\ref{fig:mfs_cov} provide detailed visualizations of the mean values, variances, covariance matrices, and correlation matrices for each statistical measure under consideration. For each statistic, one figure illustrates the comparison of mean values and variances, while another figure presents the comparison of covariance and correlation matrices. 
@@ -140,3 +181,47 @@ Figure~\ref{fig:ng_smoothing} illustrates the effects of smoothing scale on non-
     \caption[BIGBOX/TILED Ratio of Covariance Matricies for multiple smoothing scales: Non-Gaussian Statistics]{Same as Figure~\ref{fig:ng_noise}, but showing the impact of different smoothing scales on the covariance matrices of non-Gaussian statistical measures. The results emphasize how increased smoothing affects the detection and characterization of small-scale features.}
     \label{fig:ng_smoothing}
 \end{figure}
+
+\section{Source of Systematics}
+In this section, we will discuss the possible sources of systematics that could affect the covariance matrix. 
+
+\subsection{Box Replication Effect}\label{sec:boxreplication}
+The box replication effect arises from replication of the simulation box in order to increase the volume of the simulation. In our setup, patches around special directions suffer the most from the box replication effect. To roughly assess the effect, we can compare the covariance matrices made from the patches of those directions and the rest of the patches.
+
+Here, we defined the directions where are suspected to be affected by the box replication effect by the following criteria:
+\begin{itemize}
+    \item data points around equator: $ \left| \theta_i - \frac{\pi}{2} \right| \leq R_{\text{patch}} $
+    \item data points around the edges of octant: $ \left| \phi_i - \frac{k\pi}{2} \right| \leq R_{\text{patch}} $ for $k=0,1,2,3$
+\end{itemize}
+where $(\theta_i, \phi_i)$ denotes the center of the patch $i$, and $R_{\text{patch}} = 5\sqrt{2}\, \mathrm{\deg}$ is the half diagonal length of the patch. 
+
+We found that the patches including the point $(\theta_i, \phi_i) = (\pi/2, 0)$ have a signnificantly variated mean and variance, even comapared to the rest of suspects. Therefore, we simply discarded this point as it will bias the result. 
+
+Finally, we obtain $70$ patches from each realization, and $1400$ patches for TILED simulations and $770$ patches for BIGBOX simulations in total.
+
+Figure~\ref{fig:boxreplication_cov} and Figure~\ref{fig:boxreplication_corr} show the average ratios of the covariance matrices and correlation matrices between BIGBOX and TILED simulations. Regardless the noisy behavior of bispectrum, the ratio are much closer to unity for the suspected patches. This implies that the box replication effect is significantly enhance the covariance matrix.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BR_ratio_cov.png}
+    \caption{The BIGBOX / TILED ratios of covariance matrices, for the case of the patches around special directions and the rest of the patches. }
+    \label{fig:boxreplication_cov}
+    \includegraphics[width=\textwidth]{figures/BR_ratio_corr.png}
+    \caption{The same as Figure~\ref{fig:boxreplication_cov}, but for correlation matrices.}
+    \label{fig:boxreplication_corr}
+\end{figure}
+
+Figure~\ref{fig:boxreplication_ell} and~\ref{fig:boxreplication_nu} show the comparison of the ratios of mean and variance of each Statistics. Clearly, the suspected patches have biased mean values. The variance ratios are closer to unity, which means that the variance of the suspected patches is larger than the rest of the patches.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/BR/BR_ratio_ell.png}
+    \caption{The ratios of mean and variance of power spectrum and bispectrum between the patches around special directions and the rest of the patches. The mean of suspected patches are biased and the variance is larger.}
+    \label{fig:boxreplication_ell}
+    \includegraphics[width=0.9\textwidth]{figures/BR/BR_ratio_nu.png}
+    \caption{The same as Figure~\ref{fig:boxreplication_ell}, but for PDF, peak/minima counts and Minkowski functionals. The suspected patches tend to have more extreme values and larger variance.}
+    \label{fig:boxreplication_nu}
+\end{figure}
+
+\section{flat-sky vs. full-sky}
+The flat-sky approximation is a good approximation for small patches on the sky. However, the flat-sky approximation breaks down for large patches. In this section, we conduct a test for angular power spectrum, PDF, and peak/minima counts to see how the flat-sky approximation affects the statistics.

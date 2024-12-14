@@ -1,6 +1,6 @@
 In this chapter, we provide an overview of the fundamental concepts and equations that underpin the field of cosmology following  \citet{2003moco.book.....D} and \citet{2008cosm.book.....W} textbooks.
 
-\section{Einstein Field Equations}
+\section[Einstein Field Equations]{From Einstein to Cosmology: The Einstein Field Equations}
 The Einstein Field Equations (EFE) are the fundamental equations of General Relativity, describing how matter and energy influence the curvature of spacetime. Introduced by \citet{1915SPAW.......844E}, these equations extend Newton's law of universal gravitation to a relativistic context, generalizing the defintion of inertial observer in a spacetime which can be curved under the presence of a strong gravitational potential.
 
 The EFE establish a relationship between the geometry of spacetime and the distribution of matter within it. They are expressed with the Minkowski Metric $g_{\mu\nu}$, which describes the curvature of spacetime, and the stress-energy tensor $T_{\mu\nu}$, which characterizes the distribution of matter and energy. The EFE are given by:
@@ -23,6 +23,8 @@ the Ricci scalar $R$ is given by:
     R = g^{\mu\nu} R_{\mu\nu},
     \label{eq:ricci_scalar}
 \end{equation}
+
+\subsection{The Stress-Energy Tensor for a Perfect Fluid}
 Assuming a perfect fluid as the source of the gravitational field, the stress-energy tensor is given by
 \begin{equation}
     T_{\mu\nu} = \left(\rho + p \right) u_{\mu} u_{\nu} + p g_{\mu\nu},
@@ -39,6 +41,8 @@ Therefore, each component of the stress-energy tensor can be expressed as
     T_{00} = \rho c^2, \quad T_{ij} = p g_{ij},
     \label{eq:stress_energy_components}
 \end{equation}
+
+\subsection{Equations of State for Different Cosmic Components}
 Different speices of matter and energy contribute to the energy density \( \rho \) and pressure \( P \) in the universe. The equation of state parameter \( w \) is defined as the ratio of pressure \( P \) to energy density \( \rho \):
 \begin{equation}
     w = \frac{p}{\rho}.
@@ -89,6 +93,7 @@ Unlike the conditions in the early Universe, when photons and baryons were tight
 where \( w_i \) is the equation of state parameter for the \( i \)-th component. 
 
 \section{FLRW Metric and the Friedmann Equations}\label{sec:flrw_metric}
+\subsection{The FLRW Metric}
 The Friedmann-Lemaître-Robertson-Walker (FLRW) metric describes a homogeneous and isotropic universe. As obtained by~\citet{1972gcpa.book.....W}:
 \begin{equation}
     ds^2 = -c^2 dt^2 + a^2(t) \left[ d\chi^2 + f_K^2(\chi) \left( d\theta^2 + \sin^2\theta \, d\phi^2 \right) \right],
@@ -106,6 +111,7 @@ where \( a(t) \) is the time evolving scale factor, \( \chi \) is the comoving r
 \end{equation}
 where \( K \) is the spatial curvature constant, with \( K < 0 \) corresponding to an open universe, \( K = 0 \) to a flat universe, and \( K > 0 \) to a closed universe.
 
+\subsection{Derivation of the Friedmann Equations}
 For the FLRW metric, the non-zero components of the Einstein tensor are:
 \begin{align}
     G_{00} &= 3\left( \frac{\dot{a}}{a} \right)^{2} + 3\frac{K c^2}{a^2}, \label{eq:G00_component} \\
@@ -136,6 +142,8 @@ Substituting the components of \( G_{\mu\nu} \) and \( T_{\mu\nu} \) into the Ei
         \label{eq:friedmann_second}
     \end{equation}
 \end{itemize}
+
+\subsection[Critical Density, Density Parameters, and H0]{Critical Density, Density Parameters, and $H_0$}
 Introducing the Hubble parameter \( H \) and the critical density \( \rho_c \), we can simplify the Friedmann equations. The Hubble parameter is defined as:
 \begin{equation}
     H = \frac{\dot{a}}{a},
@@ -166,6 +174,8 @@ where \( \rho_m \) and \( \rho_r \) are the energy densities of matter and radia
     1 = \Omega_r + \Omega_m + \Omega_K + \Omega_\Lambda.
     \label{eq:friedmann_density_parameters}
 \end{equation}
+
+\subsection{Evolution of Density Parameters with Scale Factor}
 The evolution of the density parameters with the scale factor \( a \) can be derived from the conservation of energy-momentum and the equations of state. For matter-dominated and radiation-dominated universes, the energy densities scale as:
 \begin{equation}
     \rho_m \propto a^{-3}, \quad \rho_r \propto a^{-4}.
@@ -189,8 +199,9 @@ Combining these expressions, the Friedmann equation~\eqref{eq:friedmann_density_
 \end{equation}
 which describes the evolution of the Hubble parameter with scale factor \( a \) in terms of the contributions from radiation, matter, curvature, and the cosmological constant.
 
-\section{Cosmological Redshift and Distances}
+\section{Redshift and Cosmological Distances}
 The expansion of the universe causes the wavelength of light to stretch as it propagates through space. This effect, known as cosmological redshift, is a direct consequence of the expansion of the universe and is described by the scale factor \( a(t) \). 
+
 Before going into the details of the redshift, we first introduce the concept of the null geodesic $ds^2 = 0$, which describes the path of light in a curved spacetime. Then, the radial coordinate distance for a photon traveling from a source to the observer is obtained from the null condition:
 \begin{equation}
     ds^2 = 0 \quad \Rightarrow \quad d\chi = \frac{c \, dt}{a(t)}.
@@ -255,7 +266,7 @@ In an expanding universe, the angular diameter distance is given by~\citep{1999a
 \end{equation}
 The angular diameter distance is essential for studying standard rulers, such as the scale of baryon acoustic oscillations (BAO) in the cosmic microwave background and large-scale structure~\citep{2005ApJ...633..560E}. By measuring the angular size \( \theta \) of these features and knowing their physical size \( D \), we can determine \( d_A(z) \) and thus constrain cosmological parameters.
 
-\section{Initial Conditions}
+\section{Initial Conditions and the Primordial Universe}
 \label{sec:initial_conditions}
 The initial conditions of the universe are believed to originate from quantum fluctuations during the inflationary epoch. These fluctuations are imprinted on the cosmic microwave background (CMB) radiation, which provides a snapshot of the universe at the time of recombination ($z \sim 1100$), and these primordial perturbations served as the seeds for the formation of the large-scale structures (LSS) observed today
 
@@ -268,7 +279,7 @@ Figure~\ref{fig:cmb_power_spectrum} illustrates the CMB temperature power spectr
     \label{fig:cmb_power_spectrum}
 \end{figure}
 
-\subsection{Primodial Power Spectrum}
+\subsection{Primordial Fluctuations and the Power Spectrum}
 The standard single-field slow-roll inflation model predicts that the primordial fluctuations are nearly scale-invariant and Gaussian \citep{2003moco.book.....D}. The matter power spectrum of these primordial curvature perturbations is described by a nearly scale-invariant power-law form:
 \begin{equation}
     P_p(k) = A_s \left(\frac{k}{k_*}\right)^{n_s - 1},
@@ -301,6 +312,7 @@ Since in the radiation-dominant era, the growth of perturbations on super-horizo
         k^{-2} & \text{for } k \gg k_{\text{eq}}\, \text{Power-law}.
     \end{cases}
 \end{equation}
+
 Figure~\ref{fig:linear_power_spectrum} shows the linear matter power spectrum computed using the \texttt{CLASS} code. It is clear that the scaling of the linear power spectrum changes around $k_{\text{eq}}$. The wiggles around \( k \sim 0.1\, h/\text{Mpc} \) are due to Baryon Acoustic Oscillations (BAOs) imprinted.
 \begin{figure}[ht]
     \centering
@@ -310,7 +322,7 @@ Figure~\ref{fig:linear_power_spectrum} shows the linear matter power spectrum co
     \label{fig:linear_power_spectrum}
 \end{figure}
 
-\subsection{Baryon Acoustic Oscillations}
+\subsection{Baryon Acoustic Oscillations (BAOs)}
 BAOs serve as a standard ruler for cosmological distance measurements and are crucial for constraining cosmological parameters. These features originate from the oscillatory behavior of the photon-baryon plasma in the primordial universe prior to the epoch of recombination. During this period, photons and baryons are tightly coupled, effectively forming a coherent photon-baryon fluid. The coupling between photons and baryons is quantitatively characterized by the baryon-to-photon momentum density ratio, \( R \), defined as:
 \begin{equation}
     R = \frac{\Pi_b}{\Pi_\gamma} = \frac{\rho_b \mathbf{v}_b}{\left(1 + \frac{1}{3}\right) \rho_\gamma \mathbf{v}_\gamma} = \frac{3 \rho_b}{4 \rho_\gamma},
@@ -333,7 +345,7 @@ Therefore, the evolution of the photon-baryon plasma scales as:
 \end{equation}
 where \( k \) is the wavenumber and \( \phi \) is the phase constant. 
 
-\section{The linear evolution of density fluctuations}
+\section{Growth of Matter Density Fluctuations}
 Density fluctuations arise from quantum fluctuations during inflation and grow under the influence of gravity. 
 Starting from the continuity and Euler equations, which govern the conservation of mass and momentum, respectively:
 \begin{eqnarray}
@@ -400,7 +412,7 @@ The solutions to this differential equation depend on the sign of \( \omega^2(k,
 \end{itemize}
 These results illustrate the Jeans instability criterion, which states that perturbations grow only if their wavelength exceeds the Jeans length \( \lambda_J = c_s \sqrt{\dfrac{\pi}{G \bar{\rho}}} \) \citep{1902RSPTA.199....1J}.
 
-\section{Spherical Collapse}
+\section{The Spherical Collapse Model}
 As gravity is attractive force, ambient matter falls into such high density regions, which results in formation of halos. 
 The spherical collapse model \citep{1972ApJ...176....1G} provides a simplified description of the formation of cosmic structures by considering the evolution of a spherically symmetric overdensity in an expanding universe. Suppose that there is spherical matter around a certain point in the Universe and initial density contrast is denoted as $\delta_i \ll 1$. The equation of motion of the shell which the radius $R$ is given by:
 \begin{equation}
@@ -450,11 +462,11 @@ Substituting $t = t_{\text{ta}}$ and $t = t_{\text{coll}}$, we obtain:
 \end{equation}
 Therefore, when the linear density contrast exceeds $\delta_L \approx 1.69$, the shell virializes and forms a halo.
 
-\section{Dark Matter Halo}
+\section{Dark Matter Halos}
 \label{sec:halo}
 Dark matter halos are the fundamental building blocks of cosmic structures. They form through the gravitational collapse of overdense regions in the early universe and provide the potential wells in which baryonic matter accumulates to form galaxies and galaxy clusters. 
 
-\subsection{Halo Mass Function}
+\subsection{The Halo Mass Function: Press-Schechter}
 The halo mass function (HMF) describes the number density of dark matter halos as a function of their mass and redshift. The Press-Schechter (PS) formalism \citep{1974ApJ...187..425P} provides an analytical approach to calculate the HMF based on the initial Gaussian density field and the theory of gravitational collapse.
 
 Let us consider the density field which follows Gaussian distribution at each position. The probability distribution function is:
@@ -507,7 +519,7 @@ where $\delta_h(M, z)$ is the overdensity of halos of mass $M$ at redshift $z$, 
 \end{equation}
 where $\nu(M, z) = \delta_c / \sigma(M, z)$ is the peak height, and $\delta_c$ is the critical density contrast for collapse. It is then extended by \citet{2001MNRAS.323....1S} to include ellipsoidal collapse.
 
-\subsection{Halo Density Profile}
+\subsection{Halo Density Profiles: NFW and Einasto Models}
 Since halos undergo nonlinear gravitational evolution, their density profiles need numerical simulations to be determined. The most widely used model is the Navarro-Frenk-White (NFW) profile \citep{1996ApJ...462..563N, 1997ApJ...490..493N}, which is found universally in numerical simulations. The NFW profile is given by:
 \begin{equation}
     \rho_\text{NFW}(r) = \frac{\rho_s}{(r/r_s)(1 + r/r_s)^2}

@@ -1,11 +1,14 @@
+\section{Introduction to Numerical Simulations in Cosmology}
 Numerical simulations are crucial in physics and astronomy for studying complex systems of interacting particles, such as galaxies and the Universe's large-scale structure, where analytical solutions are often impractical due to complexity and nonlinearity \citep{1981csup.book.....H, 1985ApJS...57..241E, 2005Natur.435..629S, 2005MNRAS.364.1105S}. This section provides an overview of $N$-body simulations commonly used in cosmology.
 
+\subsection{Dark Matter-Only vs. Hydrodynamical Simulations}
 In cosmology and astrophysics, simulation can be grouped into two main categories: dark matter-only simulations and hydrodynamical simulations. 
 
 Dark matter simulations are used to study the large-scale structure of the universe, the formation of dark matter halos, and the evolution of dark matter particles under the influence of gravity. Since dark matter is effectively collisionless and interacts primarily through gravity, it can be modeled as a collection of particles that evolve under the influence of gravitational forces \citep{1985ApJS...57..241E}. 
 
 Hydrodynamical simulations, on the other hand, include the effects of gas dynamics, star formation, and feedback processes from supernovae and active galactic nuclei (AGN) \citep{1989ApJS...70..419H, 2005Natur.435..629S, 2005MNRAS.364.1105S}. These simulations are more computationally expensive and require additional physics beyond gravity, such as hydrodynamics, radiative transfer, and chemistry.
 
+\subsection{Historical Evolution and Growth in Particle Number}
 Since the 1980s, numerical cosmology has developed algorithms to mitigate the computational challenges posed by long-range gravitational interactions by reducing global communication across the computational domain. Key algorithms include mesh-based methods, tree codes, and multipole expansions~\citep{1981csup.book.....H}. Figure~\ref{fig:particle-count} displays the number of particles used in selected $N$-body simulations employing these techniques. Symbols and colors indicate the gravitational solvers: particle-particle-particle-mesh (P$^3$M) and adaptive P$^3$M (AP$^3$M); parallel or vectorized P$^3$M; Tree codes; TreePM; and particle-mesh methods with adaptive mesh refinement (PM AMR).
 
 Advancements in algorithms and software optimization have increased the number of particles in cosmological simulations beyond what direct summation methods allow. Since 1990, gravity-only simulations have exhibited a super-exponential growth trend, indicated by the quadratic regression in Figure~\ref{fig:particle-count}, reflecting significant methodological innovations beyond hardware improvements~\citep{leclercq2020}.
@@ -61,7 +64,7 @@ where $a$ is the scale factor, $H$ is the Hubble parameter, and $f(a)$ is the gr
     f(a) = \frac{d\ln D}{d\ln a},
 \end{equation}
 
-\section{Simulation Basics}
+\section[N-Body Simulation Methods]{N-Body Simulation Methods: An Overview}
 We outline the fundamental concepts and algorithms used in $N$-body simulations, including direct summation, particle-mesh methods, particle-particle particle-mesh (P3M) methods, and tree-particle-mesh (Tree-PM) methods.
 
 Table~\ref{tab:simulation-methods} summarizes the key features of these methods, including computational complexity and example objectives they are best suited for.
@@ -173,10 +176,10 @@ The main updates in the Tree-PM method compared to the P$^3$M method are in the 
         where $l_j$ is the size of node $j$ and $\theta_{\text{max}}$ is the maximum allowed opening angle.
 \end{enumerate}
 
-\section{Tools for Fast Computation}
+\section{Computational Tools and Optimization Techniques}
 Efficient computational tools are crucial for large-scale simulations and data analysis in scientific and engineering applications. This section overviews key computational techniques and algorithms used in $N$-body simulations and large-scale structure studies.
 
-\subsection{Fast Fourier Transform}
+\subsection{Fast Fourier Transforms (FFT)}
 The Fast Fourier Transform (FFT) is a highly efficient algorithm for computing the Discrete Fourier Transform (DFT) of a sequence. Given a sequence of $N$ complex numbers $\{x_n\}_{n=0}^{N-1}$, the DFT is defined as:
 \begin{equation}
     X_k = \sum_{n=0}^{N-1} x_n e^{-2\pi i kn / N}, \quad k = 0, 1, \dots, N-1.
@@ -221,7 +224,7 @@ Parallelization accelerates computations in large-scale simulations by leveragin
     \item \textbf{Data Parallelism:} Performing identical operations concurrently on different data elements, enabling SIMD (Single Instruction, Multiple Data) execution.
 \end{itemize}
 
-\subsection{Adaptive Mesh Refinement}
+\subsection{Adaptive Mesh Refinement (AMR)}
 Adaptive Mesh Refinement (AMR) dynamically adjusts grid resolution, refining the mesh where higher accuracy is needed (e.g., regions with high density gradients) and coarsening it elsewhere \citep{1989JCoPh..82...64B}. This technique is typically used in hydrodynamical simulations to capture complex fluid dynamics and shock fronts accurately.
 Because N-body simulations with discrete particles do not require continuous field solution and have more efficient methods like Tree-PM, AMR is not commonly used in N-body simulations.
 
@@ -256,7 +259,7 @@ One of the popular algorithms for tree construction is the Barnes-Hut Octree \ci
 
 Parallel tree construction involves building local trees within each subdomain and integrating them for global computations \citep{DUBINSKI1996133}. Efficient parallelization enhances scalability and performance in large-scale simulations.
 
-\section{\texttt{FASTPM}} \label{sec:fastpm}
+\section{Advanced Codes and Methods: \texttt{FASTPM}} \label{sec:fastpm}
 \texttt{FASTPM} (Fast Particle Mesh; \citealt{10.1093/mnras/stw2123}) is an advanced N-body simulation code tailored for efficiently modeling the evolution of dark matter and halo structures on cosmological scales. Building upon the foundational PM approach, \texttt{FASTPM} integrates modified kick and drift factors derived from the Zel'dovich Approximation (ZA). This enhancement allows \texttt{FASTPM} to achieve high accuracy in large-scale structure formation while significantly reducing computational overhead. This subsection delineates the core methodology of FASTPM, incorporating the mathematical formalism of its modified kick and drift factors.
 
 \subsection{Modified Kick and Drift Factors}
@@ -337,7 +340,7 @@ The main steps of the \texttt{FASTPM} algorithm follow the standard PM method di
     \]
 \end{enumerate}
 
-\section{Weak Lensing Map Generation}
+\section{Generating Weak Lensing Maps from Simulations}
 \label{sec:weak-lensing-generation}
 To extract statistics from N-body simulations, it is necessary to generate detailed WL maps by simulating the propagation of a vast number of virtual light rays from source galaxies to the observer. This process involves calculating the distortions and magnifications of the source images caused by the cumulative gravitational deflections from the intervening matter distribution along each line of sight.
 

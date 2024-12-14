@@ -1,5 +1,7 @@
 \section{Two-point Correlation Function}
-\red{Overdensity, 2PCF, galaxy bias}
+\subsection{Overdensities and the Definition of the 2PCF}
+
+\subsection{2PCF for Biased Tracers}
 
 \section{Convergence Power Spectrum}
 The matter power spectrum, \( P(k) \), is a fundamental quantity in cosmology that characterizes the distribution of dark matter density fluctuations in Fourier space. It is defined as the Fourier transform of the two-point correlation function of the dark matter density field, \( \delta(\mathbf{x}) \) \citep{2001PhR...340..291B}. Mathematically, the matter power spectrum is expressed as:
@@ -16,6 +18,7 @@ In the context of weak gravitational lensing, the matter power spectrum \( P(k) 
 \end{equation}
 where \( \tilde{\kappa}(\boldsymbol{\ell}) \) is the Fourier transform of the convergence field \( \kappa(\boldsymbol{\theta}) \), and \( \delta^{(2)} \) is the two-dimensional Dirac delta function.
 
+\subsection{Derivation of the Convergence Power Spectrum}
 The convergence field \( \kappa(\boldsymbol{\theta}) \) can be expressed as a weighted projection of the matter density contrast along the line of sight (see Eq.~\eqref{eq:convergence_integral}):
 \begin{equation}
     \kappa(\boldsymbol{\theta}) = \int_0^{\chi_s} d\chi \, W(\chi) \, \delta_m\left(\chi \boldsymbol{\theta}, \chi\right),
@@ -146,8 +149,13 @@ and
 which is given at the tree level (leading order) in perturbation theory \citep{2002PhR...367....1B}.
 
 \section{Probability Density Functions} \label{sec:pdfs}
-The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field.
+The Probability Density Function (PDF) of the convergence field, $\kappa$, provides a fundamental statistical characterization of the field's one-point distribution. By encompassing all moments and cumulants, the PDF captures both Gaussian and non-Gaussian features intrinsic to the convergence field. The PDF is defined as:
+\begin{equation}
+    P(\kappa) \, d\kappa = \mathrm{Prob}(\kappa \leq \kappa' \leq \kappa + d\kappa),
+\end{equation}
+where \(\mathrm{Prob}\) denotes the probability that the convergence \(\kappa'\) lies within the interval \([\kappa, \kappa + d\kappa]\).
 
+\subsection{Smoothing and Normalization Procedures}
 To effectively suppress noise and small-scale fluctuations, the convergence map $\kappa(\hat{\mathbf{n}})$ is first smoothed with a Gaussian kernel. The smoothed convergence field, $\kappa_{\mathrm{smooth}}(\hat{\mathbf{n}})$, is defined as:
 \begin{equation}
     \kappa_{\mathrm{smooth}}(\hat{\mathbf{n}}) = \int_{S^2} \kappa(\hat{\mathbf{n}}') W(\hat{\mathbf{n}} - \hat{\mathbf{n}}') \, d\hat{\mathbf{n}}',
@@ -172,8 +180,8 @@ Formally, the PDF \( P(\nu) \) is defined such that:
 \begin{equation}
     P(\nu) \, d\nu = \mathrm{Prob}(\nu \leq \nu' \leq \nu + d\nu),
 \end{equation}
-where \(\mathrm{Prob}\) denotes the probability that the normalized convergence \(\nu'\) lies within the interval \([\nu, \nu + d\nu]\).
 
+\subsection{Practical Estimation of the Convergence PDF}
 For a discrete set of normalized convergence measurements \(\{\nu_i\}_{i=1}^{N_{\mathrm{pix}}}\) obtained from \(N_{\mathrm{pix}}\) pixels, the PDF can be represented using the Dirac delta function \(\delta_D\):
 \begin{equation}
     P(\nu) = \frac{1}{N_{\mathrm{pix}}} \sum_{i=1}^{N_{\mathrm{pix}}} \delta_D(\nu - \nu_i).
@@ -221,6 +229,7 @@ Different approaches to analytically predict weak lensing peak counts have been 
 \label{sec:minkowski_functionals}
 Minkowski functionals provide an algebraic description of the geometrical properties of a field and are widely used to quantify the morphology of cosmic structures \citep{1994A&A...288..697M}. In cosmology,  they measure the features of the patterns formed by large-scale structure of the Universe \citep{1996dmu..conf..281S, 1997ApJ...482L...1S}.
 
+\subsection{Definition of Minkowski Functionals}
 For a two-dimensional normalized convergence field $\nu(\hat{\mathbf{n}})$ with zero mean and variance $\sigma_0^2$, the excursion set $\Sigma(\nu_0)$ at threshold $\nu_0$ is defined as the set of points where the field exceeds a certain threshold value:
 \begin{equation}
     \Sigma(\nu_0) = \left\{ \hat{\mathbf{n}} \in S^2 \ \bigg| \ \nu(\hat{\mathbf{n}}) > \nu_0 \right\}.
@@ -249,6 +258,7 @@ For a pixelized map with $\nu_{\mathrm{pix}}$ pixels, the continuous integrals i
 \end{align}
 where $\Theta$ is the Heaviside function, $\delta_D$ the Dirac delta function, $\mathcal{N}(i)$ the neighboring pixels of $i$, and derivatives are estimated via finite differences.
 
+\subsection{Analytical Expressions in Gaussian Random Fields}
 For a two-dimensional GRF $\kappa(\hat{\mathbf{n}})$ with zero mean and unit variance (after normalization), the Minkowski functionals are \citep{2010PhRvD..81h3505M}: 
 \begin{align}
     V_0(\nu) &= \frac{1}{2} \operatorname{erf}\left( \frac{\nu}{\sqrt{2}} \right), \label{eq:V0_GRF} \\
