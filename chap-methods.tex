@@ -1,5 +1,5 @@
 
-In this work, we quantified the effect of the super-sample covariance on the covariance matrix of higher-order statistics for a weak lensing survey. To achieve this, we conducted a series of N-body simulations and analyzed the resulting convergence maps. These maps enable the computation of covariance matrices for various statistical measures. Thus, we could investigate the impact of the super-sample covariance on these matrices.
+In this work, we quantified the effect of the super-sample covariance on the covariance matrix of higher-order statistics for a weak lensing survey. To achieve this, we conducted a series of N-body simulations and analyzed the resulting convergence maps. These maps enable the computation of covariance matrices for various summary statistics. Thus, we could investigate the impact of the super-sample covariance on these matrices.
 
 In the following sections, we discuss the methodology used to generate the convergence maps, extract patches for analysis, incorporate noise, apply Gaussian smoothing, and measure the summary statistics from the simulated maps. We also outline the process for estimating the covariance matrices and comparing the results between the BIGBOX and TILED simulations.
 
@@ -158,7 +158,7 @@ Figure~\ref{fig:avg_sigma0} shows the mean standard deviation of the noiseless c
 \section{Extracting Weak Lensing Statistics from Convergence Maps}
 To characterize the influence of super-sample covariance on higher-order statistics, this study focuses on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals.
 
-Table~\ref{tab:statistics} summarizes the range of values and the computational subroutines employed for each statistical measure.
+Table~\ref{tab:statistics} summarizes the range of values and the computational subroutines employed for each summary statistic.
 \begin{table*}[htbp]
     \centering
     \begin{tabular}{lcc}
@@ -173,7 +173,7 @@ Table~\ref{tab:statistics} summarizes the range of values and the computational 
     Minkowski Functionals & $-4 \leq \kappa/\sigma_\kappa \leq 4$ & Custom implementation \\
     \bottomrule
     \end{tabular}
-    \caption{Summary of the statistical measures employed in this study, including their respective value ranges and the computational subroutines used for analysis.}
+    \caption{Summary of the summary statistics employed in this study, including their respective value ranges and the computational subroutines used for analysis.}
     \label{tab:statistics}
 \end{table*}
 
@@ -212,17 +212,17 @@ Figure~\ref{fig:avg_sigma1} illustrates the variance of the gradient field, $\si
 \end{figure}
 
 \section{Comparing Covariances from BIGBOX and TILED}
-After the measurement phase, this study investigates the impact of super-sample covariance on the covariance matrices of the statistical measures discussed earlier. To facilitate this analysis, we use an unbiased estimator for the covariance matrix, as defined in Equation~\ref{eq:covariance}.
+After the measurement phase, this study investigates the impact of super-sample covariance on the covariance matrices of the summary statistics discussed earlier. To facilitate this analysis, we use an unbiased estimator for the covariance matrix, as defined in Equation~\ref{eq:covariance}.
 \begin{equation}
     \label{eq:covariance}
     \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \frac{1}{N_{\mathrm{sim}} - 1} \sum_{n=1}^{N_{\mathrm{sim}}} (\mathcal{O}_i^{(n)} - \langle \mathcal{O}_i \rangle) (\mathcal{O}_j^{(n)} - \langle \mathcal{O}_j \rangle),
 \end{equation}
 
-Additionally, we compute the correlation matrix for each statistical measure to analyze the interdependence between different scales and configurations. The correlation matrix is defined as:
+Additionally, we compute the correlation matrix for each summary statistic to analyze the interdependence between different scales and configurations. The correlation matrix is defined as:
 \begin{equation}
     \rho_{ij} = \frac{\text{Cov}(\mathcal{O}_i, \mathcal{O}_j)}{\sqrt{\text{Cov}(\mathcal{O}_i, \mathcal{O}_i)\text{Cov}(\mathcal{O}_j, \mathcal{O}_j)}},
 \end{equation}
-where $\mathcal{O}_i$ and $\mathcal{O}_j$ represent the $i$-th and $j$-th statistical measures, respectively. Correlation matrix normalize off-diagonal elements by the scale dependent variance, thereby enabling a direct comparison between different simulations and statistical measures.
+where $\mathcal{O}_i$ and $\mathcal{O}_j$ represent the $i$-th and $j$-th summary statistics, respectively. Correlation matrix normalize off-diagonal elements by the scale dependent variance, thereby enabling a direct comparison between different simulations and summary statistics.
 
 After computing the covariance and correlation matrices for both the BIGBOX and TILED simulations, we assess the impact of super-sample covariance by comparing the two sets of matrices. The comparison is performed by calculating the ratio of the BIGBOX to TILED matrices, defined as:
 \begin{equation}
@@ -230,7 +230,7 @@ After computing the covariance and correlation matrices for both the BIGBOX and 
 \end{equation}
 where $\mathrm{Cov}_{\mathrm{BIGBOX}}$ and $\mathrm{Cov}_{\mathrm{TILED}}$ denote the covariance matrices derived from the BIGBOX and TILED simulations, respectively. Similarly, $\rho_{\mathrm{BIGBOX}}$ and $\rho_{\mathrm{TILED}}$ represent the corresponding correlation matrices.
 
-To quantitatively evaluate the overall influence of super-sample covariance, we compute the mean values of the ratios $R^{\mathrm{Cov}}_{ij}$ and $R^{\rho}_{ij}$ across the respective covariance and correlation matrices. Specifically, the average of $R^{\rho}$ is calculated by excluding the diagonal elements, which are intrinsically equal to unity by definition. In contrast, the average of $R^{\mathrm{Cov}}$ utilizes all elements of the covariance matrix, including the diagonal. 
+To quantitatively evaluate the overall influence of super-sample covariance, we compute the mean values of the ratios $R^{\mathrm{Cov}}_{ij}$ and $R^{\rho}_{ij}$ across the respective covariance and correlation matrices. Specifically, the average of $R^{\rho}$ is calculated by excluding the diagonal elements, which are equal to unity by definition. In contrast, the average of $R^{\mathrm{Cov}}$ utilizes all elements of the covariance matrix, including the diagonal. 
 
 For $\ell$-binned statistics, such as the angular power spectrum ($C_\ell^{\kappa\kappa}$) and the bispectrum, the average ratio is determined across all available multipole bins. Conversely, for $\nu$-binned statistics, such as the PDF, peak/minima counts, and Minkowski functionals, the first and last bins are excluded from the ratio calculation to avoid biases introduced by limited data points and the inherent unreliability of these extreme bins. The average ratios are defined as follows:
 \begin{equation}

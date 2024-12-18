@@ -248,6 +248,9 @@
 % ============================================================================
 %                             SECTION TITLES
 % ============================================================================
+% --- Save Original Chapter Style ---
+\let\oldchapter\chapter  % Store original chapter command
+
 % --- Custom Chapter Style ---
 \titleformat{\chapter}[display]
   {\normalfont\huge\bfseries} % Format for the chapter title
