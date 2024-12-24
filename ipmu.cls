@@ -43,11 +43,11 @@
 \RequirePackage{tocloft}  % Customize table of contents
 \RequirePackage{geometry}          % For page layout
 \RequirePackage{graphicx}          % For including graphics
-\RequirePackage{amsmath, amssymb}  % For mathematical symbols and environments
+\RequirePackage{amssymb, amsmath}  % For mathematical symbols and environments
 \RequirePackage{setspace}          % For setting line spacing
 \RequirePackage{titlesec}          % For customizing section titles
 \RequirePackage{fancyhdr}          % For header and footer customization
-\RequirePackage{unicode-math}      % For Unicode math fonts
+%\RequirePackage{unicode-math}      % For Unicode math fonts
 \RequirePackage{lipsum} % For dummy text (optional)
 \RequirePackage{hyperref}
 \hypersetup{
@@ -65,6 +65,7 @@
 
 % Set main font (you can change this to your preferred font)
 \setmainfont{Times New Roman} % Example for English text
+%\setmathfont{Latin Modern Math}
 
 % Set Japanese font (ensure this font is installed on Overleaf)
 \newfontfamily\japanesefont{Noto Sans JP} % Example font; adjust as needed
@@ -144,23 +145,23 @@
         % Thesis Titles from Commands within a constrained width
         {\huge \thesisTitle}\par
         \vspace{0.5cm}
-        \textjapanese{{\large \thesisJapaneseTitle}}\par
+        \textjapanese{{\Large \thesisJapaneseTitle}}\par
         \vspace{2cm}
         
         % Submission Information
-        A Dissertation Submitted for the Degree of Doctor of Philosophy\par
+        {\Large A Dissertation Submitted for the Degree of Doctor of Philosophy}\par
         \vspace{0.5cm}
-        December 2024\par
-        \textjapanese{令和６年１２月博士（理学）申請}\par
+        {\Large December 2024}\par
+        \textjapanese{{\Large 令和６年１２月博士（理学）申請}}\par
         \vspace{2cm}
         
         % Department and University
-        Department of Physics, Graduate School of Science,\par
+        {\Large Department of Physics, Graduate School of Science,}\par
         \vspace{0.5cm}
-        The University of Tokyo\par
+        {\Large The University of Tokyo}\par
         \vspace{0.5cm}
-        \textjapanese{東京大学大学院理学系研究科}\par
-        \textjapanese{物理学専攻}\par
+        \textjapanese{{\Large 東京大学大学院理学系研究科}}\par
+        \textjapanese{{\Large 物理学専攻}}\par
         \vspace{2cm}
         
         % Author Information
