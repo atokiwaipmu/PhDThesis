@@ -1,0 +1,357 @@
+\chapter{Smoothing and Filtering Methods for Convergence Maps}
+\label{ch:smoothing-filters}
+
+\red{Weak lensing convergence maps typically contain small-scale noise from galaxy shape measurements, finite sampling, or instrumental errors. To enhance the signal on scales of interest, researchers often apply a smoothing or filtering procedure to the raw maps. This chapter reviews several commonly used filters—\emph{top-hat}, \emph{Gaussian}, \emph{wavelet-based}, and \emph{Wiener}—and discusses their typical applications, advantages, and limitations in lensing analysis.}
+
+\section{Motivation for Filtering}
+\label{sec:filter-motivation}
+
+In the weak lensing regime, convergence maps are reconstructed from noisy data, often involving:
+\begin{itemize}
+    \item \textbf{Shape Noise}: Random intrinsic ellipticities of background galaxies.
+    \item \textbf{Measurement Uncertainties}: Imperfect knowledge of the point-spread function, redshift uncertainties, etc.
+    \item \textbf{Finite Sampling}: Incomplete coverage or variable number density of sources.
+\end{itemize}
+A smoothing filter seeks to:
+\begin{itemize}
+    \item Suppress small-scale noise fluctuations that are not cosmologically informative.
+    \item Retain or highlight physical structures (e.g.\ clusters, filamentary structures) on scales of interest.
+    \item Sometimes isolate features at specific angular scales.
+\end{itemize}
+Different filters balance these goals in various ways. The choice of filter depends on the science objective—whether one is measuring power spectra, searching for cluster peaks, or analyzing non-Gaussian features.
+
+\section{Top-Hat (Disk) Filter}
+\label{sec:tophat-filter}
+
+\subsection{Definition}
+A \textbf{top-hat} filter (sometimes called a “circular aperture” or “disk” filter) applies a uniform weighting inside a circular region of radius $\theta_{\mathrm{TH}}$ and zero weight outside:
+\begin{equation}
+    W_{\mathrm{TH}}(\theta) = 
+    \begin{cases}
+        \frac{1}{\pi \theta_{\mathrm{TH}}^2}, & \text{if } \theta \le \theta_{\mathrm{TH}},\\[6pt]
+        0, & \text{if } \theta > \theta_{\mathrm{TH}}.
+    \end{cases}
+\end{equation}
+When convolving a convergence map $\kappa(\boldsymbol{\theta})$ with this filter, each output pixel is simply the average of all pixels within radius $\theta_{\mathrm{TH}}$.
+
+\subsection{Usage in Weak Lensing}
+The top-hat filter is conceptually simple and can highlight overdensities on a specified angular scale. It has been used in cluster-detection techniques (“aperture densitometry”), though it tends to create sharper boundaries and can introduce ringing in Fourier space.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages}: 
+    Simple to implement; straightforward physical interpretation as an average within a disk.
+    \item \textbf{Drawbacks}: 
+    Sharp cutoff in real space corresponds to strong sidelobes in Fourier space, meaning small-scale noise can leak into the map. It is not optimal for preserving details or controlling smoothing in frequency space.
+\end{itemize}
+
+\section{Gaussian Filter}
+\label{sec:gaussian-filter}
+
+\subsection{Definition}
+A \textbf{Gaussian} filter weights the convergence field with a radially symmetric Gaussian kernel of characteristic smoothing scale $\theta_G$:
+\begin{equation}
+    W_{\mathrm{G}}(\theta) = \frac{1}{2 \pi \,\theta_G^2}
+    \exp\!\Bigl(-\frac{\theta^2}{2 \,\theta_G^2}\Bigr).
+\end{equation}
+In Fourier space, the Gaussian kernel remains Gaussian, which makes it convenient for scale-based analysis or controlling high-frequency noise.
+
+\subsection{Usage in Weak Lensing}
+Gaussian smoothing is widely used in cosmic shear and convergence map analyses to reduce noise at small scales and to create visually smoother maps for cluster detection, cosmic web visualization, and peak counting \citep{VanWaerbeke2013}.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages}: 
+    \begin{itemize}
+        \item Smooth in both real and Fourier space.
+        \item Easy to implement via fast convolution or direct multiplication in Fourier space.
+        \item Parameter $\theta_G$ directly controls the angular scale of smoothing.
+    \end{itemize}
+    \item \textbf{Drawbacks}: 
+    \begin{itemize}
+        \item All scales receive the same functional form of smoothing.
+        \item One must choose $\theta_G$ in advance, which could blur out interesting structures if set too large.
+    \end{itemize}
+\end{itemize}
+
+\section{Wavelet-Based Filtering}~\label{sec:wavelet-filter}
+
+\subsection{Motivation}
+Unlike fixed-scale filters (e.g.\ top-hat or Gaussian), \textbf{wavelet filtering} decomposes a map into multiple scales (or wavelet bands). This allows a more flexible approach, retaining or suppressing features scale by scale \citep{Starck2006}.
+
+\subsection{Wavelet Transform}
+A wavelet transform (e.g.\ the \emph{à trous} algorithm or discrete wavelet transform) splits $\kappa(\boldsymbol{\theta})$ into a set of wavelet coefficients $w_j(\boldsymbol{\theta})$, each associated with a characteristic scale $j$. One then applies a \emph{thresholding} or weighting scheme to suppress coefficients that are likely dominated by noise. For instance, 
+\begin{equation}
+    w_j^\prime(\boldsymbol{\theta}) = 
+    \begin{cases}
+        w_j(\boldsymbol{\theta}), & \text{if } |w_j(\boldsymbol{\theta})| > \sigma_j, \\
+        0, & \text{otherwise},
+    \end{cases}
+\end{equation}
+where $\sigma_j$ is an estimated noise level for scale $j$. The filtered map is reconstructed from the modified coefficients $w_j^\prime$.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages}: 
+    \begin{itemize}
+        \item Multi-scale approach can isolate structures at different scales.
+        \item Spatially adaptive thresholding can significantly reduce noise while preserving sharp features (e.g.\ cluster edges).
+        \item Often better at recovering non-Gaussian features (peaks, filaments).
+    \end{itemize}
+    \item \textbf{Drawbacks}: 
+    \begin{itemize}
+        \item More complex to implement and interpret.
+        \item Requires a wavelet transform library and a careful choice of threshold or prior.
+        \item Potentially introduces artifacts if thresholds are set poorly.
+    \end{itemize}
+\end{itemize}
+
+\section{Wiener Filter}
+\label{sec:wiener-filter}
+
+\subsection{Conceptual Overview}
+The \textbf{Wiener filter} is an optimal linear filter under Gaussian signal + noise assumptions. It combines knowledge of the signal power spectrum ($P_s$) and the noise power spectrum ($P_n$) to filter each Fourier (or spherical-harmonic) mode by its signal-to-noise ratio \citep{Press2007, Zaroubi1995}.
+
+\subsection{Mathematical Formulation}
+In 2D Fourier space, let $\kappa_{\mathrm{obs}}(\boldsymbol{\ell})$ be the observed (noisy) convergence. Assume 
+\[
+    \kappa_{\mathrm{obs}}(\boldsymbol{\ell}) 
+    = \kappa_{\mathrm{true}}(\boldsymbol{\ell}) + n(\boldsymbol{\ell}),
+\]
+where $n(\boldsymbol{\ell})$ is additive noise with known power $P_n(\ell)$. If $P_s(\ell)$ is the true convergence power spectrum, then the Wiener filter solution is 
+\begin{equation}
+    \label{eq:wiener-filter}
+    \kappa_{\mathrm{WF}}(\boldsymbol{\ell}) = \frac{P_s(\ell)}{P_s(\ell) + P_n(\ell)} 
+    \;\kappa_{\mathrm{obs}}(\boldsymbol{\ell}).
+\end{equation}
+High-SNR modes (where $P_s \gg P_n$) are passed almost unchanged, while low-SNR modes are heavily downweighted. Transforming back to real space yields the Wiener-filtered map.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages}: 
+    \begin{itemize}
+        \item Optimal (in the least-squares sense) for Gaussian fields.
+        \item Straightforward implementation if signal and noise power spectra are known.
+        \item Preserves large scales well, strongly damps noisy small-scale modes.
+    \end{itemize}
+    \item \textbf{Drawbacks}: 
+    \begin{itemize}
+        \item Requires an accurate model for $P_s(\ell)$ and $P_n(\ell)$.
+        \item Not necessarily optimal if the signal or noise has strong non-Gaussianity.
+        \item May oversmooth small structures if they do not conform to the assumed power spectrum.
+    \end{itemize}
+\end{itemize}
+
+\section{Comparison and Practical Guidelines}
+\label{sec:filter-comparison}
+
+Each filter approach can be advantageous depending on the analysis goal:
+\begin{itemize}
+    \item \textbf{Top-hat}: Simple, direct average on a chosen scale; can be too blunt for some scientific studies.
+    \item \textbf{Gaussian}: Common baseline; easy to implement; preserves large-scale structure in a smooth manner.
+    \item \textbf{Wavelet-based}: Excellent for multi-scale feature extraction (e.g.\ detecting peaks or filaments); more complex to implement.
+    \item \textbf{Wiener}: Optimal for Gaussian signal+noise with well-known power spectra; effectively damps noise while retaining main features.
+\end{itemize}
+In practice, a lensing analysis might use \emph{several} filters to cross-check results or to focus on distinct scales or morphological features in the map.
+
+\section{Summary}
+\label{sec:filter-summary}
+
+Smoothing or filtering is a critical step in weak lensing map analysis. Each filter—top-hat, Gaussian, wavelet-based, or Wiener—comes with unique properties. 
+\begin{itemize}
+    \item The \textbf{top-hat} filter is easiest to interpret but less optimal in frequency space.
+    \item The \textbf{Gaussian} filter is widely used for noise reduction, though it applies uniform smoothing to all scales.
+    \item \textbf{Wavelet filters} decompose the map into multiple scales, allowing an adaptive and potentially more powerful approach for detecting non-Gaussian features.
+    \item The \textbf{Wiener filter} is an optimal linear method for Gaussian noise and signal, making it appealing if one has reliable priors on the power spectra.
+\end{itemize}
+In subsequent chapters, we will explore how each smoothing method can affect the estimated power spectra, peak statistics, and higher-order moments derived from the convergence maps.
+
+\chapter{Smoothing and Filtering Methods for Convergence Maps}
+\label{ch:smoothing-filters}
+
+Weak lensing convergence maps often contain noise from galaxy shape measurements, measurement 
+uncertainties, and finite sampling. To focus on cosmologically relevant signals, several smoothing 
+and filtering approaches are employed. This chapter concisely reviews four commonly used filters—top-hat, 
+Gaussian, wavelet-based, and Wiener—and discusses their applications, advantages, and drawbacks.
+
+\section{Motivation for Filtering}
+\label{sec:filter-motivation}
+Convergence maps in the weak lensing regime typically contain:
+\begin{itemize}
+    \item \textbf{Shape Noise:} Random intrinsic galaxy ellipticities. 
+    \item \textbf{Measurement Errors:} Imperfect point-spread function (PSF) modeling, redshift 
+    uncertainties, etc.
+    \item \textbf{Finite Sampling:} Variable source density across the field.
+\end{itemize}
+A smoothing filter attempts to:
+\begin{itemize}
+    \item Suppress small-scale noise fluctuations.
+    \item Retain physical structures (clusters, filaments) at relevant scales.
+    \item Sometimes isolate features at specific angular scales for targeted analysis.
+\end{itemize}
+The choice of filter depends on the scientific objective—e.g., measuring power spectra, 
+detecting clusters, or analyzing peak statistics.
+
+\section{Top-Hat (Disk) Filter}
+\label{sec:tophat-filter}
+
+\subsection{Definition and Usage}
+A top-hat filter (or “disk” filter) averages the convergence map $\kappa(\boldsymbol{\theta})$ over 
+a circular region of radius $\theta_{\mathrm{TH}}$. In Fourier space, the sharp boundary leads to 
+significant sidelobes, potentially leaking small-scale noise. Despite this, it remains useful for 
+aperture densitometry and cluster detection.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages:} Simple to understand and implement; direct interpretation as an 
+    average within a circle.
+    \item \textbf{Drawbacks:} Produces a sharp cutoff in real space, causing strong sidelobes 
+    and suboptimal frequency-space performance.
+\end{itemize}
+
+\section{Gaussian Filter}
+\label{sec:gaussian-filter}
+
+\subsection{Definition and Usage}
+A Gaussian filter convolves $\kappa(\boldsymbol{\theta})$ with a radially symmetric Gaussian kernel 
+of scale $\theta_G$. In Fourier space, the kernel remains Gaussian, providing convenient control 
+over high-frequency noise \citep{VanWaerbeke2013}.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages:} 
+    Smooth in both real and Fourier space; easy to implement; parameter $\theta_G$ cleanly defines 
+    the smoothing scale.
+    \item \textbf{Drawbacks:} 
+    Uniformly smooths all scales; a poorly chosen $\theta_G$ can blur significant structures.
+\end{itemize}
+
+\section{Wavelet-Based Filtering}
+\label{sec:wavelet-filter}
+
+\subsection{Concept and Implementation}
+Wavelet methods decompose the map into multiple scale bands via a wavelet transform 
+(e.g.\ the \emph{à trous} algorithm). By thresholding coefficients scale by scale, one can 
+selectively remove noise while preserving important non-Gaussian structures like peaks and 
+filaments \citep{Starck2006}.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages:} 
+    Multi-scale analysis allows selective noise suppression and feature retention; preserves 
+    sharp edges (clusters, filaments).
+    \item \textbf{Drawbacks:} 
+    More complex to implement; requires careful thresholding to avoid artifacts.
+\end{itemize}
+
+\section{Wiener Filter}
+\label{sec:wiener-filter}
+
+\subsection{Conceptual Overview}
+The Wiener filter is an optimal linear filter under Gaussian assumptions, weighting each Fourier 
+mode of the observed convergence by its signal-to-noise ratio (SNR). It requires knowledge of 
+the signal and noise power spectra \citep{Press2007,Zaroubi1995}.
+
+\subsection{Advantages and Drawbacks}
+\begin{itemize}
+    \item \textbf{Advantages:} 
+    Optimal in a least-squares sense for Gaussian fields; damps noisy small-scale modes while 
+    preserving large-scale modes.
+    \item \textbf{Drawbacks:} 
+    Accuracy depends on correct modeling of the signal and noise spectra; less effective 
+    if the field is strongly non-Gaussian.
+\end{itemize}
+
+\section{Comparison and Practical Guidelines}
+\label{sec:filter-comparison}
+\begin{itemize}
+    \item \textbf{Top-hat}: Straightforward averaging but can be too blunt for detailed studies.
+    \item \textbf{Gaussian}: Common baseline; smooth noise reduction and easy implementation.
+    \item \textbf{Wavelet-based}: Flexible, multi-scale approach for recovering non-Gaussian 
+    features.
+    \item \textbf{Wiener}: Statistically optimal given accurate power spectra, but assumes 
+    near-Gaussianity.
+\end{itemize}
+
+\section{Summary}
+\label{sec:filter-summary}
+Smoothing and filtering are essential to handle noise in weak lensing maps. Top-hat, Gaussian, 
+wavelet-based, and Wiener filters each offer benefits suited to different scientific goals. 
+In the following chapters, we will demonstrate how these filters influence the measurement of 
+power spectra, cluster detections, and higher-order statistics in the convergence field.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Summary of smoothing and filtering methods for weak lensing convergence maps.}
+    \label{tab:filter-summary}
+    \begin{tabular}{p{2.3cm} p{5.0cm} p{3.8cm} p{3.8cm}}
+    \hline
+    \textbf{Filter} & \textbf{Objective / Usage} & \textbf{Pros} & \textbf{Cons} \\
+    \hline
+    \textbf{Top-Hat} 
+    & 
+    Average $\kappa(\boldsymbol{\theta})$ within a circular radius \(\theta_{\mathrm{TH}}\). 
+    Often used in aperture densitometry.
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Conceptually simple
+    \item Straightforward to implement
+    \end{itemize}
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Sharp cutoff in real space
+    \item Sizable sidelobes in Fourier space
+    \end{itemize} 
+    \\[4pt]
+    \hline
+    \textbf{Gaussian} 
+    & 
+    Smooth map by convolving with a radially symmetric Gaussian of scale \(\theta_G\). 
+    Commonly used for noise reduction.
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Smooth in real and Fourier space
+    \item Single parameter \(\theta_G\) controls smoothing scale
+    \end{itemize}
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Uniform smoothing at all scales
+    \item Can blur out small-scale features if \(\theta_G\) is large
+    \end{itemize}
+    \\[4pt]
+    \hline
+    \textbf{Wavelet-Based} 
+    & 
+    Decompose map into multiple scale bands (wavelets), 
+    then apply thresholding to suppress noise-dominated coefficients.
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Adaptive multi-scale denoising
+    \item Preserves sharp edges and non-Gaussian features
+    \end{itemize}
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Implementation is more complex
+    \item Requires careful choice of thresholds
+    \end{itemize}
+    \\[4pt]
+    \hline
+    \textbf{Wiener} 
+    & 
+    Optimal linear filter for Gaussian signal+noise, 
+    using known signal \(P_s(\ell)\) and noise \(P_n(\ell)\) power spectra.
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Statistically optimal for Gaussian fields
+    \item Downweights noisy high-\(\ell\) modes
+    \end{itemize}
+    & 
+    \begin{itemize}[leftmargin=0.5em]
+    \item Depends on accurate \(P_s(\ell)\) and \(P_n(\ell)\)
+    \item May oversmooth non-Gaussian features
+    \end{itemize}
+    \\
+    \hline
+    \end{tabular}
+    \end{table}
+    

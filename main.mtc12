@@ -1,0 +1,15 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.1}Motivation for Filtering}{\reset@font\mtcSfont 116}{section.C.1}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.2}Top-Hat (Disk) Filter}{\reset@font\mtcSfont 117}{section.C.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.2.1}Definition and Usage}{\reset@font\mtcSSfont 117}{subsection.C.2.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.2.2}Advantages and Drawbacks}{\reset@font\mtcSSfont 117}{subsection.C.2.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.3}Gaussian Filter}{\reset@font\mtcSfont 117}{section.C.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.3.1}Definition and Usage}{\reset@font\mtcSSfont 117}{subsection.C.3.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.3.2}Advantages and Drawbacks}{\reset@font\mtcSSfont 117}{subsection.C.3.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.4}Wavelet-Based Filtering}{\reset@font\mtcSfont 117}{section.C.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.4.1}Concept and Implementation}{\reset@font\mtcSSfont 117}{subsection.C.4.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.4.2}Advantages and Drawbacks}{\reset@font\mtcSSfont 117}{subsection.C.4.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.5}Wiener Filter}{\reset@font\mtcSfont 118}{section.C.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.5.1}Conceptual Overview}{\reset@font\mtcSSfont 118}{subsection.C.5.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {C.5.2}Advantages and Drawbacks}{\reset@font\mtcSSfont 118}{subsection.C.5.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.6}Comparison and Practical Guidelines}{\reset@font\mtcSfont 118}{section.C.6}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {C.7}Summary}{\reset@font\mtcSfont 118}{section.C.7}}

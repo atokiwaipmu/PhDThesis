@@ -47,6 +47,7 @@
 \RequirePackage{setspace}          % For setting line spacing
 \RequirePackage{titlesec}          % For customizing section titles
 \RequirePackage{fancyhdr}          % For header and footer customization
+\RequirePackage{tabularx}         % For tables with adjustable width
 %\RequirePackage{unicode-math}      % For Unicode math fonts
 \RequirePackage{lipsum} % For dummy text (optional)
 \RequirePackage{hyperref}
