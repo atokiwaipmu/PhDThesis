@@ -51,6 +51,8 @@
 %\RequirePackage{unicode-math}      % For Unicode math fonts
 \RequirePackage{lipsum} % For dummy text (optional)
 \RequirePackage{hyperref}
+\RequirePackage{fix-cm}
+\RequirePackage{lmodern}
 \hypersetup{
     linktoc=page,        % ページ番号にリンク
     colorlinks=true,     % カラーリンクを有効化
@@ -63,6 +65,11 @@
 \setcounter{tocdepth}{3}
 \setcounter{minitocdepth}{1}
 \AtBeginDocument{\dominitoc} 
+
+% Add math sizes declaration
+\DeclareMathSizes{10}{10}{7}{5}
+\DeclareMathSizes{11}{11}{7}{5}
+\DeclareMathSizes{12}{12}{7}{5}
 
 % Set main font (you can change this to your preferred font)
 \setmainfont{Times New Roman} % Example for English text
@@ -144,9 +151,9 @@
         \vspace{2cm}
         
         % Thesis Titles from Commands within a constrained width
-        {\huge \thesisTitle}\par
+        {\HUge \thesisTitle}\par
         \vspace{0.5cm}
-        \textjapanese{{\Large \thesisJapaneseTitle}}\par
+        \textjapanese{{\LARGE \thesisJapaneseTitle}}\par
         \vspace{2cm}
         
         % Submission Information
@@ -184,17 +191,17 @@
         \vspace*{1cm}
         
         % Abstract Header
-        {\Large \textjapanese{論文の内容の要旨}}\par
+        {\Huge \textjapanese{論文の内容の要旨}}\par
         \vspace{1cm}
         
         % Thesis Titles within a constrained width
-        {\Large \thesisTitle}\par
+        {\HUge\thesisTitle}\par
         \vspace{0.5cm}
-        \textjapanese{\large \thesisJapaneseTitle}\par
+        \textjapanese{\Large \thesisJapaneseTitle}\par
         \vspace{1cm}
         
         % Author Information
-        \textjapanese{氏名}\hspace{5em}\textjapanese{\thesisAuthorJapanese}\par
+        \textjapanese{\large 氏名}\hspace{5em}\textjapanese{\large \thesisAuthorJapanese}\par
         \vspace{0.5cm}
         \end{center}
         
@@ -245,6 +252,7 @@
 \renewcommand{\Large}{\fontsize{14pt}{16pt}\selectfont}
 \renewcommand{\LARGE}{\fontsize{17pt}{19pt}\selectfont}
 \renewcommand{\huge}{\fontsize{20pt}{22pt}\selectfont}
+\newcommand{\HUge}{\fontsize{22pt}{24pt}\selectfont} 
 \renewcommand{\Huge}{\fontsize{25pt}{27pt}\selectfont}
 
 % ============================================================================

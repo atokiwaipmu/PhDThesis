@@ -1,7 +1,7 @@
 \documentclass[11pt,a4paper]{ipmu}
 
 % define color for comments
-\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\at}[1]{\textcolor{black}{#1}}
 
 % Set Thesis Metadata
 \setThesisTitle{Effects of Replicated N-body Simulation Boxes \\in Simulating Weak Lensing Observables}
@@ -14,10 +14,20 @@
 % Create Title Page
 \makethesistitle
 \frontmatter
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+
+
 % Create Abstract Page
 \begin{abstractpage}
     \input{abstract_long}
 \end{abstractpage}
+
+
+    
 
 % Create Abstract Page
 \oldchapter*{Abstract}
@@ -38,12 +48,12 @@
 \chapter{Introduction}
 \label{chap:introduction}
 \mainmatter
-\minitoc 
+\minitoc
 \input{chap-introduction}
 
 \chapter{Foundational Concepts in Modern Cosmology}
 \label{chap:cosmology}
-\minitoc 
+\minitoc
 \input{chap-cosmology}
 
 \chapter{Theoretical Foundations of Weak Gravitational Lensing}
@@ -81,13 +91,11 @@
 \input{chap-conclusion}
 
 \appendix  % Start of appendices
-\input{chap-appendix.tex}
-
-
-% Here you can include detailed derivations that were omitted from the main text.
+\input{chap-app/smoothing_filters.tex}
 
 \backmatter
 \bibliographystyle{mnras}
-\bibliography{thesis_bib.bib}
+\bibliography{thesis_bib}
+
 
 \end{document}

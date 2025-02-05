@@ -1,5 +1,5 @@
 
-In this work, we quantified the effect of the super-sample covariance on the covariance matrix of higher-order statistics for a weak lensing survey. To achieve this, we conducted a series of N-body simulations and analyzed the resulting convergence maps. These maps enable the computation of covariance matrices for various summary statistics. Thus, we could investigate the impact of the super-sample covariance on these matrices.
+In this work, we quantified the effect of the super-sample effect on the covariance matrix of higher-order statistics for a weak lensing survey. To achieve this, we conducted a series of N-body simulations and analyzed the resulting convergence maps. These maps enable the computation of covariance matrices for various summary statistics. Thus, we could investigate the impact of the super-sample effect on these matrices.
 
 In the following sections, we discuss the methodology used to generate the convergence maps, extract patches for analysis, incorporate noise, apply Gaussian smoothing, and measure the summary statistics from the simulated maps. We also outline the process for estimating the covariance matrices and comparing the results between the BIGBOX and TILED simulations.
 
@@ -80,7 +80,7 @@ We considered four different surveys with varying galaxy number densities, as de
 \begin{equation}
     \sigma_{\kappa, \text{noise}}^2 = \frac{\sigma_{\epsilon}^2}{2 n_{\mathrm{gal}} A_{\mathrm{pix}}},
 \end{equation}
-where $\sigma_{\epsilon}$ is the intrinsic ellipticity dispersion of galaxies, set to $\sigma_{\epsilon} = 0.26$ \citep{2019A&A...627A..59E}, $n_{\mathrm{gal}}$ is the galaxy number density per square arcminute, and $A_{\mathrm{pix}}$ is the solid angle of a pixel, set to $0.43$ arcminutes$^2$. Using this calculated variance, we generated a Gaussian random field, $n(\hat{\mathbf{n}})$, and added it to the convergence maps to simulate the observed signal:
+where $\sigma_{\epsilon}$ is the intrinsic ellipticity dispersion of galaxies, set to $\sigma_{\epsilon} = 0.26$ \citep{2019A&A...627A..59E}, $n_{\mathrm{gal}}$ is the galaxy number density per square arcminute, and $A_{\mathrm{pix}}$ is the solid angle of a pixel, set to $0.43^2$ arcminutes$^2$. Using this calculated variance, we generated a Gaussian random field, $n(\hat{\mathbf{n}})$, and added it to the convergence maps to simulate the observed signal:
 \begin{equation}
     \kappa_{\mathrm{obs}}(\hat{\mathbf{n}}) = \kappa(\hat{\mathbf{n}}) + n(\hat{\mathbf{n}}).
 \end{equation}
@@ -125,7 +125,7 @@ Each patch is represented by a $2048 \times 2048$ grid of pixels, resulting in a
 For each realization, the covariance was computed using 194 patches extracted from the full-sky map of each simulation. This resulted in a total of 2134 patches from the BIGBOX simulation and 3880 patches from the TILED simulation. This ensemble of patches enables us to robustly sample both cosmic variance and shot noise, ensuring that our statistical analyses are sufficient for the power spectrum at $\ell = 5283$ and peak counts in $ \kappa \in \left[-0.06, 0.45\right]$ \citep{2016PhRvD..93f3524P}.
 
 \section{Applying Gaussian Kernels to Convergence Fields}
-Shape noise predominantly affects small angular scales. To mitigate this noise and enhance the detection of the underlying lensing signal, we applied Gaussian smoothing to the noisy convergence maps. The Gaussian filter is defined as:
+Shape noise primarily affects small angular scales, which can hinder the extraction of the underlying lensing signal. To mitigate this effect, we apply a Gaussian smoothing filter to the noisy convergence maps. \at{Owing to its straightforward implementation and reliance on a single parameter, the Gaussian filter is commonly adopted for handling noisy lensing data. A discussion of alternative smoothing approaches can be found in Appendix~\ref{app:smoothing_filters}.} The Gaussian filter is defined as:
 \begin{equation}
     W(\theta) = \frac{1}{\pi \theta_{\mathrm{G}}^2} \exp\left( -\frac{\theta^2}{\theta_{\mathrm{G}}^2} \right),
 \end{equation}
@@ -156,7 +156,7 @@ Figure~\ref{fig:avg_sigma0} shows the mean standard deviation of the noiseless c
 \end{figure}
 
 \section{Extracting Weak Lensing Statistics from Convergence Maps}
-To characterize the influence of super-sample covariance on higher-order statistics, this study focuses on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals.
+To characterize the influence of super-sample effect on higher-order statistics, this study focuses on the bispectrum, probability distribution function (PDF), peak counts, minima counts, and Minkowski functionals.
 
 Table~\ref{tab:statistics} summarizes the range of values and the computational subroutines employed for each summary statistic.
 \begin{table*}[htbp]
@@ -189,7 +189,7 @@ The bispectrum ($B_{\ell}$) is computed from the unsmoothed convergence maps usi
 
 The bispectrum computations are confined to the same multipole range as the angular power spectrum, specifically $\ell \in [300, 3000]$,  divided into eight logarithmically spaced bins. Although the bispectrum is more sensitive to noise and small-scale structures, maintaining an identical multipole range facilitates direct comparison with the angular power spectrum results.
 
-For theoretical validation, we compute the bispectrum prediction using the \texttt{BiHalofit} model \citep{2020ApJ...895..113T} and compare it with the measured bispectrum from the simulations. The theoretical bispectrum is derived using the same cosmological parameters as those employed in the simulations.
+%For theoretical validation, we compute the bispectrum prediction using the \texttt{BiHalofit} model \citep{2020ApJ...895..113T} and compare it with the measured bispectrum from the simulations. The theoretical bispectrum is derived using the same cosmological parameters as those employed in the simulations.
 
 \subsection{PDF}
 We compute the probability distribution function (PDF) of the convergence field using \texttt{lenstools}. Each PDF is derived from the smoothed convergence maps over a normalized range of $-4 \leq \kappa/\sigma_{\kappa} \leq 4$, divided into eight equally spaced bins. Here, $\sigma_{\kappa}$ represents the standard deviation of the convergence field within each individual patch. This range is chosen to align with the study by \citet{2023arXiv230405928T}, while the binning is optimized to ensure that each bin contains a sufficient number of data points.
@@ -212,9 +212,9 @@ Figure~\ref{fig:avg_sigma1} illustrates the variance of the gradient field, $\si
 \end{figure}
 
 \section{Comparing Covariances from BIGBOX and TILED}
-After the measurement phase, this study investigates the impact of super-sample covariance on the covariance matrices of the summary statistics discussed earlier. To facilitate this analysis, we use an unbiased estimator for the covariance matrix, as defined in Equation~\ref{eq:covariance}.
+After the measurement phase, this study investigates the impact of super-sample effect on the covariance matrices of the summary statistics discussed earlier. To facilitate this analysis, we use an unbiased estimator for the covariance matrix, as defined in Equation~\ref{eq:covariance_again}.
 \begin{equation}
-    \label{eq:covariance}
+    \label{eq:covariance_again}
     \mathrm{Cov}(\mathcal{O}_i, \mathcal{O}_j) = \frac{1}{N_{\mathrm{sim}} - 1} \sum_{n=1}^{N_{\mathrm{sim}}} (\mathcal{O}_i^{(n)} - \langle \mathcal{O}_i \rangle) (\mathcal{O}_j^{(n)} - \langle \mathcal{O}_j \rangle),
 \end{equation}
 
@@ -224,13 +224,13 @@ Additionally, we compute the correlation matrix for each summary statistic to an
 \end{equation}
 where $\mathcal{O}_i$ and $\mathcal{O}_j$ represent the $i$-th and $j$-th summary statistics, respectively. Correlation matrix normalize off-diagonal elements by the scale dependent variance, thereby enabling a direct comparison between different simulations and summary statistics.
 
-After computing the covariance and correlation matrices for both the BIGBOX and TILED simulations, we assess the impact of super-sample covariance by comparing the two sets of matrices. The comparison is performed by calculating the ratio of the BIGBOX to TILED matrices, defined as:
+After computing the covariance and correlation matrices for both the BIGBOX and TILED simulations, we assess the impact of super-sample effect by comparing the two sets of matrices. The comparison is performed by calculating the ratio of the BIGBOX to TILED matrices, defined as:
 \begin{equation}
     R^{\mathrm{Cov}}_{ij} = \frac{\mathrm{Cov}^{\mathrm{BIGBOX}}_{ij}}{\mathrm{Cov}^{\mathrm{TILED}}_{ij}}, \quad R^{\rho}_{ij} = \frac{\rho^{\mathrm{BIGBOX}}_{ij}}{\rho^{\mathrm{TILED}}_{ij}},
 \end{equation}
 where $\mathrm{Cov}_{\mathrm{BIGBOX}}$ and $\mathrm{Cov}_{\mathrm{TILED}}$ denote the covariance matrices derived from the BIGBOX and TILED simulations, respectively. Similarly, $\rho_{\mathrm{BIGBOX}}$ and $\rho_{\mathrm{TILED}}$ represent the corresponding correlation matrices.
 
-To quantitatively evaluate the overall influence of super-sample covariance, we compute the mean values of the ratios $R^{\mathrm{Cov}}_{ij}$ and $R^{\rho}_{ij}$ across the respective covariance and correlation matrices. Specifically, the average of $R^{\rho}$ is calculated by excluding the diagonal elements, which are equal to unity by definition. In contrast, the average of $R^{\mathrm{Cov}}$ utilizes all elements of the covariance matrix, including the diagonal. 
+To quantitatively evaluate the overall influence of super-sample effect, we compute the mean values of the ratios $R^{\mathrm{Cov}}_{ij}$ and $R^{\rho}_{ij}$ across the respective covariance and correlation matrices. Specifically, the average of $R^{\rho}$ is calculated by excluding the diagonal elements, which are equal to unity by definition. In contrast, the average of $R^{\mathrm{Cov}}$ utilizes all elements of the covariance matrix, including the diagonal. 
 
 For $\ell$-binned statistics, such as the angular power spectrum ($C_\ell^{\kappa\kappa}$) and the bispectrum, the average ratio is determined across all available multipole bins. Conversely, for $\nu$-binned statistics, such as the PDF, peak/minima counts, and Minkowski functionals, the first and last bins are excluded from the ratio calculation to avoid biases introduced by limited data points and the inherent unreliability of these extreme bins. The average ratios are defined as follows:
 \begin{equation}

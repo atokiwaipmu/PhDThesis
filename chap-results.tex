@@ -1,20 +1,20 @@
 This chapter presents a comprehensive comparison of weak lensing statistics derived from two distinct simulation sets: BIGBOX and TILED. The primary objective is to quantify the differences in mean values, covariance matrices, and correlation matrices between these simulations to assess the impacts of super-sample covariance and other systematic effects on the measurements. Additionally, the chapter investigates the influence of shape noise, varying smoothing scales, and box replication artifacts on the results. Unless otherwise specified, the main findings are based on noiseless simulations with a smoothing scale of 2 arcminutes. Furthermore, the power spectrum ($C_\ell$) and bispectrum results are normalized by factors of $\ell(\ell+1)/2\pi$ and $\ell^4$, respectively, to facilitate meaningful comparisons.
 
 \section{Comparison of Mean and Variance for Summary Statistics}
-In this section, we analyze and compare the mean ($\mu$) and variance ($\sigma^2$) of summary statistics derived from the BIGBOX and TILED simulations. Figures~\ref{fig:ell_main} and~\ref{fig:nu_main} illustrate these comparisons for the angular power spectrum, bispectrum, and other higher-order statistics, highlighting the differences arising from simulation methodologies and super-sample covariance (SSC) effects.
+In this section, we analyze and compare the mean ($\mu$) and variance ($\sigma^2$) of summary statistics derived from the BIGBOX and TILED simulations. Figures~\ref{fig:ell_main} and~\ref{fig:nu_main} illustrate these comparisons for the angular power spectrum, bispectrum, and other higher-order statistics, highlighting the differences arising from simulation methodologies and super-sample effect.
 
 The mean values, represented by the ratio $R_{\mu}$, demonstrate remarkable consistency in capturing statistical distributions across the two simulation sets. For most summary statistics, deviations in $R_{\mu}$ are less than $1\%$, underscoring the robustness of both simulation pipelines in reproducing the underlying statistics. Moreover, comparisons with theoretical predictions (\texttt{Halofit} and \texttt{hmpdf}) reveal no significant conflicts between the theoretical models and the simulation results.
 
 However, systematic deviations between TILED and BIGBOX simulations emerge at low $\nu$ values for peak counts, minima, and Minkowski Functionals, as well as at high $\nu$ values for minima (see the left panels in Figure~\ref{fig:nu_main}). These deviations likely result from the limited resolution of the TILED simulations in capturing super high-density and low-density regions, leading to fewer data points in the extreme tails of the distribution.
 
-In contrast, the variance ratios $R_{\sigma^2}$ exhibit more pronounced differences, highlighting the critical impact of SSC on variance measurements. Specifically, the variance of the angular power spectrum (top-right panel in Figure~\ref{fig:ell_main}) shows a significant increase in the BIGBOX simulations at high multipole moments ($\ell$). This increase is consistent with the expected amplification due to the inclusion of larger-scale modes in the BIGBOX setup, which are absent in the TILED simulations. Furthermore, discrepancies in variance ratios grow with increasing source redshift, reflecting the progressive loss of large-scale modes in the TILED simulations. For $\nu$-binned statistics (right panels in Figure~\ref{fig:nu_main}), the BIGBOX simulations consistently yield higher variances across nearly all $\nu$ bins, with this trend becoming more pronounced at higher source redshifts. These findings emphasize the necessity of accounting for SSC and other systematic effects to ensure accurate cosmological parameter estimation from weak lensing statistics.
+In contrast, the variance ratios $R_{\sigma^2}$ exhibit more pronounced differences, highlighting the critical impact of super-sample effect on variance measurements. Specifically, the variance of the angular power spectrum (top-right panel in Figure~\ref{fig:ell_main}) shows a significant increase in the BIGBOX simulations at high multipole moments ($\ell$). This increase is consistent with the expected amplification due to the inclusion of larger-scale modes in the BIGBOX setup, which are absent in the TILED simulations. Furthermore, discrepancies in variance ratios grow with increasing source redshift, reflecting the progressive loss of large-scale modes in the TILED simulations. For $\nu$-binned statistics (right panels in Figure~\ref{fig:nu_main}), the BIGBOX simulations consistently yield higher variances across nearly all $\nu$ bins, with this trend becoming more pronounced at higher source redshifts. These findings emphasize the necessity of accounting for super-sample effect and other systematic effects to ensure accurate cosmological parameter estimation from weak lensing statistics.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{figures/results/ell_main.png}
     \caption[Comparison of Mean and Variance for $C^{\kappa\kappa}_{\ell}$ and Bispectrum]
     {
-        Comparison of the mean and variance for the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) and the bispectrum components across three configurations: equilateral ($B_{\ell}^{\text{(eq)}}$), isosceles ($B_{\ell}^{\text{(iso)}}$), and squeezed ($B_{\ell}^{\text{(sq)}}$). Results are presented for the BIGBOX and TILED simulations across source redshifts $z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$. The figure highlights how different simulation methodologies and super-sample covariance (SSC) effects influence the summary statistics of these cosmological observables.
+        Comparison of the mean and variance for the angular power spectrum ($C^{\kappa\kappa}_{\ell}$) and the bispectrum components across three configurations: equilateral ($B_{\ell}^{\text{(eq)}}$), isosceles ($B_{\ell}^{\text{(iso)}}$), and squeezed ($B_{\ell}^{\text{(sq)}}$). Results are presented for the BIGBOX and TILED simulations across source redshifts $z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$. The figure highlights how different simulation methodologies and super-sample effect influence the summary statistics of these cosmological observables.
     }
     \label{fig:ell_main}
 \end{figure}
@@ -24,7 +24,7 @@ In contrast, the variance ratios $R_{\sigma^2}$ exhibit more pronounced differen
     \includegraphics[width=\textwidth]{figures/results/nu_main.png}
     \caption[Comparison of Mean and Variance for PDF, Peak/Minima Counts, and Minkowski Functionals]
     {
-        Comparison of the mean and variance for $\nu$-binned statistics, including the Minkowski Functionals ($V_0$, $V_1$, $V_2$), the probability density function (PDF), and peak and minima counts. Results are derived from the BIGBOX and TILED simulations across source redshifts $z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$, highlighting their sensitivity to super-sample covariance (SSC). The figure illustrates how SSC and other systematic effects influence the distribution and variance of these higher-order weak lensing statistics.
+        Comparison of the mean and variance for $\nu$-binned statistics, including the Minkowski Functionals ($V_0$, $V_1$, $V_2$), the probability density function (PDF), and peak and minima counts. Results are derived from the BIGBOX and TILED simulations across source redshifts $z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$, highlighting their sensitivity to super-sample effect. The figure illustrates how super-sample effect and other systematic effects influence the distribution and variance of these higher-order weak lensing statistics.
     }
     \label{fig:nu_main}
 \end{figure}
@@ -32,9 +32,9 @@ In contrast, the variance ratios $R_{\sigma^2}$ exhibit more pronounced differen
 \clearpage
 
 \section{Analysis of Covariance and Correlation Matrices}
-In this section, we quantify the impact of super-sample covariance (SSC) on the covariance and correlation matrices of various summary statistics derived from the BIGBOX and TILED simulations. Figures~\ref{fig:cov_bigbox} and~\ref{fig:cov_tiled} present the covariance matrices for the BIGBOX and TILED simulations, respectively, revealing that while the general covariance structures are consistent between the two simulation sets, the BIGBOX simulations exhibit higher covariance values on average. Figure~\ref{fig:corr_main} illustrates the corresponding correlation matrices, where the upper-left triangle represents the BIGBOX results and the lower-right triangle shows the TILED results. The color scale indicates that the correlation structures are almost consistent between the two simulation sets.
+In this section, we quantify the impact of super-sample effect on the covariance and correlation matrices of various summary statistics derived from the BIGBOX and TILED simulations. Figures~\ref{fig:cov_bigbox} and~\ref{fig:cov_tiled} present the covariance matrices for the BIGBOX and TILED simulations, respectively, revealing that while the general covariance structures are consistent between the two simulation sets, the BIGBOX simulations exhibit higher covariance values on average. Figure~\ref{fig:corr_main} illustrates the corresponding correlation matrices, where the upper-left triangle represents the BIGBOX results and the lower-right triangle shows the TILED results. The color scale indicates that the correlation structures are almost consistent between the two simulation sets.
 
-Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios of the covariance and correlation matrices between BIGBOX and TILED, denoted as $R_{\text{Cov}}$ and $R_{\rho}$, respectively. These ratios provide a quantitative assessment of SSC's influence on both the diagonal and off-diagonal elements of the covariance structure. The covariance ratios $R_{\text{Cov}}$ generally exceed unity, ranging from $10\%$ to $30\%$ above the baseline values for most summary statistics, underscoring SSC's significant contribution to the overall covariance matrix. Conversely, the correlation ratios $R_{\rho}$ typically deviate by less than $5\%$, suggesting that while SSC elevates the covariance, it has a minimal impact on the correlation coefficients. However, notable exceptions are observed in the angular power spectrum and peak/minima counts. For the angular power spectrum, larger deviations in $R_{\rho}$ are consistent with SSC effects, which introduce strong correlations through shared large-scale modes, particularly at small multipole moments ($\ell$). In the case of peak and minima counts, the deviations in correlation ratios likely arise from systematic shifts in peak positions within the TILED simulations, affecting correlations near the peak bins. For a summary of the average ratios of covariance and correlation matrices, refer to Figure~\ref{fig:avg_main}. 
+Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios of the covariance and correlation matrices between BIGBOX and TILED, denoted as $R_{\text{Cov}}$ and $R_{\rho}$, respectively. These ratios provide a quantitative assessment of super-sample effect's influence on both the diagonal and off-diagonal elements of the covariance structure. The covariance ratios $R_{\text{Cov}}$ generally exceed unity, ranging from $10\%$ to $30\%$ above the baseline values for most summary statistics, underscoring super-sample effect's significant contribution to the overall covariance matrix. Conversely, the correlation ratios $R_{\rho}$ typically deviate by less than $5\%$, suggesting that while super-sample effect elevates the covariance, it has a minimal impact on the correlation coefficients. However, notable exceptions are observed in the angular power spectrum and peak/minima counts. For the angular power spectrum, larger deviations in $R_{\rho}$ are consistent with super-sample effect, which introduce strong correlations through shared large-scale modes, particularly at small multipole moments ($\ell$). In the case of peak and minima counts, the deviations in correlation ratios likely arise from systematic shifts in peak positions within the TILED simulations, affecting correlations near the peak bins. For a summary of the average ratios of covariance and correlation matrices, refer to Figure~\ref{fig:avg_main}. 
 
 \begin{figure}[ht]
     \centering
@@ -49,7 +49,7 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
     \end{minipage}
     \caption[Average BIGBOX/TILED Ratios of Covariance and Correlation Matrices]
     {
-        Average ratios of covariance matrices (left) and correlation matrices (right) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The increasing trend in the covariance ratios ($R_{\text{Cov}}$) highlights the significant contribution of super-sample covariance (SSC) to the covariance structure. Conversely, the correlation ratios ($R_{\rho}$) remain relatively stable, indicating minimal impact on the correlation coefficients.
+        Average ratios of covariance matrices (left) and correlation matrices (right) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The increasing trend in the covariance ratios ($R_{\text{Cov}}$) highlights the significant contribution of super-sample effect to the covariance structure. Conversely, the correlation ratios ($R_{\rho}$) remain relatively stable, indicating minimal impact on the correlation coefficients.
     }
     \label{fig:avg_main}
 \end{figure}
@@ -59,7 +59,7 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
     \includegraphics[width=\textwidth]{figures/results/cov_bigbox.png}
     \caption[Covariance Matrices of Summary Statistics in BIGBOX Simulations]
     {
-        Covariance matrices of various summary statistics in the BIGBOX simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The matrices illustrate the covariance structure influenced by super-sample covariance (SSC), with higher covariance values observed on average compared to the TILED simulations.
+        Covariance matrices of various summary statistics in the BIGBOX simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The matrices illustrate the covariance structure influenced by super-sample effect, with higher covariance values observed on average compared to the TILED simulations.
     }
     \label{fig:cov_bigbox}
 \end{figure}
@@ -69,7 +69,7 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
     \includegraphics[width=\textwidth]{figures/results/cov_tiled.png}
     \caption[Covariance Matrices of Summary Statistics in TILED Simulations]
     {
-        Covariance matrices of various summary statistics in the TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$), using a color scale consistent with Figure~\ref{fig:cov_bigbox}. These matrices demonstrate generally lower covariance values compared to the BIGBOX simulations, highlighting the reduced influence of super-sample covariance (SSC) due to the absence of larger-scale modes.
+        Covariance matrices of various summary statistics in the TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$), using a color scale consistent with Figure~\ref{fig:cov_bigbox}. These matrices demonstrate generally lower covariance values compared to the BIGBOX simulations, highlighting the reduced influence of super-sample effect due to the absence of larger-scale modes.
     }
     \label{fig:cov_tiled}
 \end{figure}
@@ -89,7 +89,7 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
     \includegraphics[width=\textwidth]{figures/results/cov_ratio.png}
     \caption[Ratios of Covariance Matrices between BIGBOX and TILED Simulations]
     {
-        Ratios of covariance matrices ($R_{\text{Cov}}$) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The ratios consistently range from $10\%$ to $30\%$ above unity for most measured statistics, indicating the substantial impact of super-sample covariance (SSC) on the covariance structure.
+        Ratios of covariance matrices ($R_{\text{Cov}}$) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The ratios consistently range from $10\%$ to $30\%$ above unity for most measured statistics, indicating the substantial impact of super-sample effect on the covariance structure.
     }
     \label{fig:cov_ratio_main}
 \end{figure}
@@ -99,7 +99,7 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
     \includegraphics[width=\textwidth]{figures/results/corr_ratio.png}
     \caption[Ratios of Correlation Matrices between BIGBOX and TILED Simulations]
     {
-        Ratios of correlation matrices ($R_{\rho}$) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The ratios generally deviate by less than $5\%$, indicating that while super-sample covariance (SSC) elevates the entire covariance structure, its impact on the correlation coefficients remains minimal.
+        Ratios of correlation matrices ($R_{\rho}$) between the BIGBOX and TILED simulations across multiple source redshifts ($z_s = 0.5$, $1.0$, $1.5$, $2.0$, and $2.5$). The ratios generally deviate by less than $5\%$, indicating that while super-sample effect elevates the entire covariance structure, its impact on the correlation coefficients remains minimal.
     }
     \label{fig:corr_ratio_main}
 \end{figure}
@@ -107,11 +107,11 @@ Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main} depict the ratios
 \clearpage
 
 \section{Effects of Noise on Summary Statistics}
-The presence of shape noise in convergence maps can influence the covariance and correlation structures of weak lensing summary statistics. To evaluate the interaction between shape noise and super-sample covariance (SSC) effects, we analyzed multiple noise levels corresponding to those expected in current and future surveys (see Table~\ref{tab:survey_comparison}). This analysis aims to quantify the extent to which SSC dominates over the contribution from shape noise. Since the bispectrums exhibit no clear trends in the noiseless case (as shown in Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main}), we focus our analysis on the angular power spectrum and select higher-order statistics. 
+The presence of shape noise in convergence maps can influence the covariance and correlation structures of weak lensing summary statistics. To evaluate the interaction between shape noise and super-sample effect, we analyzed multiple noise levels corresponding to those expected in current and future surveys (see Table~\ref{tab:survey_comparison}). This analysis aims to quantify the extent to which super-sample effect dominates over the contribution from shape noise. Since the bispectrums exhibit no clear trends in the noiseless case (as shown in Figures~\ref{fig:cov_ratio_main} and~\ref{fig:corr_ratio_main}), we focus our analysis on the angular power spectrum and select higher-order statistics. 
 
-Figures~\ref{fig:avg_cov_noise} and~\ref{fig:cov_noise} present the covariance matrix ratios and their averages across summary statistics for the BIGBOX and TILED simulations at various noise levels. The angular power spectrum and peak/minima counts exhibit greater sensitivity to noise, particularly at high noise levels (e.g., DES and HSC surveys), with covariance ratios consistently increasing across most statistics. This trend suggests that in future surveys, SSC is expected to dominate over noise contributions. 
+Figures~\ref{fig:avg_cov_noise} and~\ref{fig:cov_noise} present the covariance matrix ratios and their averages across summary statistics for the BIGBOX and TILED simulations at various noise levels. The angular power spectrum and peak/minima counts exhibit greater sensitivity to noise, particularly at high noise levels (e.g., DES and HSC surveys), with covariance ratios consistently increasing across most statistics. This trend suggests that in future surveys, super-sample effect is expected to dominate over noise contributions. 
 
-Conversely, Figures~\ref{fig:avg_corr_noise} and~\ref{fig:corr_noise} display the correlation matrix ratios and their averages across summary statistics at different noise levels. These ratios generally remain below $10\%$ for most statistics, indicating that noise has a minimal impact on the overall covariance structure. However, higher values in the correlation ratios are concentrated near the boundaries of each summary statistic, arising from regions where data points are sparse and measurements are more senstive to noise amplification. These findings underscore the necessity of accounting for SSC in weak lensing analyses to ensure accurate cosmological parameter estimation, especially as survey sensitivities improve and noise levels vary.
+Conversely, Figures~\ref{fig:avg_corr_noise} and~\ref{fig:corr_noise} display the correlation matrix ratios and their averages across summary statistics at different noise levels. These ratios generally remain below $10\%$ for most statistics, indicating that noise has a minimal impact on the overall covariance structure. However, higher values in the correlation ratios are concentrated near the boundaries of each summary statistic, arising from regions where data points are sparse and measurements are more senstive to noise amplification. These findings underscore the necessity of accounting for super-sample effect in weak lensing analyses to ensure accurate cosmological parameter estimation, especially as survey sensitivities improve and noise levels vary.
 
 \begin{figure}[p]
     \centering
@@ -131,13 +131,13 @@ Conversely, Figures~\ref{fig:avg_corr_noise} and~\ref{fig:corr_noise} display th
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/results/avg_corr_ratio_noise.png}
+    \includegraphics[width=0.9\textwidth]{figures/results/avg_corr_ratio_noise.png}
     \caption[Average BIGBOX/TILED Ratio of Correlation for Multiple Noise Levels]
     {
         Average ratio of correlation matrices for summary statistics between the BIGBOX and TILED simulations at varying shape noise levels (see Table~\ref{tab:survey_comparison}). The correlation ratios ($R_{\rho}$) remain below $10\%$ for most summary statistics. 
     }
     \label{fig:avg_corr_noise}
-    \includegraphics[width=0.95\textwidth]{figures/results/corr_noise.png}
+    \includegraphics[width=0.9\textwidth]{figures/results/corr_noise.png}
     \caption[BIGBOX/TILED Ratio of Correlation for Multiple Noise Levels]
     {
         Ratios of correlation matrices ($R_{\rho}$) between the BIGBOX and TILED simulations across multiple shape noise levels (see Table~\ref{tab:survey_comparison}). Higher correlation ratios are concentrated near the boundaries of summary statistics, resulting from sparse data points and amplified noise effects in these regions. 
@@ -167,7 +167,7 @@ In summary, these findings suggest that while Gaussian smoothing scales can infl
     \includegraphics[width=\textwidth]{figures/results/cov_smoothing.png}
     \caption[BIGBOX/TILED Ratio of Covariance for Multiple Smoothing Scales]
     {
-        Ratio of covariance matrices ($R_{\text{Cov}}$) for various summary statistics between the BIGBOX and TILED simulations across different Gaussian smoothing scales. The figure highlights consistent trends in covariance ratios regardless of the applied smoothing scale, demonstrating the persistent influence of super-sample covariance (SSC) across varying smoothing conditions.
+        Ratio of covariance matrices ($R_{\text{Cov}}$) for various summary statistics between the BIGBOX and TILED simulations across different Gaussian smoothing scales. The figure highlights consistent trends in covariance ratios regardless of the applied smoothing scale, demonstrating the persistent influence of super-sample effect across varying smoothing conditions.
     }
     \label{fig:cov_smoothing}
 \end{figure}

@@ -1,0 +1,77 @@
+\chapter{Filtering Techniques in Cosmological Lensing}
+\label{app:smoothing_filters}
+
+\section{Gaussian Filter}
+A straightforward approach to smoothing noisy lensing data is the Gaussian filter. Gaussian filtering is simple to implement, requiring only the choice of \(\sigma\). Larger \(\sigma\) effectively suppresses high-frequency noise, though it also blurs small-scale structures, such as strong peaks and void edges, limiting its effectiveness for extracting higher-order cosmological information.
+In two dimensions, a Gaussian kernel \(G\) with standard deviation \(\sigma\) is given by:
+\begin{equation}
+    G(\mathbf{x}; \sigma)
+    \;=\;
+    \frac{1}{2\pi \,\sigma^2}\,
+    \exp\Bigl(-\frac{\|\mathbf{x}\|^2}{2\,\sigma^2}\Bigr).
+\end{equation}
+If \(\kappa(\mathbf{x})\) represents the unsmoothed convergence map, then its Gaussian-smoothed counterpart is:
+\begin{equation}
+    \kappa_{\text{smooth}}(\mathbf{x})
+    \;=\;
+    \bigl[\kappa(\mathbf{x}) \,\ast\, G(\mathbf{x}; \sigma)\bigr],
+\end{equation}
+where \(\ast\) denotes a 2D convolution. 
+
+\section{Wiener Filter}
+A more sophisticated filtering technique for reconstructing cosmological signals in the presence of noise is the Wiener filter \citep{10.7551/mitpress/2946.001.0001, 2021A&A...649A..99S}. The Wiener filter aims to minimize the mean-square error between an estimated signal \(\widehat{\kappa}\) and the true signal \(\kappa\).  If both signal and noise can be approximated as Gaussian random fields, the Wiener filter is the optimal linear filter in a least-squares sense. The Wiener filter is highly relevant in lensing studies, particularly for kaiser-Squires inversion \citep{1993ApJ...404..441K}.
+In Fourier or harmonic space, one commonly encounters:
+\begin{equation}
+    \widehat{\kappa}(\ell)
+    \;=\;
+    \frac{C^{\kappa\kappa}_\ell}{\,C^{\kappa\kappa}_\ell \,+\, N_\ell\,}\,
+    \tilde{\kappa}(\ell),
+    \label{eq:wiener_filter}
+\end{equation}
+where $\kappa{(\ell)}$ is the convergence field in harmonic space, $\gamma{(\ell)}$ is the observed shear field in harmonic space, $C^{\kappa\kappa}_\ell$ is the theoretical convergence power spectrum, $N_\ell$ is the noise power spectrum, and $\tilde{\kappa}(\ell)$ is the Fourier transform of the observed noisy convergence map.
+
+The ratio \(\frac{C^{\kappa\kappa}_\ell}{C^{\kappa\kappa}_\ell + N_\ell}\) acts as a mode-by-mode weighting: modes with high signal-to-noise (\(C^{\kappa\kappa}_\ell \gg N_\ell\)) pass through unattenuated, while low signal-to-noise modes (\(C^{\kappa\kappa}_\ell \ll N_\ell\)) are strongly 
+suppressed.
+
+\section{Starlet Filter}
+The Starlet filter is a \emph{wavelet transform} that satisfies the admissibility condition for analyzing data across multiple scales simultaneously. Let \(I(x,y)\) be the original 2D map (e.g., a convergence map in cosmological lensing). The Starlet transform decomposes \(I\) into a coarse or residual approximation \(c_{J}(x,y)\) and \(j_{\max}\) wavelet (detail) images \(w_{j}(x,y)\) at different resolution scales:
+\begin{equation}
+    I(x,y)
+    \;=\;
+    c_{J}(x,y)
+    \;+\;
+    \sum_{j=1}^{j_{\max}} w_{j}(x,y),
+    \label{eq:starlet_decomposition}
+\end{equation}
+where each wavelet scale \(w_{j}\) captures structures corresponding to a dyadic scale \(2^{j}\) in spatial size, and \(J = j_{\max} + 1\). 
+The Starlet wavelet function is derived from a cubic B-spline, making the transform particularly smooth. In one dimension, the generating function for the Starlet can be written in terms of a scaling function \(\phi\) and its dilations. Specifically, the Starlet wavelet is obtained by applying:
+\begin{equation}
+    \psi(t_1, t_2)
+    \;=\;
+    4 \bigl[\phi(2\,t_1) - \phi(2\,t_2)\bigr],
+\end{equation}
+where \(\phi\) is the cubic B-spline function of order 3. A common 1D representation of the B-spline function \(\phi(t)\) is (for \(t \ge 0\)):
+\begin{equation}
+    \phi(t)
+    \;=\;
+    \frac{1}{12}
+    \Bigl(\,
+      t^3
+      \;-\; 4\,t^2
+      \;+\; 6\,t
+      \;-\;4
+    \Bigr)_+
+    \quad\text{(appropriately shifted and scaled)},
+    \label{eq:b_spline}
+\end{equation}
+with `\((\cdot)_+\)` indicating that \(\phi(t)\) is zero outside a finite support. In two dimensions, the Starlet basis is separable, defined by products of the 1D scaling function or its wavelet function:
+\begin{equation}
+    \Phi(x,y)
+    \;=\;
+    \phi(x)\,\phi(y), 
+    \qquad
+    \Psi(x,y)
+    \;=\;
+    \psi(x)\,\psi(y).
+\end{equation}
+For a detailed derivation of these functions and the full Starlet transform algorithm, see \citet{Starck_Murtagh_Fadili_2010}.
